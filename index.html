@@ -117,11 +117,10 @@
 
   /* ── HERO ── */
   #hero {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 120px 48px 80px;
+    padding: 96px 48px 56px;
     max-width: 1100px;
     margin: 0 auto;
   }
@@ -148,7 +147,7 @@
 
   .hero-name {
     font-family: var(--font-head);
-    font-size: clamp(56px, 8vw, 96px);
+    font-size: clamp(44px, 6vw, 72px);
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.02em;
@@ -175,11 +174,11 @@
   }
 
   .hero-bio {
-    font-size: 17px;
+    font-size: 16px;
     color: var(--muted);
     max-width: 560px;
     line-height: 1.75;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
     font-weight: 300;
   }
 
@@ -228,9 +227,9 @@
 
   .hero-stats {
     display: flex;
-    gap: 48px;
-    margin-top: 80px;
-    padding-top: 48px;
+    gap: 40px;
+    margin-top: 48px;
+    padding-top: 32px;
     border-top: 1px solid var(--border);
     flex-wrap: wrap;
   }
@@ -258,7 +257,7 @@
   .section-wrap {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 100px 48px;
+    padding: 64px 48px;
   }
 
   .section-label {
@@ -267,7 +266,7 @@
     color: var(--orange);
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -283,24 +282,40 @@
 
   .section-title {
     font-family: var(--font-head);
-    font-size: clamp(32px, 4vw, 48px);
+    font-size: clamp(28px, 3.5vw, 40px);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.01em;
-    margin-bottom: 60px;
+    margin-bottom: 32px;
     color: var(--text);
   }
 
   /* ── PROJECTS ── */
   #projects { background: var(--bg); }
 
+  .project-group-label {
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--orange);
+    margin-bottom: 20px;
+    margin-top: 44px;
+  }
+  .project-group-label:first-of-type { margin-top: 0; }
+
   .project-featured {
     background: var(--bg2);
     border: 1px solid var(--border);
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 460px;
+    min-height: 360px;
     transition: border-color 0.3s;
     overflow: hidden;
   }
@@ -431,17 +446,62 @@
   .project-card {
     background: var(--bg2);
     border: 1px solid var(--border);
-    padding: 32px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 0;
     transition: border-color 0.3s, transform 0.3s;
     cursor: default;
+    overflow: hidden;
   }
 
   .project-card:hover {
     border-color: var(--orange-dim);
     transform: translateY(-3px);
+  }
+
+  .card-thumb {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-thumb-placeholder {
+    width: 100%;
+    height: 160px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-thumb-placeholder img {
+    max-height: 56px;
+    width: auto;
+    opacity: 0.7;
+  }
+
+  .card-body {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card-result {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--orange2);
+    letter-spacing: 0.04em;
+    padding: 6px 12px;
+    background: rgba(249,115,22,0.07);
+    border-left: 2px solid var(--orange);
+    margin-bottom: 2px;
   }
 
   .card-num {
@@ -682,6 +742,31 @@
   /* Smoother link transitions */
   a, button { transition: all 0.25s cubic-bezier(0.22,1,0.36,1); }
 
+  /* ── CASE STUDY IMAGE COMPRESSION ── */
+  .cs-media-full img,
+  .cs-media-full video {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cs-media-full img[style*="object-fit:contain"],
+  .cs-media-full img[style*="object-fit: contain"] {
+    max-height: 320px;
+  }
+
+  .cs-media-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .cs-media-pair .cs-media-full {
+    margin-bottom: 0;
+  }
+
   /* ── CASE STUDY PAGE ── */
   .case-study {
     display: none;
@@ -893,6 +978,87 @@
     font-weight: 400;
   }
 
+  .cs-skills-used {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .cs-skill-pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid var(--orange-dim);
+    color: var(--orange2);
+    background: rgba(249,115,22,0.05);
+  }
+
+  .cs-skill-pill.secondary {
+    border-color: var(--border2);
+    color: var(--muted);
+    background: none;
+  }
+
+  .cs-other-projects {
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  .cs-other-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .cs-other-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .cs-other-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 20px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .cs-other-card:hover { border-color: var(--orange-dim); }
+
+  .cs-other-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .cs-other-title {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .cs-other-desc {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
   @media (max-width: 900px) {
     nav { padding: 0 24px; }
     #hero { padding: 100px 24px 60px; }
@@ -913,9 +1079,10 @@
 <nav>
   <a class="nav-logo" href="#hero">OW.ENG</a>
   <ul class="nav-links">
-    <li><a href="#projects" class="active">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#proj-tsc">TSC</a></li>
+    <li><a href="#proj-cce">CCE</a></li>
+    <li><a href="#proj-research">Research</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a class="nav-resume" href="Omar_Wali_Resume.docx" target="_blank">Resume ↗</a>
@@ -929,11 +1096,7 @@
     <strong>CAD · FEA · Fabrication</strong> &nbsp;—&nbsp; Solar · EV · Motorsport
   </p>
   <p class="hero-bio">
-    Freshman at UC San Diego building real hardware — from
-    <em>Ackermann steering geometry designed in SolidWorks and fabricated in steel</em> to
-    <em>commercial-scale solar PV systems</em>.
-    Targeting mechanical engineering roles in clean energy and high-performance vehicles.
-    Planning M.S. in Mechanical Engineering.
+    Freshman at UCSD with steel parts on a solar race car, a published paper, and a commercial solar internship — before taking a single upper-division class. I care about the full loop: model, validate, build, test. Clean energy and high-performance vehicles are where I want to spend the next 40 years.
   </p>
   <div class="hero-cta">
     <a class="btn-primary" href="#projects">View Projects</a>
@@ -965,71 +1128,95 @@
     <div class="section-label">Work</div>
     <h2 class="section-title">Engineering Projects</h2>
 
-    <!-- FEATURED: Triton Solar Car -->
+    <!-- GROUP 1: COMPETITION TEAM -->
+    <div class="project-group-label" id="proj-tsc">01 — Competition Team</div>
+
     <div class="project-featured reveal" id="open-triton" style="cursor:pointer">
-      <div class="project-media" style="background:#000;display:flex;align-items:center;justify-content:center;padding:40px">
-        <img src="tsc-logo.png" alt="Triton Solar Car logo" style="width:75%;height:auto;object-fit:contain;opacity:0.95">
+      <div class="project-media" style="overflow:hidden">
+        <img src="car-assembly-hero.jpg" alt="Triton Solar Car assembly" style="width:100%;height:100%;object-fit:cover">
       </div>
       <div class="project-info">
         <div>
-          <div class="project-num">01 — Featured</div>
-          <h3 class="project-title">Ackermann Steering System<br>Triton Solar Car</h3>
+          <div class="project-num">Triton Solar Car · UCSD · 2025–Present</div>
+          <h3 class="project-title">Ackermann Steering System<br>+ Steering Wheel Ergonomics</h3>
           <p class="project-desc">
-            Full design and fabrication of a custom steering geometry for UCSD's American Solar Challenge competitor. Involved a full vs. partial Ackermann trade study, FEA stress analysis under worst-case loading, and hands-on steel fabrication.
+            Full design-to-fabrication of custom steering geometry for UCSD's American Solar Challenge car. Ackermann trade study, ANSYS FEA under worst-case loading, CNC wood prototyping → steel. Also designed the steering wheel button module housing: CAD, 3D printed tolerancing iterations, CNC aluminum backplate.
           </p>
-          <div class="project-tags">
+          <div class="card-result">Geometry designed, FEA validated, steel fabricated — part is physically on the car</div>
+          <div class="project-tags" style="margin-top:12px">
             <span class="tag highlight">SolidWorks</span>
-            <span class="tag highlight">Fusion360</span>
-            <span class="tag">FEA</span>
-            <span class="tag">Steel Fabrication</span>
+            <span class="tag highlight">Fusion 360</span>
+            <span class="tag">ANSYS FEA</span>
+            <span class="tag">Steel Fab</span>
             <span class="tag">CNC</span>
             <span class="tag">3D Printing</span>
           </div>
         </div>
-        <span class="project-link">Read Case Study</span>
+        <span class="project-link" style="margin-top:20px">Read Case Study</span>
       </div>
     </div>
 
-    <!-- PROJECT GRID -->
-    <div class="project-grid">
+    <!-- GROUP 2: INTERNSHIP -->
+    <div class="project-group-label" id="proj-cce">02 — Internship</div>
 
+    <div class="project-grid" style="margin-bottom:0">
       <div class="project-card reveal" id="open-cce" style="cursor:pointer">
-        <div style="background:#000;border-radius:4px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;min-height:64px">
-          <img src="cce-logo.png" alt="Center for Community Energy" style="max-height:48px;width:auto;object-fit:contain">
+        <div class="card-thumb-placeholder">
+          <img src="cce-logo.png" alt="Center for Community Energy">
         </div>
-        <div class="card-num">02</div>
-        <h3 class="card-title">Commercial Solar PV Design</h3>
-        <p class="card-desc">Designing carport and dual-axis tracker PV systems for real clients including a safe-harbor ITC proposal for Viasat. Helioscope layout, stringing, BOM, ROI modeling.</p>
-        <div class="project-tags" style="margin-top:auto">
-          <span class="tag highlight">Helioscope</span>
-          <span class="tag">Solar PV</span>
-          <span class="tag">EV Charging</span>
+        <div class="card-body">
+          <div class="card-num">02</div>
+          <h3 class="card-title">Commercial Solar PV Design</h3>
+          <div class="card-result">Viasat safe-harbor ITC proposal · Helioscope · ROI modeling</div>
+          <p class="card-desc">Carport + dual-axis tracker PV systems for real clients. Utility bill analysis, stringing, BOM, NPV/payback financial modeling, structural feasibility coordination.</p>
+          <div class="project-tags" style="margin-top:auto;padding-top:12px">
+            <span class="tag highlight">Helioscope</span>
+            <span class="tag">Solar PV</span>
+            <span class="tag">Financial Modeling</span>
+            <span class="tag">EV Charging</span>
+          </div>
+          <span class="project-link" style="margin-top:12px;display:inline-flex">View Work</span>
         </div>
       </div>
+    </div>
 
+    <!-- GROUP 3: RESEARCH -->
+    <div class="project-group-label" id="proj-research">03 &amp; 04 — Independent Research</div>
+
+    <div class="project-grid">
       <div class="project-card reveal" id="open-solar" style="cursor:pointer">
-        <div class="card-num">03</div>
-        <h3 class="card-title">Solar Carport — Humanitarian Infrastructure</h3>
-        <p class="card-desc">Independent research designing a solar PV carport for a refugee camp. Published in Curieux Academic Journal. AutoCAD layout, irradiance modeling, seasonal performance analysis.</p>
-        <div class="project-tags" style="margin-top:auto">
-          <span class="tag highlight">AutoCAD</span>
-          <span class="tag">Published</span>
-          <span class="tag">Solar</span>
+        <img class="card-thumb" src="research-autocad-clean.png" alt="AutoCAD solar carport layout">
+        <div class="card-body">
+          <div class="card-num">03</div>
+          <h3 class="card-title">Solar Carport — Humanitarian Infrastructure</h3>
+          <div class="card-result">4,736 panels · 4.38 GWh/yr · 14% camp demand · Published</div>
+          <p class="card-desc">PV carport for Shatila refugee camp, Beirut. AutoCAD layout, irradiance modeling, $2.5M cost analysis. Published in Curieux Academic Journal.</p>
+          <div class="project-tags" style="margin-top:auto;padding-top:12px">
+            <span class="tag highlight">AutoCAD</span>
+            <span class="tag">Published</span>
+            <span class="tag">Solar</span>
+          </div>
+          <span class="project-link" style="margin-top:12px;display:inline-flex">Read Study</span>
         </div>
       </div>
 
       <div class="project-card reveal" id="open-research" style="cursor:pointer">
-        <div class="card-num">04</div>
-        <h3 class="card-title">Wind Turbine &amp; Solar Tilt Research</h3>
-        <p class="card-desc">Two independent research studies: experimental rotor swept-area scaling (R²=0.794 vs Betz limit) and calculus-based solar tilt angle optimization using irradiance geometry models.</p>
-        <div class="project-tags" style="margin-top:auto">
-          <span class="tag">Experimental</span>
-          <span class="tag">MATLAB</span>
-          <span class="tag">Research</span>
+        <img class="card-thumb" src="research-wind-turbine.png" alt="3D printed wind turbine rotors">
+        <div class="card-body">
+          <div class="card-num">04</div>
+          <h3 class="card-title">Wind Turbine &amp; Solar Tilt Research</h3>
+          <div class="card-result">R²=0.794 vs Betz limit · Calculus-optimized monthly tilt schedule</div>
+          <p class="card-desc">Study 1: experimental rotor swept-area scaling with 3D-printed rotors + Logger Pro. Study 2: calculus-based solar tilt angle optimization using irradiance geometry models.</p>
+          <div class="project-tags" style="margin-top:auto;padding-top:12px">
+            <span class="tag">Experimental</span>
+            <span class="tag">MATLAB</span>
+            <span class="tag">3D Printing</span>
+          </div>
+          <span class="project-link" style="margin-top:12px;display:inline-flex">Read Study</span>
         </div>
       </div>
-
     </div>
+
   </div>
 </section>
 
@@ -1090,20 +1277,13 @@
     <div class="about-grid">
       <div class="about-text reveal">
         <p>
-          I'm a freshman at UC San Diego studying Structural Engineering with
-          <em>junior-year credits</em>, planning to bridge into Mechanical Engineering
-          at the graduate level. My work sits at the intersection of
-          <em>structural analysis, mechanical design, and clean energy systems</em>.
+          I got into engineering because I wanted to understand how things actually work — not in textbooks, but in the real world where tolerances matter, assumptions have consequences, and the part either fits or it doesn't.
         </p>
         <p>
-          I build things. From steel tie-rod steering geometry that's physically
-          on a solar race car, to commercial solar PV systems for real clients —
-          I care about the full loop from model to metal.
+          I'm a freshman at UCSD with junior-year credits and a habit of taking on more than I probably should. So far that's led to steel geometry on a race car, a published paper on refugee camp energy, and a solar PV internship where I build financial models for clients who aren't messing around.
         </p>
         <p>
-          Outside of engineering I'm obsessed with motorsport and the EV transition.
-          Both are pulling in the same direction: making vehicles faster, lighter,
-          and cleaner.
+          Outside engineering: Formula 1, long drives, and an embarrassing amount of time thinking about EV powertrains. Both motorsport and the EV transition are solving the same problem from different directions — I want to be in the middle of that.
         </p>
       </div>
       <div class="about-details reveal">
@@ -1178,159 +1358,174 @@
       <div class="cs-meta-item"><div class="cs-meta-label">Status</div><div class="cs-meta-val">Manufactured · On vehicle</div></div>
     </div>
 
+    <div class="cs-skills-used">
+      <span class="cs-skill-pill">SolidWorks</span>
+      <span class="cs-skill-pill">Fusion 360</span>
+      <span class="cs-skill-pill">ANSYS FEA</span>
+      <span class="cs-skill-pill">3D Printing</span>
+      <span class="cs-skill-pill secondary">CNC Prototyping</span>
+      <span class="cs-skill-pill secondary">Steel Fabrication</span>
+      <span class="cs-skill-pill secondary">Geometric Tolerancing</span>
+      <span class="cs-skill-pill secondary">Trade Study</span>
+    </div>
+
     <!-- HERO MEDIA -->
-    <div class="cs-media-full" style="min-height:560px;overflow:hidden">
-      <img src="car-assembly-hero.jpg" alt="Triton Solar Car full assembly — Fusion360" style="width:100%;height:560px;object-fit:cover;object-position:center center">
+    <div class="cs-media-full" style="min-height:360px;overflow:hidden">
+      <img src="car-assembly-hero.jpg" alt="Triton Solar Car full assembly — Fusion360" style="width:100%;height:360px;object-fit:cover;object-position:center center">
     </div>
 
     <div class="cs-body">
 
       <h2>The Problem</h2>
       <p>
-        When a car turns, the inner and outer wheels trace arcs of different radii. If both wheels point at the same angle — parallel steering — the outer tire scrubs sideways, fighting the turn. <em>Ackermann geometry</em> solves this by angling the inner wheel more sharply than the outer, so both wheels steer toward a common turning center.
-      </p>
-      <p>
-        For Triton Solar Car, the challenge wasn't just choosing Ackermann geometry — it was choosing <em>how much</em>. Full Ackermann minimizes tire scrub at low speeds. Partial Ackermann distributes lateral load more evenly at higher speeds. A solar race car operates across both regimes. The task: run a full trade study and design a linkage that found the right balance.
+        When a car turns, the inner and outer wheels trace arcs of different radii. Parallel steering makes the outer tire scrub sideways. <em>Ackermann geometry</em> fixes this — but for a solar race car operating at both low and high speeds, the question is how much Ackermann. Full Ackermann minimizes scrub at low speed; partial distributes lateral load better at speed. Task: run the trade study, pick the number, build it.
       </p>
 
-      <h2>The Geometry Work</h2>
+      <h2>Geometry &amp; Iteration</h2>
       <p>
-        The starting point was physical measurement — locating exactly where the kingpins sat and where the rack and pinion lived on the car. From there, I drew construction lines in SolidWorks from the rear axle centerpoint through each kingpin axis. The key insight from research: the tie rod endpoints have to fall somewhere on those construction lines for the geometry to produce true Ackermann behavior. That gave me a constraint to work within rather than a blank canvas.
-      </p>
-      <p>
-        From there it was iteration. I tested different tie rod pickup positions along those lines, each one producing a different Ackermann percentage, and evaluated the tradeoff between scrub elimination at low speed and lateral load distribution at higher speed. The final geometry — <em>21.5° inner / 16.8° outer</em> — was the point where scrubbing was effectively eliminated without overcorrecting into full Ackermann, which would have loaded the outer tire too aggressively in faster corners.
+        I drew construction lines in SolidWorks from the rear axle centerpoint through each kingpin axis — tie rod endpoints have to fall on those lines to produce true Ackermann behavior. Then iterated tie rod positions, each producing a different Ackermann percentage, until the scrub vs. load tradeoff landed at <em>21.5° inner / 16.8° outer</em>.
       </p>
 
-      <div class="cs-media-full" style="min-height:480px">
-        <video autoplay muted loop playsinline style="width:100%;min-height:480px;object-fit:contain;background:#0a0a0a">
+      <div class="cs-media-full">
+        <video autoplay muted loop playsinline style="width:100%;height:420px;object-fit:contain;background:#0a0a0a">
           <source src="ackermann-geometry-2d.mp4" type="video/mp4">
         </video>
       </div>
       <div class="cs-media-full">
-        <img src="ackermann-3d-model.png" alt="Ackermann steering 3D model screenshot">
+        <img src="ackermann-3d-model.png" alt="Ackermann steering 3D model screenshot" style="height:380px;object-fit:contain;background:#0a0a0a;width:100%">
       </div>
 
-      <h2>The Kingpin Axis Problem</h2>
+      <h2>Kingpin Complication</h2>
       <p>
-        When the suspension team's design came in, the kingpin geometry introduced a complication — the axis wasn't rotating purely about the Y-axis as a simplified model would assume. The actual physical setup meant the rotation had a Z-component too, which changes how you think about the load cases going through that joint.
-      </p>
-      <p>
-        The honest answer is this is a first-generation car. No one on the team had built one before. The call I made was to assume a simplified straight axis for the analysis and proceed — because one of the things you learn quickly in engineering is that <em>you can't calculate everything to the T</em>. Sometimes the right move is to make a defensible assumption, document it, build the part, and see what the real world tells you. The design is on the car now. That's the test that matters.
+        The suspension team's kingpin geometry had a Z-axis rotation component — not purely the simplified Y-axis the initial analysis assumed. First-generation car, no prior precedent on the team. I made a documented assumption, proceeded, and built the part. The design is on the car. That's the test that matters.
       </p>
       <div class="cs-callout">
-        <p>A perfect model of a flawed input is still a flawed output. We made a reasonable assumption, built the part, and committed to learning from the physical result — which is how first-generation engineering actually works.</p>
+        <p>A perfect model of a flawed input is still a flawed output. Make a defensible assumption, document it, build, and learn from the physical result.</p>
       </div>
 
       <h2>FEA Validation</h2>
       <p>
-        To validate the design before cutting steel, the team ran static structural analysis in ANSYS under worst-case combined front kingpin loading — simulating a hard turn combined with an impact event, which maximizes stress through the linkage simultaneously. I worked through interpreting the outputs and understanding what the stress distribution meant for our geometry and material choice.
+        ANSYS static structural analysis under worst-case combined front kingpin loading — hard turn plus impact event simultaneously. 55,338 psi max von Mises. Design cleared.
       </p>
 
       <div class="cs-stat-row">
         <div class="cs-stat">
           <div class="cs-stat-num">55,338</div>
-          <div class="cs-stat-desc">psi max von Mises stress<br>worst-case combined loading</div>
+          <div class="cs-stat-desc">psi peak stress<br>design cleared under worst-case load</div>
         </div>
         <div class="cs-stat">
           <div class="cs-stat-num">21.5°</div>
-          <div class="cs-stat-desc">inner wheel steer angle<br>partial Ackermann geometry</div>
+          <div class="cs-stat-desc">inner wheel angle<br>optimized partial Ackermann</div>
         </div>
         <div class="cs-stat">
           <div class="cs-stat-num">16.8°</div>
-          <div class="cs-stat-desc">outer wheel steer angle<br>optimized for cornering load</div>
+          <div class="cs-stat-desc">outer wheel angle<br>cornering load balanced</div>
         </div>
       </div>
 
       <div class="cs-media-full">
-        <img src="ansys-fea.png" alt="ANSYS von Mises stress analysis - 55,338 psi max">
+        <img src="ansys-fea.png" alt="ANSYS von Mises stress analysis">
       </div>
 
       <h2>Fabrication</h2>
       <p>
-        Fabrication started with CNC wood prototypes — a fast, cheap way to validate the geometry before committing to steel. Once the linkage positions checked out on the car, the parts were recut in steel plate and assembled. Getting the tie rod endpoints to land in exactly the right positions was the critical tolerance — small deviations there change the effective Ackermann percentage, so fitting was done carefully against the SolidWorks reference geometry.
+        CNC wood prototypes first — fast and cheap to validate fit on the car before touching steel. Once geometry checked out, recut in steel plate. Tie rod endpoints are the critical tolerance: a few millimeters off changes the effective Ackermann percentage.
       </p>
 
-      <div class="cs-media-grid">
+      <div class="cs-media-pair">
         <div class="cs-media-full">
-          <img src="fabrication-on-car.jpg" alt="Fitting steering geometry on car">
+          <img src="fabrication-on-car.jpg" alt="Fitting steering geometry on car" style="height:260px;object-fit:cover">
         </div>
         <div class="cs-media-full">
-          <img src="fabrication-team-fit.png" alt="Team fitting the wood prototype steering geometry on car">
+          <img src="fabrication-team-fit.png" alt="Wood prototype fit check" style="height:260px;object-fit:cover">
         </div>
       </div>
-
-      <div class="cs-media-full">
-        <img src="steering-assembly.gif" alt="Steering assembly being fitted on the car" style="width:100%;max-height:420px;object-fit:cover">
-      </div>
-
-      <div class="cs-media-full">
-        <img src="fabrication-chassis.png" alt="Steering system fully integrated on chassis with wheel">
+      <div class="cs-media-pair">
+        <div class="cs-media-full">
+          <img src="steering-assembly.gif" alt="Steering assembly installation" style="height:260px;object-fit:cover">
+        </div>
+        <div class="cs-media-full">
+          <img src="fabrication-chassis.png" alt="Steering system on chassis" style="height:260px;object-fit:cover">
+        </div>
       </div>
 
       <h2>Steering Wheel Control Module</h2>
       <p>
-        Alongside the steering geometry, I designed the ergonomics side — a button module backplate that houses horn, turn signals, lighting, and driver comms. The constraint is ASC regulations require all controls to rotate with the wheel, which means the housing needs to clip onto the button module and turn with the column rather than being fixed to the chassis.
-      </p>
-      <p>
-        The hardest part was spatial. The button module had an unusual elliptical profile with awkward dimensions, so I modelled it fully in CAD before even touching the assembly — getting every curve and hole position exact so the housing would actually be snug rather than floating around inside the wheel. From there it was a positioning problem: figuring out the right standoff distance to sit the module close to the driver without fouling the wheel structure, which meant live iteration in the assembly moving parts around until the clearances felt right.
+        ASC regulations require all controls to rotate with the wheel — so the button module housing had to clip onto the module and turn with the column. The button module had an unusual elliptical profile, so I modelled it fully in CAD before printing anything.
       </p>
 
-      <h2>A Lesson in Simplicity</h2>
+      <h2>Design Iteration: Complexity Is a Liability</h2>
       <p>
-        My first CAD design for the backplate holder was overengineered. I added features, brackets, and geometry that solved problems I hadn't actually encountered yet — designing defensively against hypothetical failure modes instead of building for what the part actually needed to do.
+        First design was overengineered — solving problems I hadn't encountered yet. The redesign strips it to the functional core.
       </p>
       <div class="cs-callout">
-        <p>One of the most valuable engineering lessons: never make something more complicated than it needs to be. Complexity is a liability, not a signal of effort.</p>
+        <p>Never make something more complicated than it needs to be. Complexity is a liability, not a signal of effort.</p>
       </div>
+      <div class="cs-media-full">
+        <img src="button-module-cad-complex.png" alt="Overengineered first CAD design" style="height:280px;object-fit:contain;background:#111;width:100%">
+      </div>
+
+      <h2>Tolerancing — When Calipers Aren't Enough</h2>
       <p>
-        The image below is that first design — you can see where I went too far. The redesign strips it back to the functional core. Same job, less to go wrong.
+        The usual rule is measure the physical part, not the spec sheet. Problem: several critical dimensions on the button module were geometrically inaccessible — recessed curves and internal features you can't reach with calipers no matter how you try. Iteration became the measurement tool.
+      </p>
+      <p>
+        Each print revealed something specific. Mounting holes oversized from shrinkage. Curved faces not seating flush. And a recurring structural issue: inner walls thin enough that the clips would snap off under the force needed to seat the module. The fix wasn't just dimensional — I started varying infill percentage and wall thickness until the part was stiff enough to survive assembly without the critical features breaking. Once the geometry and the print settings both landed right, the fit was tight and the part held.
       </p>
       <div class="cs-media-full">
-        <img src="button-module-cad-complex.png" alt="Initial overcomplicated CAD design for button module holder">
+        <img src="IMG_0373.jpg" alt="All tolerancing test iterations">
       </div>
 
-      <h2>Redesign &amp; Final Design</h2>
-      <p>
-        The redesigned holder is a direct response to everything the first version got wrong. Cleaner geometry, fewer features, tighter to the module. The final part clips securely onto the button module and mounts flush to the wheel — no play, no fouling.
-      </p>
-      <div class="cs-media-grid">
+      <h2>Final Design</h2>
+      <p>Once the fit was right, I went ahead with the design.</p>
+      <div class="cs-media-pair">
         <div class="cs-media-full">
-          <img src="button-module-irl-2.jpg" alt="Redesigned 3D printed button module holder — disassembled">
+          <img src="button-module-irl-2.jpg" alt="Redesigned holder — disassembled" style="height:280px;object-fit:cover">
         </div>
         <div class="cs-media-full">
-          <img src="button-module-irl-3.jpg" alt="Button module with redesigned holder clipped on">
+          <img src="button-module-irl-3.jpg" alt="Holder clipped onto button module" style="height:280px;object-fit:cover">
         </div>
       </div>
 
-      <h2>Tolerancing — Measure Twice, Print Once</h2>
+      <h2>Backplate &amp; Final Assembly</h2>
       <p>
-        Getting the fit right took more iterations than the CAD work did. The image below shows every test print across the tolerancing process — each one a different color, each one slightly wrong in a slightly different way. Mounting holes oversized from print shrinkage, curved faces not matching the module contour, standoff distances a half-millimeter off. Every failure was specific and useful, but the process is genuinely tedious: a print takes hours, the mistake takes seconds to find, and the fix takes a minute in CAD. Then you do it again.
+        CNC-machined aluminum backplate, dimensioned against the SolidWorks reference. Module clips into holder, holder mounts to backplate, backplate bolts to wheel. On the car.
       </p>
-      <p>
-        The lesson that stuck: measure the physical part obsessively before modelling. Not the drawing. Not the spec sheet. The actual part, with calipers, multiple times. Print shrinkage and real-world variation are predictable if you account for them upfront — they're painful if you don't.
-      </p>
-      <div class="cs-media-full">
-        <img src="IMG_0373.jpg" alt="All test print iterations — tolerancing process across multiple prints">
-      </div>
-
-      <h2>Backplate Fabrication</h2>
-      <p>
-        The backplate that mounts the button module to the wheel is CNC-cut aluminum — machined to the exact hole pattern needed to align with the wheel hub and locate the module at the correct standoff. Calipers at every step. The five-hole bolt pattern was verified against the SolidWorks reference before any cuts were made.
-      </p>
-      <div class="cs-media-full">
-        <img src="IMG_0350.jpg" alt="CNC-machined aluminum backplate with bolt hole pattern">
-      </div>
-
-      <h2>Final Assembly — On the Wheel</h2>
-      <p>
-        Button module clipped into the holder, holder mounted to the backplate, backplate bolted to the wheel. All controls rotate with the column as required. The assembly is now on the car.
-      </p>
-      <div class="cs-media-grid">
+      <div class="cs-media-pair">
         <div class="cs-media-full">
-          <img src="IMG_0353.jpg" alt="Button module assembly close-up — mounted on steering wheel">
+          <img src="IMG_0350.jpg" alt="Aluminum backplate" style="height:280px;object-fit:cover">
         </div>
         <div class="cs-media-full">
-          <img src="IMG_0351.jpg" alt="Full steering wheel with button module assembly installed">
+          <img src="IMG_0347.jpg" alt="CNC laser cutting the backplate" style="height:280px;object-fit:cover">
+        </div>
+      </div>
+      <div class="cs-media-pair">
+        <div class="cs-media-full">
+          <img src="IMG_0353.jpg" alt="Assembly on wheel — close up" style="height:280px;object-fit:cover">
+        </div>
+        <div class="cs-media-full">
+          <img src="IMG_0351.jpg" alt="Full steering wheel with module" style="height:280px;object-fit:cover">
+        </div>
+      </div>
+
+      <div class="cs-other-projects">
+        <div class="cs-other-label">Other Projects</div>
+        <div class="cs-other-grid">
+          <div class="cs-other-card" onclick="closeCase('cs-triton');openCase('cs-cce')">
+            <div class="cs-other-num">02 — Internship</div>
+            <div class="cs-other-title">Commercial Solar PV Design</div>
+            <div class="cs-other-desc">Helioscope layout, financial modeling, Viasat safe-harbor ITC proposal.</div>
+          </div>
+          <div class="cs-other-card" onclick="closeCase('cs-triton');openCase('cs-solar')">
+            <div class="cs-other-num">03 — Research</div>
+            <div class="cs-other-title">Solar Carport — Refugee Camp</div>
+            <div class="cs-other-desc">4,736 panels · 4.38 GWh/yr · Published in Curieux Academic Journal.</div>
+          </div>
+          <div class="cs-other-card" onclick="closeCase('cs-triton');openCase('cs-research')">
+            <div class="cs-other-num">04 — Research</div>
+            <div class="cs-other-title">Wind Turbine &amp; Solar Tilt</div>
+            <div class="cs-other-desc">3D-printed rotor study + calculus-based tilt angle optimization.</div>
+          </div>
         </div>
       </div>
 
@@ -1354,55 +1549,68 @@
       <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-val">Engineering Intern</div></div>
       <div class="cs-meta-item"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">Helioscope · AutoCAD · Excel</div></div>
     </div>
+
+    <div class="cs-skills-used">
+      <span class="cs-skill-pill">Helioscope</span>
+      <span class="cs-skill-pill">Solar PV Design</span>
+      <span class="cs-skill-pill">Financial Modeling</span>
+      <span class="cs-skill-pill secondary">NPV / ITC Analysis</span>
+      <span class="cs-skill-pill secondary">Utility Bill Analysis</span>
+      <span class="cs-skill-pill secondary">Structural Coordination</span>
+    </div>
+
     <div class="cs-media-full" style="background:#000;padding:40px;min-height:160px;display:flex;align-items:center;justify-content:center">
       <img src="cce-logo.png" alt="Center for Community Energy" style="max-height:100px;width:auto;object-fit:contain">
     </div>
     <div class="cs-body">
-      <h2>Overview</h2>
+      <h2>The Work</h2>
       <p>
-        Center for Community Energy is a San Diego-based nonprofit focused on accelerating distributed energy adoption for commercial and institutional clients. As an engineering intern, my role is genuinely broad — I do a bit of everything. On any given week that means <em>policy research, financial modeling (NPV, ROI, ITC analysis), BOM development, structural feasibility consulting with external parties, and hands-on system design</em> in Helioscope. The work sits at the intersection of engineering and energy policy, which is exactly where the most interesting problems live.
-      </p>
-
-      <h2>What the Work Actually Looks Like</h2>
-      <p>
-        A typical project starts with utility bill analysis — pulling interval data to understand a client's load profile, peak demand timing, and blended rate structure. From there, solar production is modeled in Helioscope: laying out the array, configuring electrical stringing, and running shading analysis to get a credible energy output estimate.
+        San Diego nonprofit accelerating commercial solar adoption. My role is broad — utility bill analysis, Helioscope layout and stringing, financial modeling (NPV, ITC, MACRS), BOM development, and structural coordination with external engineers. One week might be a Viasat safe-harbor proposal; the next, load profile analysis for a school district.
       </p>
 
       <h2>Utility Bill Analysis</h2>
-      <p>
-        Understanding the baseline is what makes a financial model defensible. We pull interval billing data to map out annual usage, peak demand, and the blended rate structure — this is what the solar system needs to offset.
-      </p>
+      <p>Pull interval billing data, map load profile, identify peak demand timing. This is what makes the financial model defensible.</p>
       <div class="cs-media-full">
-        <img src="cce-dashboard-utility.png" alt="Utility dashboard — billing analysis and rate structure">
+        <img src="cce-dashboard-utility.png" alt="Utility dashboard — billing analysis">
       </div>
 
-      <h2>Load Profile &amp; Solar Production Modeling</h2>
-      <p>
-        Load profile modeling overlays solar production against actual facility demand throughout the day and across seasons. Dual-axis trackers follow the sun, maximizing the overlap between peak solar output and peak building load — which is where the real bill savings come from.
-      </p>
+      <h2>Solar Production Modeling</h2>
+      <p>Helioscope layout, stringing, shading analysis. Dual-axis trackers overlaid against facility demand — the overlap is where the savings come from.</p>
       <div class="cs-media-full">
-        <img src="cce-dashboard-load.png" alt="Load profile analysis — solar production vs facility demand">
+        <img src="cce-dashboard-load.png" alt="Load profile vs solar production">
       </div>
 
       <h2>Financial Modeling</h2>
-      <p>
-        The production model feeds into a 20-year financial analysis: NPV, payback period, ITC and MACRS depreciation, O&M escalation — built to be rigorous enough to put in front of a client's accountant. Safe-harbor provisions and federal incentive timing are factored into the acquisition strategy.
-      </p>
+      <p>20-year NPV analysis: payback period, ITC and MACRS depreciation, O&M escalation. Built to go in front of a client's accountant.</p>
       <div class="cs-media-full">
-        <img src="cce-dashboard-savings.png" alt="Solar savings model — 20-year financial projection">
+        <img src="cce-dashboard-savings.png" alt="20-year solar savings projection">
       </div>
 
-      <p>
-        On the engineering side, I coordinate with panel manufacturers on electrical and mechanical compatibility and reach out to structural engineers to verify carport load capacity. The policy side — incentive structures, zoning, permitting, municipal outreach — is just as much a part of the workflow as the technical modeling.
-      </p>
+      <div class="cs-other-projects">
+        <div class="cs-other-label">Other Projects</div>
+        <div class="cs-other-grid">
+          <div class="cs-other-card" onclick="closeCase('cs-cce');openCase('cs-triton')">
+            <div class="cs-other-num">01 — Competition Team</div>
+            <div class="cs-other-title">Ackermann Steering System</div>
+            <div class="cs-other-desc">SolidWorks · ANSYS FEA · Steel fabrication · On vehicle.</div>
+          </div>
+          <div class="cs-other-card" onclick="closeCase('cs-cce');openCase('cs-solar')">
+            <div class="cs-other-num">03 — Research</div>
+            <div class="cs-other-title">Solar Carport — Refugee Camp</div>
+            <div class="cs-other-desc">4,736 panels · 4.38 GWh/yr · Published.</div>
+          </div>
+          <div class="cs-other-card" onclick="closeCase('cs-cce');openCase('cs-research')">
+            <div class="cs-other-num">04 — Research</div>
+            <div class="cs-other-title">Wind Turbine &amp; Solar Tilt</div>
+            <div class="cs-other-desc">3D-printed rotor study + calculus-based tilt optimization.</div>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     CASE STUDY: SOLAR CARPORT (SKELETON)
-══════════════════════════════════════════ -->
 <div class="case-study" id="cs-solar">
   <div class="cs-nav">
     <button class="cs-back" onclick="closeCase('cs-solar')">Back to Projects</button>
@@ -1416,53 +1624,44 @@
       <div class="cs-meta-item"><div class="cs-meta-label">Location</div><div class="cs-meta-val">Beirut, Lebanon</div></div>
       <div class="cs-meta-item"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">AutoCAD · Global Solar Atlas · Google Earth Pro</div></div>
     </div>
+
+    <div class="cs-skills-used">
+      <span class="cs-skill-pill">AutoCAD</span>
+      <span class="cs-skill-pill">Solar Irradiance Modeling</span>
+      <span class="cs-skill-pill secondary">Global Solar Atlas</span>
+      <span class="cs-skill-pill secondary">Google Earth Pro</span>
+      <span class="cs-skill-pill secondary">Cost Analysis</span>
+      <span class="cs-skill-pill secondary">Published Research</span>
+    </div>
+
     <div class="cs-media-full">
-      <img src="research-satellite-clean.png" alt="Satellite view of Camille Chamoun Sports City Stadium parking lot" style="image-rendering:crisp-edges;image-rendering:-webkit-optimize-contrast">
+      <img src="research-satellite-clean.png" alt="Satellite view of Camille Chamoun Sports City Stadium" style="image-rendering:crisp-edges">
     </div>
     <div class="cs-body">
 
       <h2>The Problem</h2>
       <p>
-        The Shatila refugee camp in Beirut, Lebanon was established in 1949 and now houses an estimated 40,000 residents in severely overcrowded conditions. One of the most pressing daily problems: residents receive only <em>1–3 hours of government electricity per day</em>. The 2020 Beirut explosion compounded this — fuel prices surged, and residents were forced to pay privately owned generators within the camp for electricity at increasingly unaffordable rates.
-      </p>
-      <p>
-        The core research question: <em>could a solar PV carport installed in the nearby Camille Chamoun Sports City Stadium parking lot supply meaningful energy to the camp?</em> Installing panels within the camp itself was not viable — the density of the housing, safety concerns, and lack of flat available space ruled it out. The stadium parking lot, a large flat site with high solar irradiance and no obstructions, was the only realistic option.
+        Shatila refugee camp, Beirut — 40,000 residents, 1–3 hours of government electricity per day. After the 2020 explosion, private generator costs became unaffordable. The question: could a solar PV carport at the nearby Camille Chamoun Stadium parking lot supply meaningful energy to the camp?
       </p>
 
       <h2>Site Analysis</h2>
-      <p>
-        Using Google Earth Pro and the Global Solar Atlas, I characterized the site: GHI of 1,904.8 kWh/m², DNI of 1,968.3 kWh/m², and an optimum panel tilt of 27° facing south. The sunpath analysis confirmed the location receives strong solar access year-round with no significant terrain shading.
-      </p>
+      <p>GHI of 1,904.8 kWh/m², optimum tilt 27° south. Strong solar access year-round, no significant terrain shading.</p>
       <div class="cs-media-full">
-        <img src="research-solar-sunpath-clean.png" alt="Horizon and sunpath diagram for Beirut parking lot site">
+        <img src="research-solar-sunpath-clean.png" alt="Sunpath diagram for Beirut site">
       </div>
 
-      <h2>First Iteration — Area Estimation</h2>
-      <p>
-        Before designing the actual layout, I ran five estimates using 60–100% of the parking lot area to get a range of output figures accounting for roads, gaps, and infrastructure. This gave a defensible range before committing to detailed CAD work.
-      </p>
-      <div class="cs-media-full" style="background:#fff">
-        <img src="research-solar-table1.png" alt="First iteration — panel count and yearly output by area percentage" style="padding:24px 40px">
-      </div>
-      <div class="cs-media-full">
-        <img src="research-solar-chart1.png" alt="Months x megawatt hours for different area percentages">
-      </div>
-
-      <h2>Design Methodology</h2>
-      <p>
-        I ran two iterations. The first used percentage-based area calculations — modeling what the farm would produce if 60%, 70%, 80%, 90%, and 100% of the parking lot area was used. This gave a range of output estimates accounting for roads, spacing, and infrastructure.
-      </p>
-      <p>
-        The second and more accurate iteration involved designing the actual carport layout in AutoCAD — placing individual T-configuration carport rows with proper 2.7m car lanes between them, then counting every panel that physically fit. Panel specification: Jinko Tiger Pro 72HC at 550W each.
-      </p>
-      <div class="cs-media-full">
-        <img src="research-autocad-clean.png" alt="AutoCAD 2D carport layout for stadium parking lot">
+      <h2>Two Iterations</h2>
+      <p>First: percentage-based area estimates (60–100%) to bound the output range. Second: actual AutoCAD layout — T-configuration carport rows with 2.7m car lanes, Jinko Tiger Pro 72HC at 550W each, counting every panel that physically fit.</p>
+      <div class="cs-media-pair">
+        <div class="cs-media-full" style="background:#fff">
+          <img src="research-autocad-clean.png" alt="AutoCAD carport layout" style="height:280px;object-fit:contain;width:100%;padding:12px">
+        </div>
+        <div class="cs-media-full">
+          <img src="research-solar-chart2.png" alt="Monthly output — second iteration" style="height:280px;object-fit:contain;background:#fff;padding:16px;width:100%">
+        </div>
       </div>
 
       <h2>Results</h2>
-      <p>
-        The AutoCAD iteration fit <em>4,736 panels</em> — a 2,604.8 kWp system producing an estimated <em>4.383 GWh per year</em>. Against the camp's estimated annual demand of 31,260,000 kWh, the farm would supply <em>14.02%</em> of total energy needs.
-      </p>
       <div class="cs-stat-row">
         <div class="cs-stat">
           <div class="cs-stat-num">4,736</div>
@@ -1477,16 +1676,33 @@
           <div class="cs-stat-desc">of camp's total<br>energy demand supplied</div>
         </div>
       </div>
-      <div class="cs-media-full">
-        <img src="research-solar-chart2.png" alt="Monthly average megawatt hours output — second iteration">
-      </div>
 
-      <h2>Conclusion</h2>
-      <p>
-        14% is not a complete solution — but in a camp where residents currently get 1–3 hours of power a day, a system that meaningfully expands that is worth building. The study also identified the two main barriers: the estimated <em>$2.5M construction cost</em> and the need for Lebanese government approval to build on the stadium site.
-      </p>
+      <div class="cs-callout">
+        <p>14% isn't a complete solution. But in a camp where residents get 1–3 hours of power a day, a system that changes that is worth building. Main barriers: $2.5M construction cost and Lebanese government approval for the stadium site.</p>
+      </div>
       <div class="cs-callout">
         <p>Engineering research doesn't always end with a solved problem. Sometimes the value is in precisely defining what's possible, what it costs, and what stands in the way.</p>
+      </div>
+
+      <div class="cs-other-projects">
+        <div class="cs-other-label">Other Projects</div>
+        <div class="cs-other-grid">
+          <div class="cs-other-card" onclick="closeCase('cs-solar');openCase('cs-triton')">
+            <div class="cs-other-num">01 — Competition Team</div>
+            <div class="cs-other-title">Ackermann Steering System</div>
+            <div class="cs-other-desc">SolidWorks · ANSYS FEA · Steel fabrication · On vehicle.</div>
+          </div>
+          <div class="cs-other-card" onclick="closeCase('cs-solar');openCase('cs-cce')">
+            <div class="cs-other-num">02 — Internship</div>
+            <div class="cs-other-title">Commercial Solar PV Design</div>
+            <div class="cs-other-desc">Helioscope layout · Financial modeling · Viasat ITC proposal.</div>
+          </div>
+          <div class="cs-other-card" onclick="closeCase('cs-solar');openCase('cs-research')">
+            <div class="cs-other-num">04 — Research</div>
+            <div class="cs-other-title">Wind Turbine &amp; Solar Tilt</div>
+            <div class="cs-other-desc">3D-printed rotor study + calculus-based tilt optimization.</div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -1494,7 +1710,7 @@
 </div>
 
 <!-- ══════════════════════════════════════════
-     CASE STUDY: RESEARCH (SKELETON)
+     CASE STUDY: RESEARCH
 ══════════════════════════════════════════ -->
 <div class="case-study" id="cs-research">
   <div class="cs-nav">
@@ -1509,18 +1725,26 @@
       <div class="cs-meta-item"><div class="cs-meta-label">Period</div><div class="cs-meta-val">Jun 2024 – Mar 2025</div></div>
       <div class="cs-meta-item"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">MATLAB · Logger Pro · 3D Printing · Calculus</div></div>
     </div>
+
+    <div class="cs-skills-used">
+      <span class="cs-skill-pill">MATLAB</span>
+      <span class="cs-skill-pill">Logger Pro</span>
+      <span class="cs-skill-pill">3D Printing</span>
+      <span class="cs-skill-pill secondary">Experimental Design</span>
+      <span class="cs-skill-pill secondary">Calculus-Based Optimization</span>
+      <span class="cs-skill-pill secondary">Data Analysis</span>
+    </div>
+
     <div class="cs-media-full">
-      <img src="research-wind-turbine.png" alt="3D printed wind turbine model">
+      <img src="research-wind-turbine.png" alt="3D printed wind turbine rotors">
     </div>
     <div class="cs-body">
 
       <h2>Study 1 — Wind Turbine Rotor Swept Area</h2>
       <p>
-        The question driving this study: does wind turbine power output scale predictably with rotor swept area? The Betz limit — the theoretical maximum efficiency of any wind turbine — says power should scale with the square of rotor radius, but real-world behavior deviates, especially at low wind speeds where flow separation and tip vortices complicate things.
+        Does wind turbine power output scale predictably with rotor swept area? I 3D-printed a series of variable-radius rotors — geometrically identical except for length — and measured voltage and current output against each size using a controlled fan and Logger Pro. R² = 0.794 confirmed the swept-area scaling relationship, with nonlinear behavior at lower wind speeds matching trends in existing literature.
       </p>
-      <p>
-        To test this, I designed and 3D-printed a series of variable-radius rotor blades, each geometrically identical except for length. A controlled fan provided consistent wind input while I measured voltage and current output across each rotor size. The R² = 0.794 correlation between rotor radius and electrical power output confirmed the general swept-area scaling relationship while revealing nonlinear behavior at lower wind speeds — experimental results that matched trends reported in existing literature.
-      </p>
+
       <div class="cs-stat-row">
         <div class="cs-stat">
           <div class="cs-stat-num">0.891</div>
@@ -1532,31 +1756,55 @@
         </div>
         <div class="cs-stat">
           <div class="cs-stat-num">3×</div>
-          <div class="cs-stat-desc">rotor sizes tested<br>0.02m · 0.04m · 0.06m radius</div>
+          <div class="cs-stat-desc">rotor sizes tested<br>0.02 · 0.04 · 0.06m</div>
+        </div>
+      </div>
+
+      <div class="cs-media-pair">
+        <div class="cs-media-full">
+          <img src="research-wind-setup.png" alt="Experimental setup" style="height:260px;object-fit:cover">
+        </div>
+        <div class="cs-media-full" style="background:#fff">
+          <img src="research-wind-data-table.png" alt="Data table" style="height:260px;object-fit:contain;padding:16px;width:100%">
         </div>
       </div>
       <div class="cs-media-full">
-        <img src="research-wind-setup.png" alt="Experimental setup — fan, rotors, and multimeter">
-      </div>
-      <div class="cs-media-full" style="background:#fff">
-        <img src="research-wind-data-table.png" alt="Voltage and current data table across rotor sizes" style="width:100%;height:auto;object-fit:contain;padding:24px 32px">
-      </div>
-      <div class="cs-media-full">
-        <img src="research-wind-graph.png" alt="Turbine radius squared vs average wattage output — Logger Pro graph">
+        <img src="research-wind-graph.png" alt="Radius² vs wattage — Logger Pro">
       </div>
 
       <h2>Study 2 — Optimal Solar Panel Tilt Angle</h2>
       <p>
-        Solar panels mounted at a fixed angle sacrifice energy in every month where the sun's position deviates from that angle. This study applied established solar geometry models to calculate the <em>optimal tilt angle for each calendar month</em> at a specific site latitude — a more practical output than a single annual average.
+        Fixed-angle panels sacrifice energy every month the sun deviates from that angle. I derived beam irradiation ratio R̄b as a function of tilt angle β, differentiated to find the monthly maximum, and produced a complete tilt schedule per calendar month — validated against known solar positioning models.
       </p>
-      <p>
-        The method used calculus-based optimization: deriving the beam irradiation ratio R̄b as a function of panel tilt angle β, then differentiating with respect to β and solving for the angle that maximizes monthly irradiance capture. The formula accounts for solar declination, hour angle, and site latitude — all varying by month. Results produced a complete monthly tilt schedule validated against known solar positioning models.
-      </p>
-      <div class="cs-media-full" style="background:#fff">
-        <img src="research-solar-irradiance.png" alt="GHI DNI DHI solar irradiance diagram" style="width:100%;height:auto;object-fit:contain;padding:32px 60px">
+
+      <div class="cs-media-pair">
+        <div class="cs-media-full" style="background:#fff">
+          <img src="research-solar-irradiance.png" alt="GHI DNI DHI irradiance diagram" style="height:260px;object-fit:contain;padding:20px;width:100%">
+        </div>
+        <div class="cs-media-full" style="background:#fff">
+          <img src="research-tilt-table-clean.png" alt="Monthly optimal tilt angles" style="height:260px;object-fit:contain;padding:20px;width:100%">
+        </div>
       </div>
-      <div class="cs-media-full" style="background:#fff">
-        <img src="research-tilt-table-clean.png" alt="Monthly optimal tilt angles" style="width:auto;height:auto;max-width:360px;object-fit:contain;margin:0 auto;display:block;padding:24px">
+
+      <div class="cs-other-projects">
+        <div class="cs-other-label">Other Projects</div>
+        <div class="cs-other-grid">
+          <div class="cs-other-card" onclick="closeCase('cs-research');openCase('cs-triton')">
+            <div class="cs-other-num">01 — Competition Team</div>
+            <div class="cs-other-title">Ackermann Steering System</div>
+            <div class="cs-other-desc">SolidWorks · ANSYS FEA · Steel fabrication · On vehicle.</div>
+          </div>
+          <div class="cs-other-card" onclick="closeCase('cs-research');openCase('cs-cce')">
+            <div class="cs-other-num">02 — Internship</div>
+            <div class="cs-other-title">Commercial Solar PV Design</div>
+            <div class="cs-other-desc">Helioscope layout · Financial modeling · Viasat ITC proposal.</div>
+          </div>
+          <div class="cs-other-card" onclick="closeCase('cs-research');openCase('cs-solar')">
+            <div class="cs-other-num">03 — Research</div>
+            <div class="cs-other-title">Solar Carport — Refugee Camp</div>
+            <div class="cs-other-desc">4,736 panels · 4.38 GWh/yr · Published.</div>
+          </div>
+        </div>
       </div>
 
     </div>
