@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Omar Wali — Engineering Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="car-assembly-hero.jpg" fetchpriority="high">
+<meta name="description" content="Omar Wali — mechanical and structural engineering portfolio: Ackermann steering design and fabrication, FEA, solar PV design, and independent research.">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Barlow:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -26,7 +29,40 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+    scrollbar-gutter: stable;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* thin dark scrollbars so the page doesn't get a bright gutter */
+  * { scrollbar-width: thin; scrollbar-color: #333 transparent; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: #2e2e2e;
+    border: 2px solid var(--bg);
+    border-radius: 6px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #3d3d3d; }
+
+  /* images settle in instead of popping (only when JS is running) */
+  .js img { opacity: 0; transition: opacity 0.45s ease; }
+  .js img.is-loaded { opacity: 1; }
+
+  :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .js img { opacity: 1; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+  }
 
   body {
     background: var(--bg);
@@ -63,6 +99,18 @@
     background: rgba(12,12,12,0.85);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(12,12,12,0.97);
+    border-bottom-color: var(--border2);
+  }
+
+  body.locked {
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
   }
 
   .nav-logo {
@@ -684,7 +732,6 @@
   }
 
   /* ── SCROLL ANIMATIONS ── */
-  html { scroll-behavior: smooth; }
 
   .reveal {
     opacity: 0;
@@ -775,7 +822,17 @@
     overflow-y: auto;
   }
 
-  .case-study.open { display: block; }
+  .case-study.open {
+    display: block;
+    animation: caseIn 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .case-study:focus { outline: none; }
+
+  @keyframes caseIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
 
   .cs-nav {
     position: sticky;
@@ -1093,7 +1150,7 @@
     <strong>CAD · FEA · Fabrication</strong> &nbsp;—&nbsp; Model · Validate · Build · Test
   </p>
   <p class="hero-bio">
-    Sophomore at UCSD with steel parts on a solar race car, a published paper, and a commercial solar internship — most of it done before my second year. I care about the full loop: model, validate, build, test. I'm looking for hardware problems where the design has to survive contact with the real world — the industry matters less to me than the work.
+    Sophomore at UCSD with steel parts on a solar race car, a published paper, and a commercial solar internship — most of it done before my second year. Steering geometry, FEA, and steel fabrication on one project; PV layouts and payback models on another. I want the full loop: model it, validate it, build it, find out where I was wrong.
   </p>
   <div class="hero-cta">
     <a class="btn-primary" href="#projects">View Projects</a>
@@ -1130,7 +1187,7 @@
 
     <div class="project-featured reveal" id="open-triton" style="cursor:pointer">
       <div class="project-media" style="overflow:hidden">
-        <img src="car-assembly-hero.jpg" alt="Triton Solar Car assembly" style="width:100%;height:100%;object-fit:cover">
+        <img decoding="async" fetchpriority="high" src="car-assembly-hero.jpg" alt="Triton Solar Car assembly" style="width:100%;height:100%;object-fit:cover">
       </div>
       <div class="project-info">
         <div>
@@ -1159,7 +1216,7 @@
     <div class="project-grid" style="margin-bottom:0">
       <div class="project-card reveal" id="open-cce" style="cursor:pointer">
         <div class="card-thumb-placeholder">
-          <img src="cce-logo.png" alt="Center for Community Energy">
+          <img loading="lazy" decoding="async" src="cce-logo.png" alt="Center for Community Energy">
         </div>
         <div class="card-body">
           <div class="card-num">02</div>
@@ -1182,7 +1239,7 @@
 
     <div class="project-grid">
       <div class="project-card reveal" id="open-solar" style="cursor:pointer">
-        <img class="card-thumb" src="research-autocad-clean.png" alt="AutoCAD solar carport layout">
+        <img loading="lazy" decoding="async" class="card-thumb" src="research-autocad-clean.png" alt="AutoCAD solar carport layout">
         <div class="card-body">
           <div class="card-num">03</div>
           <h3 class="card-title">Solar Carport — Humanitarian Infrastructure</h3>
@@ -1198,7 +1255,7 @@
       </div>
 
       <div class="project-card reveal" id="open-research" style="cursor:pointer">
-        <img class="card-thumb" src="research-wind-turbine.png" alt="3D printed wind turbine rotors">
+        <img loading="lazy" decoding="async" class="card-thumb" src="research-wind-turbine.png" alt="3D printed wind turbine rotors">
         <div class="card-body">
           <div class="card-num">04</div>
           <h3 class="card-title">Wind Turbine &amp; Solar Tilt Research</h3>
@@ -1280,7 +1337,7 @@
           I'm a sophomore at UCSD, running ahead on credits, with a habit of taking on more than I probably should. So far that's led to steel geometry on a race car, a published paper on refugee camp energy, and a solar PV internship where I build financial models for clients who aren't messing around.
         </p>
         <p>
-          Those three projects have almost nothing in common on paper — a vehicle subsystem, an energy study, a client-facing design job — and that's on purpose. What carries across is the method: understand the constraint, model it, validate it, build it, and find out where you were wrong. I'd rather go deep on hard problems than pick a lane early, so I'm open across mechanical design, energy, aerospace, and hardware generally.
+          Those three don't have much in common on paper — a vehicle subsystem, an energy study, a client-facing design job. I took them that way deliberately. Second year is early to pick a lane, and the parts that transfer — constraints, tolerances, FEA, knowing what a drawing costs to actually make — transfer everywhere.
         </p>
         <p>
           Outside engineering: Formula 1, long drives, and an embarrassing amount of time thinking about how things are put together.
@@ -1375,7 +1432,7 @@
 
     <!-- HERO MEDIA -->
     <div class="cs-media-full" style="min-height:360px;overflow:hidden">
-      <img src="car-assembly-hero.jpg" alt="Triton Solar Car full assembly — Fusion360" style="width:100%;height:360px;object-fit:cover;object-position:center center">
+      <img decoding="async" fetchpriority="high" src="car-assembly-hero.jpg" alt="Triton Solar Car full assembly — Fusion360" style="width:100%;height:360px;object-fit:cover;object-position:center center">
     </div>
 
     <div class="cs-body">
@@ -1396,7 +1453,7 @@
         </video>
       </div>
       <div class="cs-media-full">
-        <img src="ackermann-3d-model.png" alt="Ackermann steering 3D model screenshot" style="height:380px;object-fit:contain;background:#0a0a0a;width:100%">
+        <img loading="lazy" decoding="async" src="ackermann-3d-model.png" alt="Ackermann steering 3D model screenshot" style="height:380px;object-fit:contain;background:#0a0a0a;width:100%">
       </div>
 
       <h2>Kingpin Complication</h2>
@@ -1428,7 +1485,7 @@
       </div>
 
       <div class="cs-media-full">
-        <img src="ansys-fea.png" alt="ANSYS von Mises stress analysis">
+        <img loading="lazy" decoding="async" src="ansys-fea.png" alt="ANSYS von Mises stress analysis">
       </div>
 
       <h2>Fabrication</h2>
@@ -1438,18 +1495,18 @@
 
       <div class="cs-media-pair">
         <div class="cs-media-full">
-          <img src="fabrication-on-car.jpg" alt="Fitting steering geometry on car" style="height:260px;object-fit:cover">
+          <img loading="lazy" decoding="async" src="fabrication-on-car.jpg" alt="Fitting steering geometry on car" style="height:260px;object-fit:cover">
         </div>
         <div class="cs-media-full">
-          <img src="fabrication-team-fit.png" alt="Wood prototype fit check" style="height:260px;object-fit:cover">
+          <img loading="lazy" decoding="async" src="fabrication-team-fit.png" alt="Wood prototype fit check" style="height:260px;object-fit:cover">
         </div>
       </div>
       <div class="cs-media-pair">
         <div class="cs-media-full">
-          <img src="steering-assembly.gif" alt="Steering assembly installation" style="height:260px;object-fit:cover">
+          <video autoplay muted loop playsinline preload="metadata" poster="" style="width:100%;height:260px;object-fit:cover"><source src="steering-assembly.mp4" type="video/mp4"></video>
         </div>
         <div class="cs-media-full">
-          <img src="fabrication-chassis.png" alt="Steering system on chassis" style="height:260px;object-fit:cover">
+          <img loading="lazy" decoding="async" src="fabrication-chassis.png" alt="Steering system on chassis" style="height:260px;object-fit:cover">
         </div>
       </div>
 
@@ -1459,15 +1516,15 @@
       </p>
 
       <div class="cs-media-full">
-        <img src="cross_bar_fab.jpeg" alt="Cutting the cross bar to length on the horizontal bandsaw" style="height:380px;object-fit:cover;object-position:center 45%">
+        <img loading="lazy" decoding="async" src="cross_bar_fab.jpeg" alt="Cutting the cross bar to length on the horizontal bandsaw" style="height:380px;object-fit:cover;object-position:center 45%">
       </div>
 
       <div class="cs-media-pair">
         <div class="cs-media-full">
-          <img src="jig%20no%20clamp.jpeg" alt="3D printed weld jig locating the cross bar against the frame tube" style="height:340px;object-fit:cover;object-position:center 52%">
+          <img loading="lazy" decoding="async" src="jig%20no%20clamp.jpeg" alt="3D printed weld jig locating the cross bar against the frame tube" style="height:340px;object-fit:cover;object-position:center 52%">
         </div>
         <div class="cs-media-full">
-          <img src="jig_with_clamp.jpeg" alt="Weld jig clamped, holding the cross bar in position to be tabbed" style="height:340px;object-fit:cover;object-position:center 48%">
+          <img loading="lazy" decoding="async" src="jig_with_clamp.jpeg" alt="Weld jig clamped, holding the cross bar in position to be tabbed" style="height:340px;object-fit:cover;object-position:center 48%">
         </div>
       </div>
       <div class="cs-cap-pair">
@@ -1488,7 +1545,7 @@
         <p>Never make something more complicated than it needs to be. Complexity is a liability, not a signal of effort.</p>
       </div>
       <div class="cs-media-full">
-        <img src="button-module-cad-complex.png" alt="Overengineered first CAD design" style="height:280px;object-fit:contain;background:#111;width:100%">
+        <img loading="lazy" decoding="async" src="button-module-cad-complex.png" alt="Overengineered first CAD design" style="height:280px;object-fit:contain;background:#111;width:100%">
       </div>
 
       <h2>Tolerancing — When Calipers Aren't Enough</h2>
@@ -1499,17 +1556,17 @@
         Each print revealed something specific. Mounting holes oversized from shrinkage. Curved faces not seating flush. And a recurring structural issue: inner walls thin enough that the clips would snap off under the force needed to seat the module. The fix wasn't just dimensional — I started varying infill percentage and wall thickness until the part was stiff enough to survive assembly without the critical features breaking. Once the geometry and the print settings both landed right, the fit was tight and the part held.
       </p>
       <div class="cs-media-full">
-        <img src="IMG_0373.jpg" alt="All tolerancing test iterations">
+        <img loading="lazy" decoding="async" src="IMG_0373.jpg" alt="All tolerancing test iterations">
       </div>
 
       <h2>Final Design</h2>
       <p>Once the fit was right, I went ahead with the design.</p>
       <div class="cs-media-pair">
         <div class="cs-media-full">
-          <img src="button-module-irl-2.jpg" alt="Redesigned holder — disassembled" style="height:280px;object-fit:cover">
+          <img loading="lazy" decoding="async" src="button-module-irl-2.jpg" alt="Redesigned holder — disassembled" style="height:280px;object-fit:cover">
         </div>
         <div class="cs-media-full">
-          <img src="button-module-irl-3.jpg" alt="Holder clipped onto button module" style="height:280px;object-fit:cover">
+          <img loading="lazy" decoding="async" src="button-module-irl-3.jpg" alt="Holder clipped onto button module" style="height:280px;object-fit:cover">
         </div>
       </div>
 
@@ -1519,18 +1576,18 @@
       </p>
       <div class="cs-media-pair">
         <div class="cs-media-full">
-          <img src="IMG_0350.jpg" alt="Aluminum backplate" style="height:280px;object-fit:cover">
+          <img loading="lazy" decoding="async" src="IMG_0350.jpg" alt="Aluminum backplate" style="height:280px;object-fit:cover">
         </div>
         <div class="cs-media-full">
-          <img src="IMG_0347.jpg" alt="CNC laser cutting the backplate" style="height:280px;object-fit:cover">
+          <img loading="lazy" decoding="async" src="IMG_0347.jpg" alt="CNC laser cutting the backplate" style="height:280px;object-fit:cover">
         </div>
       </div>
       <div class="cs-media-pair">
         <div class="cs-media-full">
-          <img src="IMG_0353.jpg" alt="Assembly on wheel — close up" style="height:280px;object-fit:cover">
+          <img loading="lazy" decoding="async" src="IMG_0353.jpg" alt="Assembly on wheel — close up" style="height:280px;object-fit:cover">
         </div>
         <div class="cs-media-full">
-          <img src="IMG_0351.jpg" alt="Full steering wheel with module" style="height:280px;object-fit:cover">
+          <img loading="lazy" decoding="async" src="IMG_0351.jpg" alt="Full steering wheel with module" style="height:280px;object-fit:cover">
         </div>
       </div>
 
@@ -1586,7 +1643,7 @@
     </div>
 
     <div class="cs-media-full" style="background:#000;padding:40px;min-height:160px;display:flex;align-items:center;justify-content:center">
-      <img src="cce-logo.png" alt="Center for Community Energy" style="max-height:100px;width:auto;object-fit:contain">
+      <img loading="lazy" decoding="async" src="cce-logo.png" alt="Center for Community Energy" style="max-height:100px;width:auto;object-fit:contain">
     </div>
     <div class="cs-body">
       <h2>The Work</h2>
@@ -1597,19 +1654,19 @@
       <h2>Utility Bill Analysis</h2>
       <p>Pull interval billing data, map load profile, identify peak demand timing. This is what makes the financial model defensible.</p>
       <div class="cs-media-full">
-        <img src="cce-dashboard-utility.png" alt="Utility dashboard — billing analysis">
+        <img loading="lazy" decoding="async" src="cce-dashboard-utility.png" alt="Utility dashboard — billing analysis">
       </div>
 
       <h2>Solar Production Modeling</h2>
       <p>Helioscope layout, stringing, shading analysis. Dual-axis trackers overlaid against facility demand — the overlap is where the savings come from.</p>
       <div class="cs-media-full">
-        <img src="cce-dashboard-load.png" alt="Load profile vs solar production">
+        <img loading="lazy" decoding="async" src="cce-dashboard-load.png" alt="Load profile vs solar production">
       </div>
 
       <h2>Financial Modeling</h2>
       <p>20-year NPV analysis: payback period, ITC and MACRS depreciation, O&M escalation. Built to go in front of a client's accountant.</p>
       <div class="cs-media-full">
-        <img src="cce-dashboard-savings.png" alt="20-year solar savings projection">
+        <img loading="lazy" decoding="async" src="cce-dashboard-savings.png" alt="20-year solar savings projection">
       </div>
 
       <div class="cs-other-projects">
@@ -1661,7 +1718,7 @@
     </div>
 
     <div class="cs-media-full">
-      <img src="research-satellite-clean.png" alt="Satellite view of Camille Chamoun Sports City Stadium" style="image-rendering:crisp-edges">
+      <img loading="lazy" decoding="async" src="research-satellite-clean.png" alt="Satellite view of Camille Chamoun Sports City Stadium" style="image-rendering:crisp-edges">
     </div>
     <div class="cs-body">
 
@@ -1673,17 +1730,17 @@
       <h2>Site Analysis</h2>
       <p>GHI of 1,904.8 kWh/m², optimum tilt 27° south. Strong solar access year-round, no significant terrain shading.</p>
       <div class="cs-media-full">
-        <img src="research-solar-sunpath-clean.png" alt="Sunpath diagram for Beirut site">
+        <img loading="lazy" decoding="async" src="research-solar-sunpath-clean.png" alt="Sunpath diagram for Beirut site">
       </div>
 
       <h2>Two Iterations</h2>
       <p>First: percentage-based area estimates (60–100%) to bound the output range. Second: actual AutoCAD layout — T-configuration carport rows with 2.7m car lanes, Jinko Tiger Pro 72HC at 550W each, counting every panel that physically fit.</p>
       <div class="cs-media-pair">
         <div class="cs-media-full" style="background:#fff">
-          <img src="research-autocad-clean.png" alt="AutoCAD carport layout" style="height:280px;object-fit:contain;width:100%;padding:12px">
+          <img loading="lazy" decoding="async" src="research-autocad-clean.png" alt="AutoCAD carport layout" style="height:280px;object-fit:contain;width:100%;padding:12px">
         </div>
         <div class="cs-media-full">
-          <img src="research-solar-chart2.png" alt="Monthly output — second iteration" style="height:280px;object-fit:contain;background:#fff;padding:16px;width:100%">
+          <img loading="lazy" decoding="async" src="research-solar-chart2.png" alt="Monthly output — second iteration" style="height:280px;object-fit:contain;background:#fff;padding:16px;width:100%">
         </div>
       </div>
 
@@ -1762,7 +1819,7 @@
     </div>
 
     <div class="cs-media-full">
-      <img src="research-wind-turbine.png" alt="3D printed wind turbine rotors">
+      <img loading="lazy" decoding="async" src="research-wind-turbine.png" alt="3D printed wind turbine rotors">
     </div>
     <div class="cs-body">
 
@@ -1788,14 +1845,14 @@
 
       <div class="cs-media-pair">
         <div class="cs-media-full">
-          <img src="research-wind-setup.png" alt="Experimental setup" style="height:260px;object-fit:cover">
+          <img loading="lazy" decoding="async" src="research-wind-setup.png" alt="Experimental setup" style="height:260px;object-fit:cover">
         </div>
         <div class="cs-media-full" style="background:#fff">
-          <img src="research-wind-data-table.png" alt="Data table" style="height:260px;object-fit:contain;padding:16px;width:100%">
+          <img loading="lazy" decoding="async" src="research-wind-data-table.png" alt="Data table" style="height:260px;object-fit:contain;padding:16px;width:100%">
         </div>
       </div>
       <div class="cs-media-full">
-        <img src="research-wind-graph.png" alt="Radius² vs wattage — Logger Pro">
+        <img loading="lazy" decoding="async" src="research-wind-graph.png" alt="Radius² vs wattage — Logger Pro">
       </div>
 
       <h2>Study 2 — Optimal Solar Panel Tilt Angle</h2>
@@ -1805,10 +1862,10 @@
 
       <div class="cs-media-pair">
         <div class="cs-media-full" style="background:#fff">
-          <img src="research-solar-irradiance.png" alt="GHI DNI DHI irradiance diagram" style="height:260px;object-fit:contain;padding:20px;width:100%">
+          <img loading="lazy" decoding="async" src="research-solar-irradiance.png" alt="GHI DNI DHI irradiance diagram" style="height:260px;object-fit:contain;padding:20px;width:100%">
         </div>
         <div class="cs-media-full" style="background:#fff">
-          <img src="research-tilt-table-clean.png" alt="Monthly optimal tilt angles" style="height:260px;object-fit:contain;padding:20px;width:100%">
+          <img loading="lazy" decoding="async" src="research-tilt-table-clean.png" alt="Monthly optimal tilt angles" style="height:260px;object-fit:contain;padding:20px;width:100%">
         </div>
       </div>
 
@@ -1838,69 +1895,135 @@
 </div>
 
 <script>
-  // Smooth scroll reveal with natural stagger
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 60);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(r => obs.observe(r));
+  document.documentElement.classList.add('js');
 
-  // Smooth nav background on scroll
-  window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    if (window.scrollY > 40) {
-      nav.style.background = 'rgba(12,12,12,0.97)';
-    } else {
-      nav.style.background = 'rgba(12,12,12,0.85)';
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── images fade in once decoded (incl. lazy ones inside case studies) ── */
+  const markLoaded = img => img.classList.add('is-loaded');
+  document.querySelectorAll('img').forEach(img => {
+    if (img.complete && img.naturalWidth > 0) markLoaded(img);
+    else {
+      img.addEventListener('load', () => markLoaded(img), { once: true });
+      img.addEventListener('error', () => markLoaded(img), { once: true });
     }
+  });
+
+  /* ── reveal on scroll ── */
+  const reveals = document.querySelectorAll('.reveal');
+  if (reduceMotion) {
+    reveals.forEach(r => r.classList.add('visible'));
+  } else {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 60);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(r => obs.observe(r));
+  }
+
+  /* ── one rAF-throttled scroll handler for nav state + active link ──
+     (two separate listeners reading offsetTop on every scroll event was the jank) */
+  const nav = document.querySelector('nav');
+  const navLinks = [...document.querySelectorAll('.nav-links a')];
+  const sections = [...document.querySelectorAll('section[id]')];
+  const groupLabels = [...document.querySelectorAll('.project-group-label[id]')];
+  const targets = [...sections, ...groupLabels];
+  let offsets = [];
+  let ticking = false;
+  let lastActive = '';
+  let scrolled = false;
+
+  const measure = () => {
+    offsets = targets
+      .map(el => ({ id: el.id, top: el.getBoundingClientRect().top + window.scrollY }))
+      .sort((a, b) => a.top - b.top);
+  };
+
+  const onScroll = () => {
+    const y = window.scrollY;
+
+    const isScrolled = y > 40;
+    if (isScrolled !== scrolled) {
+      scrolled = isScrolled;
+      nav.classList.toggle('scrolled', isScrolled);
+    }
+
+    let current = '';
+    for (const o of offsets) {
+      if (y >= o.top - 120) current = o.id; else break;
+    }
+    if (current !== lastActive) {
+      lastActive = current;
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
 
-  // Case study open/close
+  window.addEventListener('resize', () => { measure(); onScroll(); }, { passive: true });
+  window.addEventListener('load', () => { measure(); onScroll(); });
+  measure();
+  onScroll();
+
+  /* ── case study overlays ── */
+  let savedScroll = 0;
+
   function openCase(id) {
     const el = document.getElementById(id);
+    if (!el) return;
+    savedScroll = window.scrollY;
     el.classList.add('open');
     el.scrollTop = 0;
-    document.body.style.overflow = 'hidden';
+    document.body.style.top = `-${savedScroll}px`;
+    document.body.classList.add('locked');
+    el.setAttribute('tabindex', '-1');
+    el.focus({ preventScroll: true });
   }
 
   function closeCase(id) {
     const el = document.getElementById(id);
+    if (!el) return;
     el.scrollTop = 0;
     el.classList.remove('open');
-    document.body.style.overflow = '';
-
+    document.body.classList.remove('locked');
+    document.body.style.top = '';
+    // wait for layout to come back before restoring, or the scroll gets clamped
+    requestAnimationFrame(() => {
+      const prev = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo(0, savedScroll);
+      document.documentElement.style.scrollBehavior = prev;
+    });
   }
 
-  document.getElementById('open-triton').addEventListener('click', () => openCase('cs-triton'));
-  document.getElementById('open-cce').addEventListener('click', () => openCase('cs-cce'));
-  document.getElementById('open-solar').addEventListener('click', () => openCase('cs-solar'));
-  document.getElementById('open-research').addEventListener('click', () => openCase('cs-research'));
-
-  // Keyboard close
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.case-study.open').forEach(cs => {
-        cs.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-    }
+  const openers = {
+    'open-triton': 'cs-triton',
+    'open-cce': 'cs-cce',
+    'open-solar': 'cs-solar',
+    'open-research': 'cs-research'
+  };
+  Object.entries(openers).forEach(([btn, cs]) => {
+    const el = document.getElementById(btn);
+    if (!el) return;
+    el.addEventListener('click', () => openCase(cs));
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCase(cs); }
+    });
   });
 
-  // Active nav on scroll
-  const sections = document.querySelectorAll('section[id]');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 100) current = s.id;
-    });
-    document.querySelectorAll('.nav-links a').forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-    });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const open = document.querySelector('.case-study.open');
+    if (open) closeCase(open.id);
   });
 </script>
 </body>
