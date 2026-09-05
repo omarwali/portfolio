@@ -404,6 +404,86 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* ══════════════════════════════════════════════════════════════
+   8b. DRAWINGS  (layout family: drawing plate grid)
+   content-visibility keeps this section out of layout until it is
+   near the viewport, so the sheets cost nothing on first paint.
+   ══════════════════════════════════════════════════════════════ */
+#drawings {
+  border-top: 1px solid var(--hairline);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+.dwg-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--s-md); }
+.dwg {
+  grid-column: span 3;
+  display: block; width: 100%; text-align: left;
+  background: #ffffff;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-card);
+  overflow: hidden;
+  transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease, border-color .25s ease;
+}
+.dwg.sm { grid-column: span 2; }
+.dwg:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(20,20,19,0.09); border-color: var(--surface-strong); }
+.dwg:active { transform: translateY(0); }
+.dwg img { width: 100%; height: auto; aspect-ratio: 1600 / 1236; object-fit: cover; object-position: top left; }
+.dwg-cap {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 12px var(--s-md) 14px;
+  border-top: 1px solid var(--hairline-soft);
+  background: var(--canvas);
+}
+.dwg-no { font-family: var(--font-mono); font-size: 12px; color: var(--primary-ink); flex: none; }
+.dwg-name { font-size: 13.5px; color: var(--body); min-width: 0; }
+@media (max-width: 860px) {
+  .dwg-grid { grid-template-columns: 1fr; }
+  .dwg, .dwg.sm { grid-column: auto; }
+}
+
+/* poster + test video row */
+.dwg-extra {
+  display: grid; grid-template-columns: 2fr 1fr;
+  gap: var(--s-md); margin-top: var(--s-md);
+  align-items: start;
+}
+.dwg-extra .dwg, .dwg-extra .dwg.sm { grid-column: auto; }
+.dwg-poster img { aspect-ratio: 3 / 2; object-fit: cover; object-position: top center; }
+.dwg-video { background: var(--surface-dark); border-color: var(--surface-dark); }
+.dwg-video:hover { transform: none; box-shadow: none; border-color: var(--surface-dark); }
+.dwg-video video {
+  display: block; width: 100%;
+  aspect-ratio: 9 / 16; max-height: 460px;
+  object-fit: contain; background: var(--surface-dark);
+}
+@media (max-width: 860px) { .dwg-extra { grid-template-columns: 1fr; } }
+
+/* lightbox for reading a sheet full size */
+.lightbox {
+  position: fixed; inset: 0; z-index: 160;
+  background: rgba(20,20,19,0.88);
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(12px, 3vw, 40px);
+  overscroll-behavior: contain;
+}
+.lightbox[hidden] { display: none; }
+.lightbox img {
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto;
+  border-radius: var(--r-btn);
+  background: #ffffff;
+}
+.lb-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; line-height: 1;
+  color: var(--ink); background: var(--canvas);
+  border-radius: var(--r-pill);
+  transition: background-color .2s ease;
+}
+.lb-close:hover { background: #ffffff; }
+
+/* ══════════════════════════════════════════════════════════════
    9. SKILLS  (layout family: grouped label and pill rows)
    ══════════════════════════════════════════════════════════════ */
 #skills { background: var(--surface-soft); }
@@ -741,6 +821,73 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   </div>
 </section>
 
+<!-- ══════════════════ DRAWINGS ══════════════════ -->
+<section class="section" id="drawings">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="display-lg">Drawings and documentation</h2>
+      <p>A 28 sheet controlled drawing package built in SolidWorks and AutoCAD for the SE 3 design build project: sheet designator scheme, master BOM tied to McMaster part numbers, assembly sequence notes, and drawn-by and checked-by signoff on every sheet. Four person team, drawings released across three phases.</p>
+    </div>
+
+    <div class="dwg-grid reveal">
+
+      <button class="dwg" data-full="drawings/dwg-eh801-test-setup-plan.webp" data-title="EH801, experiment test setup plan view">
+        <img src="drawings/dwg-eh801-test-setup-plan-thumb.webp" alt="AutoCAD plan view of the experiment test setup, dimensioned and layered by colour" loading="lazy" decoding="async" width="800" height="621">
+        <span class="dwg-cap"><span class="dwg-no">EH801</span><span class="dwg-name">Test setup plan view, AutoCAD, layered and fully dimensioned</span></span>
+      </button>
+
+      <button class="dwg" data-full="drawings/dwg-eh602-assembly-sequence.webp" data-title="EH602, catapult placement 2">
+        <img src="drawings/dwg-eh602-assembly-sequence-thumb.webp" alt="Exploded isometric assembly drawing with written assembly sequence notes" loading="lazy" decoding="async" width="800" height="621">
+        <span class="dwg-cap"><span class="dwg-no">EH602</span><span class="dwg-name">Exploded isometric with assembly sequence notes</span></span>
+      </button>
+
+      <button class="dwg sm" data-full="drawings/dwg-eh703-pokeball-housing.webp" data-title="EH703, pokeball housing">
+        <img src="drawings/dwg-eh703-pokeball-housing-thumb.webp" alt="Four view part drawing of the pokeball housing with spline callout" loading="lazy" decoding="async" width="800" height="617">
+        <span class="dwg-cap"><span class="dwg-no">EH703</span><span class="dwg-name">Part drawing, spline geometry</span></span>
+      </button>
+
+      <button class="dwg sm" data-full="drawings/dwg-eh712-servo-housing.webp" data-title="EH712, servo motor housing">
+        <img src="drawings/dwg-eh712-servo-housing-thumb.webp" alt="Four view part drawing of the servo motor housing with a 2 to 1 detail view" loading="lazy" decoding="async" width="800" height="618">
+        <span class="dwg-cap"><span class="dwg-no">EH712</span><span class="dwg-name">Part drawing, detail view at 2:1</span></span>
+      </button>
+
+      <button class="dwg sm" data-full="drawings/dwg-eh002-summary-sheet.webp" data-title="EH002, summary sheet">
+        <img src="drawings/dwg-eh002-summary-sheet-thumb.webp" alt="Summary sheet showing the sheet index and the master assembly bill of materials" loading="lazy" decoding="async" width="800" height="618">
+        <span class="dwg-cap"><span class="dwg-no">EH002</span><span class="dwg-name">Sheet index and master BOM</span></span>
+      </button>
+
+      <!-- TEMPLATE: copy for another sheet. Use class="dwg sm" for a third-width
+           tile, class="dwg" for a half-width one. Keep the row cell counts adding
+           up to 6 so no empty cells appear.
+      <button class="dwg sm" data-full="drawings/FILE.webp" data-title="EHxxx, title">
+        <img src="drawings/FILE-thumb.webp" alt="ALT" loading="lazy" decoding="async" width="800" height="618">
+        <span class="dwg-cap"><span class="dwg-no">EHxxx</span><span class="dwg-name">SHORT DESCRIPTION</span></span>
+      </button>
+      -->
+
+    </div>
+
+    <div class="dwg-extra reveal">
+
+      <button class="dwg dwg-poster" data-full="drawings/pokepult-technical-poster.webp" data-title="Mystic 2 technical poster">
+        <img src="drawings/pokepult-technical-poster-thumb.webp" alt="Conference technical poster covering the design approach, subassemblies, construction drawings and results" loading="lazy" decoding="async" width="900" height="600">
+        <span class="dwg-cap"><span class="dwg-no">POSTER</span><span class="dwg-name">Technical poster presented at Mystic 2, design approach through results</span></span>
+      </button>
+
+      <div class="dwg dwg-video">
+        <video controls preload="none" playsinline
+               poster="drawings/pokepult-firing-test-poster.webp"
+               width="540" height="960"
+               aria-label="Firing test of the built catapult, launching the ball toward the tiered target">
+          <source src="drawings/pokepult-firing-test.mp4" type="video/mp4">
+        </video>
+        <span class="dwg-cap"><span class="dwg-no">TEST</span><span class="dwg-name">Firing test of the built mechanism</span></span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════════ SKILLS ══════════════════ -->
 <section class="section" id="skills">
   <div class="wrap">
@@ -830,6 +977,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   </div>
 </footer>
 
+
+<!-- drawing viewer -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Drawing viewer" hidden>
+  <button class="lb-close" id="lb-close" aria-label="Close drawing">&times;</button>
+  <img id="lb-img" src="" alt="">
+</div>
 
 <!-- ══════════════════════════════════════════════════════════════
      CASE STUDY 1: TRITON SOLAR CAR
@@ -1250,6 +1403,52 @@ navLinks.forEach(function (link) {
     });
   }, { rootMargin: '-45% 0px -50% 0px' }).observe(target);
 });
+
+/* ══════════════════════════════════════════════════════════════
+   DRAWING VIEWER
+   Thumbnails load with the page. The full 1600px sheet is only
+   fetched when someone actually opens it.
+   ══════════════════════════════════════════════════════════════ */
+(function () {
+  var box = document.getElementById('lightbox');
+  var img = document.getElementById('lb-img');
+  var closeBtn = document.getElementById('lb-close');
+  if (!box) return;
+  var opener = null;
+  var scrollY = 0;
+
+  function open(btn) {
+    opener = btn;
+    img.src = btn.dataset.full;
+    img.alt = btn.dataset.title || '';
+    scrollY = window.scrollY;
+    box.hidden = false;
+    document.body.style.top = '-' + scrollY + 'px';
+    document.body.classList.add('locked');
+    closeBtn.focus();
+  }
+
+  function close() {
+    box.hidden = true;
+    img.src = '';
+    document.body.classList.remove('locked');
+    document.body.style.top = '';
+    var prev = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, scrollY);
+    document.documentElement.style.scrollBehavior = prev;
+    if (opener) { opener.focus({ preventScroll: true }); opener = null; }
+  }
+
+  document.querySelectorAll('.dwg[data-full]').forEach(function (btn) {
+    btn.addEventListener('click', function () { open(btn); });
+  });
+  closeBtn.addEventListener('click', close);
+  box.addEventListener('click', function (e) { if (e.target !== img) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !box.hidden) close();
+  });
+})();
 
 /* ══════════════════════════════════════════════════════════════
    CASE STUDY OVERLAYS
