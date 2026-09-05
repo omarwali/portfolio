@@ -232,7 +232,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .nav-links a:hover { color: var(--ink); }
 .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
 .nav-links a.active { color: var(--ink); }
-.nav-links .btn { margin-left: var(--s-xs); height: 38px; padding: 0 18px; color: var(--on-primary); }
+.nav-links .btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-left: var(--s-xs); height: 38px; padding: 0 18px;
+  color: var(--on-primary);
+}
 .nav-links .btn::after { display: none; }
 .nav-links .btn:hover { color: var(--on-primary); }
 
@@ -638,7 +642,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
         <div class="p-kicker">Triton Solar Car, UC San Diego, 2025 to present</div>
         <h3 class="p-title">Ackermann steering system and wheel ergonomics</h3>
         <p class="p-desc">Full design to fabrication of custom steering geometry for UCSD&rsquo;s American Solar Challenge car. Ackermann trade study, ANSYS FEA, CNC wood prototyping into steel. Plus the steering wheel control module housing: CAD, printed tolerancing iterations, CNC aluminium backplate.</p>
-        <div class="p-result">Designed, analysed, fabricated in steel and run on the car. Then it failed in torsion, and the load case I had written turned out to be the wrong one.</div>
+        <div class="p-result">Geometry trade study, ANSYS FEA, steel fabrication. The part is on the car.</div>
         <div class="p-tags">
           <span class="tag key">SolidWorks</span>
           <span class="tag key">ANSYS FEA</span>
@@ -843,7 +847,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
       <div><div class="cs-meta-k">Team</div><div class="cs-meta-v">Triton Solar Car, UC San Diego</div></div>
       <div><div class="cs-meta-k">Role</div><div class="cs-meta-v">Steering and ergonomics</div></div>
       <div><div class="cs-meta-k">Tools</div><div class="cs-meta-v">SolidWorks, Fusion 360, ANSYS, CNC, steel fab</div></div>
-      <div><div class="cs-meta-k">Status</div><div class="cs-meta-v">Fabricated, run, failed, rebuilt</div></div>
+      <div><div class="cs-meta-k">Status</div><div class="cs-meta-v">Fabricated and run on the car</div></div>
     </div>
 
     <div class="cs-pills">
