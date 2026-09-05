@@ -5,52 +5,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Omar Wali, Engineering Portfolio</title>
 <meta name="description" content="Omar Wali, mechanical and structural engineering portfolio: Ackermann steering design and fabrication, FEA, solar PV design, and independent research.">
-<meta name="theme-color" content="#faf9f5">
+<meta name="theme-color" content="#f6f8f9">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="car-assembly-hero.jpg" fetchpriority="high">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 /* ══════════════════════════════════════════════════════════════
    1. TOKENS
-   Warm editorial system. Do not add colours outside this block.
+   Instrument palette. Two hues with two different jobs:
+     cyan   = structure and navigation (nav, links, buttons, bands)
+     orange = engineering results only (stat numbers, outcome rules)
+   They never do the same job, which is what keeps them from
+   fighting. Do not add colours outside this block.
    ══════════════════════════════════════════════════════════════ */
 :root {
-  /* brand */
-  --primary:              #cc785c;   /* coral, large surfaces and display text only */
-  --primary-ink:          #a9583e;   /* darker coral, all small text and buttons (AA) */
+  /* cyan, structural */
+  --primary:              #158991;   /* large fills and bands only */
+  --primary-ink:          #0b6c7a;   /* all small text, links, buttons (AA) */
+  --primary-bright:       #3ad6e3;   /* on dark surfaces only */
+
+  /* orange, results only */
+  --accent:               #f97316;   /* rules and figures on dark */
+  --accent-ink:           #b8460d;   /* small orange text on light (AA) */
 
   /* text */
-  --ink:                  #141413;
-  --body-strong:          #252523;
-  --body:                 #3d3d3a;
-  --muted:                #6c6a64;
+  --ink:                  #0d1418;
+  --body-strong:          #232e34;
+  --body:                 #3a4750;
+  --muted:                #5f6c76;
 
   /* surfaces */
-  --canvas:               #faf9f5;
-  --surface-soft:         #f5f0e8;
-  --surface-card:         #efe9de;
-  --surface-strong:       #e8e0d2;
-  --surface-dark:         #181715;
-  --surface-dark-elev:    #252320;
+  --canvas:               #f6f8f9;
+  --surface-soft:         #eef2f4;
+  --surface-card:         #e9eff1;
+  --surface-strong:       #dbe4e8;
+  --surface-dark:         #0d1418;
+  --surface-dark-elev:    #151d22;
 
   /* lines */
-  --hairline:             #e6dfd8;
-  --hairline-soft:        #ebe6df;
+  --hairline:             #dde5e8;
+  --hairline-soft:        #e6ecee;
 
   /* on-colour */
   --on-primary:           #ffffff;
-  --on-dark:              #faf9f5;
-  --on-dark-soft:         #a09d96;
-
-  /* semantic */
-  --success:              #5db872;
+  --on-dark:              #eaf1f3;
+  --on-dark-soft:         #93a3ac;
 
   /* type */
-  --font-display: 'Source Serif 4', 'Tiempos Headline', Georgia, serif;
+  --font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
   --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* motion */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
   /* radius scale: buttons 8, cards 12, hero 16, pills full */
   --r-sm:   6px;
@@ -76,6 +86,8 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-h) + 24px);
   scrollbar-gutter: stable;
+  overflow-x: clip;                 /* clip, not hidden: no stray scroll container */
+  overscroll-behavior-y: none;      /* stops the rubber-band chain past the ends */
   -webkit-text-size-adjust: 100%;
   color-scheme: light;
 }
@@ -86,12 +98,12 @@ body {
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.55;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  -webkit-tap-highlight-color: rgba(204,120,92,0.14);
+  -webkit-tap-highlight-color: rgba(21,137,145,0.14);
   touch-action: manipulation;
 }
-body.locked { position: fixed; width: 100%; overflow: hidden; }
+/* inset pins all four edges so iOS cannot shift the locked page sideways */
+body.locked { position: fixed; inset: 0 0 auto 0; width: 100%; overflow: hidden; }
 
 * { scrollbar-width: thin; scrollbar-color: var(--surface-strong) transparent; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -126,14 +138,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ── type scale ── */
 .display-xl, .display-lg, .display-md, .display-sm {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 500;
   color: var(--ink);
   text-wrap: balance;
 }
-.display-xl { font-size: clamp(46px, 7vw, 76px); line-height: 1.04; letter-spacing: -0.022em; }
-.display-lg { font-size: clamp(34px, 4.4vw, 48px); line-height: 1.1;  letter-spacing: -0.02em; }
-.display-md { font-size: clamp(27px, 3.2vw, 36px); line-height: 1.15; letter-spacing: -0.015em; }
-.display-sm { font-size: clamp(23px, 2.4vw, 28px); line-height: 1.2;  letter-spacing: -0.011em; }
+.display-xl { font-size: clamp(46px, 7vw, 76px); line-height: 1.02; letter-spacing: -0.03em; }
+.display-lg { font-size: clamp(34px, 4.4vw, 48px); line-height: 1.08; letter-spacing: -0.025em; }
+.display-md { font-size: clamp(27px, 3.2vw, 36px); line-height: 1.14; letter-spacing: -0.02em; }
+.display-sm { font-size: clamp(23px, 2.4vw, 28px); line-height: 1.2;  letter-spacing: -0.015em; }
 
 .lede { font-size: 18px; line-height: 1.55; color: var(--body-strong); text-wrap: pretty; }
 
@@ -145,10 +157,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* ── reveal ── */
-.reveal { opacity: 0; transform: translateY(22px); }
+.reveal { opacity: 0; transform: translateY(12px); }
 .reveal.visible {
   opacity: 1; transform: none;
-  transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+  transition: opacity .5s var(--ease-out), transform .5s var(--ease-out);
 }
 .js img { opacity: 0; transition: opacity .5s ease; }
 .js img.is-loaded { opacity: 1; }
@@ -172,23 +184,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   height: 44px; padding: 0 22px;
   font-size: 14px; font-weight: 500; line-height: 1;
   border-radius: var(--r-btn);
-  transition: background-color .2s ease, transform .12s ease, border-color .2s ease;
+  transition: background-color .18s ease, transform .1s var(--ease-out), border-color .18s ease;
   white-space: nowrap;
 }
 .btn-primary { background: var(--primary-ink); color: var(--on-primary); }
-.btn-primary:hover { background: #8f4832; }
-.btn-primary:active { transform: translateY(1px); }
+.btn-primary:hover { background: #095b68; }
+.btn-primary:active { transform: scale(.975); }
 
 .btn-secondary {
   background: var(--canvas); color: var(--ink);
   border: 1px solid var(--hairline);
 }
 .btn-secondary:hover { border-color: var(--muted); }
-.btn-secondary:active { transform: translateY(1px); }
+.btn-secondary:active { transform: scale(.975); }
 
-.btn-on-coral { background: var(--canvas); color: var(--primary-ink); font-weight: 600; }
-.btn-on-coral:hover { background: #ffffff; }
-.btn-on-coral:active { transform: translateY(1px); }
+.btn-on-brand { background: var(--primary-bright); color: var(--surface-dark); font-weight: 600; }
+.btn-on-brand:hover { background: #5ee0ea; }
+.btn-on-brand:active { transform: scale(.975); }
 
 /* ══════════════════════════════════════════════════════════════
    4. NAV
@@ -197,7 +209,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   position: fixed; inset: 0 0 auto 0; z-index: 100;
   height: var(--nav-h);
   display: flex; align-items: center;
-  background: rgba(250,249,245,0.86);
+  background: rgba(246,248,249,0.86);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
@@ -212,9 +224,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .nav-logo {
   font-family: var(--font-display);
-  font-size: 20px; letter-spacing: -0.015em; color: var(--ink);
+  font-weight: 600;
+  font-size: 19px; letter-spacing: -0.02em; color: var(--ink);
 }
-.nav-logo b { color: var(--primary-ink); font-weight: 400; }
+.nav-logo b { color: var(--primary-ink); font-weight: 500; }
 .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
 .nav-links a {
   position: relative; display: inline-block;
@@ -247,7 +260,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ══════════════════════════════════════════════════════════════
    5. HERO  (layout family: asymmetric split)
    ══════════════════════════════════════════════════════════════ */
-#hero { padding-top: calc(var(--nav-h) + 56px); padding-bottom: 72px; }
+#hero {
+  position: relative;
+  padding-top: calc(var(--nav-h) + 56px); padding-bottom: 72px;
+}
+#hero::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background:
+    repeating-linear-gradient(to right, var(--hairline) 0 1px, transparent 1px 72px),
+    repeating-linear-gradient(to bottom, var(--hairline) 0 1px, transparent 1px 72px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.35) 62%, transparent 96%);
+          mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.35) 62%, transparent 96%);
+  pointer-events: none;
+}
+#hero > .wrap { position: relative; z-index: 1; }
 .hero-grid {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
@@ -263,7 +289,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   border-radius: var(--r-pill);
   font-size: 13px; font-weight: 500;
 }
-.chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); flex: none; }
+.chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--primary); flex: none; }
 .hero-sub { max-width: 34ch; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: var(--s-sm); }
 
@@ -292,9 +318,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .fact-num {
   font-family: var(--font-display);
+  font-weight: 500;
   font-size: clamp(30px, 3.4vw, 40px);
-  line-height: 1; letter-spacing: -0.02em;
-  color: var(--on-dark);
+  line-height: 1; letter-spacing: -0.025em;
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
 .fact-label {
@@ -318,8 +345,24 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ══════════════════════════════════════════════════════════════
    8. PROJECTS
-   Featured split row, then a 3 cell grid for 3 items.
+   Grouped by discipline. To add a project, drop a card into the
+   group it belongs to and add its entry to the PROJECTS array.
    ══════════════════════════════════════════════════════════════ */
+.p-group {
+  display: flex; align-items: center; gap: var(--s-md);
+  margin-bottom: var(--s-lg);
+}
+.p-group + * { margin-top: 0; }
+.p-group-n {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+  color: var(--primary-ink); flex: none;
+}
+.p-group-t {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: 17px; letter-spacing: -0.012em; color: var(--ink); flex: none;
+}
+.p-group-line { flex: 1; height: 1px; background: var(--hairline); }
+.p-set + .p-set { margin-top: var(--s-xxl); }
 .p-featured {
   display: grid; grid-template-columns: 7fr 5fr;
   background: var(--surface-card);
@@ -328,7 +371,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease;
   margin-bottom: var(--s-lg);
 }
-.p-featured:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(20,20,19,0.10); }
+.p-featured:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(13,20,24,0.10); }
 .p-featured .p-media { aspect-ratio: 16 / 11; overflow: hidden; background: var(--surface-strong); }
 .p-featured .p-media img {
   width: 100%; height: 100%; object-fit: cover;
@@ -342,13 +385,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
 }
 .p-title {
-  font-family: var(--font-display); font-size: 27px; line-height: 1.18;
+  font-family: var(--font-display); font-weight: 500; font-size: 26px; line-height: 1.18;
   letter-spacing: -0.014em; color: var(--ink); margin-top: 10px; text-wrap: balance;
 }
 .p-desc { margin-top: var(--s-sm); font-size: 15px; color: var(--body); text-wrap: pretty; }
 .p-result {
   margin-top: var(--s-md); padding-left: 14px;
-  border-left: 2px solid var(--primary);
+  border-left: 2px solid var(--accent);
   font-size: 14px; font-weight: 500; color: var(--body-strong);
 }
 .p-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--s-md); }
@@ -375,7 +418,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   overflow: hidden; cursor: pointer;
   transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease;
 }
-.p-card:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(20,20,19,0.10); }
+.p-card:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(13,20,24,0.10); }
 .p-card.wide { grid-column: 1 / -1; flex-direction: row; }
 .p-card .p-media { aspect-ratio: 16 / 9; overflow: hidden; background: var(--surface-strong); }
 .p-card.wide .p-media { aspect-ratio: auto; width: 38%; flex: none; }
@@ -405,14 +448,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ══════════════════════════════════════════════════════════════
    8b. DRAWINGS  (layout family: drawing plate grid)
-   content-visibility keeps this section out of layout until it is
-   near the viewport, so the sheets cost nothing on first paint.
+   Every tile carries width/height so the grid reserves its space
+   before the images land. No content-visibility here: it was
+   resizing the section mid-scroll and moving the page under you.
    ══════════════════════════════════════════════════════════════ */
-#drawings {
-  border-top: 1px solid var(--hairline);
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
-}
+#drawings { border-top: 1px solid var(--hairline); }
 .dwg-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--s-md); }
 .dwg {
   grid-column: span 3;
@@ -424,7 +464,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease, border-color .25s ease;
 }
 .dwg.sm { grid-column: span 2; }
-.dwg:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(20,20,19,0.09); border-color: var(--surface-strong); }
+.dwg:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(13,20,24,0.09); border-color: var(--surface-strong); }
 .dwg:active { transform: translateY(0); }
 .dwg img { width: 100%; height: auto; aspect-ratio: 1600 / 1236; object-fit: cover; object-position: top left; }
 .dwg-cap {
@@ -433,7 +473,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   border-top: 1px solid var(--hairline-soft);
   background: var(--canvas);
 }
-.dwg-no { font-family: var(--font-mono); font-size: 12px; color: var(--primary-ink); flex: none; }
+.dwg-no { font-family: var(--font-mono); font-size: 12px; color: var(--accent-ink); flex: none; }
 .dwg-name { font-size: 13.5px; color: var(--body); min-width: 0; }
 @media (max-width: 860px) {
   .dwg-grid { grid-template-columns: 1fr; }
@@ -460,7 +500,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* lightbox for reading a sheet full size */
 .lightbox {
   position: fixed; inset: 0; z-index: 160;
-  background: rgba(20,20,19,0.88);
+  background: rgba(13,20,24,0.90);
   display: flex; align-items: center; justify-content: center;
   padding: clamp(12px, 3vw, 40px);
   overscroll-behavior: contain;
@@ -493,7 +533,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   padding-block: var(--s-lg);
 }
 .skill-row + .skill-row { border-top: 1px solid var(--hairline); }
-.skill-name { font-family: var(--font-display); font-size: 20px; color: var(--ink); letter-spacing: -0.01em; }
+.skill-name { font-family: var(--font-display); font-weight: 500; font-size: 19px; color: var(--ink); letter-spacing: -0.015em; }
 .skill-items { display: flex; flex-wrap: wrap; gap: 8px; align-content: start; }
 .skill-items .tag { background: var(--canvas); font-size: 13px; padding: 6px 13px; }
 @media (max-width: 700px) {
@@ -507,7 +547,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .about-prose > p + p { margin-top: var(--s-md); }
 .about-prose p { text-wrap: pretty; }
 .about-pull {
-  font-family: var(--font-display);
+  font-family: var(--font-display); font-weight: 500;
   font-size: clamp(23px, 2.4vw, 28px); line-height: 1.28; letter-spacing: -0.012em;
   color: var(--ink); text-wrap: balance;
 }
@@ -526,18 +566,30 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* ══════════════════════════════════════════════════════════════
-   11. CONTACT  (layout family: coral callout band)
+   11. CONTACT  (layout family: brand callout band)
    ══════════════════════════════════════════════════════════════ */
 #contact { padding-bottom: var(--s-section); }
-.coral-band {
-  background: var(--primary);
+.brand-band {
+  position: relative; overflow: hidden;
+  background: var(--surface-dark);
   border-radius: var(--r-card);
   padding: clamp(36px, 6vw, 64px);
-  color: var(--on-primary);
+  color: var(--on-dark);
 }
-.coral-band h2 { color: var(--on-primary); }
-.coral-links { display: flex; flex-wrap: wrap; gap: var(--s-sm); margin-top: var(--s-xl); }
-.coral-links .btn { height: 46px; }
+.brand-band h2 { color: var(--on-dark); }
+.brand-band .k { display: block; margin-bottom: var(--s-md); color: var(--primary-bright); }
+.brand-band::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(to right, rgba(58,214,227,.20) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(to bottom, rgba(58,214,227,.20) 0 1px, transparent 1px 64px);
+  -webkit-mask-image: linear-gradient(118deg, transparent 34%, #000 100%);
+          mask-image: linear-gradient(118deg, transparent 34%, #000 100%);
+  pointer-events: none;
+}
+.brand-band > * { position: relative; z-index: 1; }
+.brand-links { display: flex; flex-wrap: wrap; gap: var(--s-sm); margin-top: var(--s-xl); }
+.brand-links .btn { height: 46px; }
 
 /* ══════════════════════════════════════════════════════════════
    12. FOOTER
@@ -559,18 +611,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: var(--canvas);
   overflow-y: auto; overscroll-behavior: contain;
   opacity: 0; visibility: hidden; pointer-events: none;
-  transition: opacity .35s ease, visibility .35s;
+  transition: opacity .14s ease-in, visibility .14s;
 }
-.case-study.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.case-study.open {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transition: opacity .22s var(--ease-out), visibility .22s;
+}
 
 .cs-nav {
   position: sticky; top: 0; z-index: 5;
-  background: rgba(250,249,245,0.92);
+  background: rgba(246,248,249,0.93);
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--hairline);
   padding-top: env(safe-area-inset-top);
 }
 .cs-nav-inner {
+  position: relative;
   max-width: 940px; margin-inline: auto; padding: 14px var(--s-lg);
   display: flex; align-items: center; justify-content: space-between; gap: var(--s-md);
 }
@@ -581,6 +637,98 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: background-color .2s ease;
 }
 .cs-back:hover { background: var(--surface-card); }
+
+/* ── contents control, lives in the sticky bar so it is reachable
+      from any depth in a long study ── */
+.cs-toc-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  max-width: 58%;
+  padding: 8px 12px; border-radius: var(--r-btn);
+  border: 1px solid var(--hairline);
+  font-size: 13px; font-weight: 500; color: var(--body-strong);
+  transition: border-color .18s ease, background-color .18s ease;
+}
+.cs-toc-btn:hover { border-color: var(--muted); background: var(--surface-soft); }
+.cs-toc-btn .cur {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--primary-ink);
+}
+.cs-toc-btn .cev { flex: none; transition: transform .2s var(--ease-out); }
+.cs-toc-btn[aria-expanded="true"] .cev { transform: rotate(180deg); }
+
+.cs-toc {
+  position: absolute; right: var(--s-lg); top: calc(100% + 6px);
+  z-index: 6; width: min(330px, calc(100vw - 32px));
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-card);
+  box-shadow: 0 16px 44px rgba(13,20,24,0.14);
+  padding: var(--s-xs);
+  max-height: min(64vh, 460px); overflow-y: auto; overscroll-behavior: contain;
+  transform-origin: top right;
+  transition: opacity .16s var(--ease-out), transform .16s var(--ease-out), visibility .16s;
+}
+.cs-toc[hidden] {
+  display: block; opacity: 0; visibility: hidden; pointer-events: none;
+  transform: scale(.97) translateY(-4px);
+}
+.cs-toc-i {
+  display: flex; gap: 10px; width: 100%; text-align: left;
+  padding: 9px 11px; border-radius: var(--r-sm);
+  font-size: 13.5px; line-height: 1.4; color: var(--body);
+  transition: background-color .15s ease, color .15s ease;
+}
+.cs-toc-i:hover { background: var(--surface-soft); color: var(--ink); }
+.cs-toc-i .num { font-family: var(--font-mono); font-size: 11px; color: var(--muted); padding-top: 2px; flex: none; }
+.cs-toc-i.sub { padding-left: 34px; font-size: 13px; color: var(--muted); }
+.cs-toc-i.on { color: var(--primary-ink); font-weight: 500; background: var(--surface-soft); }
+.cs-toc-i.on .num { color: var(--primary-ink); }
+
+/* ── part divider inside a long study ── */
+.cs-part {
+  margin-top: 88px !important;
+  padding-top: var(--s-lg);
+  border-top: 1px solid var(--hairline);
+}
+.cs-body h2.cs-part:first-child, .cs-part.first { margin-top: var(--s-xl) !important; }
+.cs-part-n {
+  display: block; margin-bottom: 6px;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--primary-ink);
+}
+.cs-body h3 {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(19px, 2.1vw, 21px); line-height: 1.25; letter-spacing: -0.012em;
+  color: var(--ink);
+  margin-top: var(--s-xl); margin-bottom: var(--s-sm);
+  scroll-margin-top: 96px; text-wrap: balance;
+}
+
+/* ── inline contents, shown only when a study is long enough to need it ── */
+.cs-index { margin-bottom: var(--s-xxl); }
+.cs-index-h { margin-bottom: var(--s-sm); }
+.cs-index-l { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: var(--s-sm); }
+.cs-index-i {
+  display: block; width: 100%; text-align: left;
+  padding: var(--s-md) var(--s-lg) var(--s-lg);
+  background: var(--surface-soft);
+  border-radius: var(--r-card);
+  border-top: 2px solid var(--primary);
+  transition: background-color .18s ease, transform .18s var(--ease-out);
+}
+.cs-index-i:hover { background: var(--surface-card); transform: translateY(-2px); }
+.cs-index-i:active { transform: translateY(0); }
+.cs-index-i .num {
+  display: block; margin-bottom: 6px;
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary-ink);
+}
+.cs-index-i .ttl {
+  display: block; font-family: var(--font-display); font-weight: 500;
+  font-size: 17px; line-height: 1.24; letter-spacing: -0.012em; color: var(--ink);
+}
+.cs-index-i .sub { display: block; margin-top: 7px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+@media (max-width: 520px) { .cs-toc-btn .cur { display: none; } }
 
 .cs-content { max-width: 940px; margin-inline: auto; padding: var(--s-xxl) var(--s-lg) 96px; }
 .cs-tag {
@@ -614,8 +762,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 700px) { .cs-pair { grid-template-columns: 1fr; } }
 
 .cs-body h2 {
-  font-family: var(--font-display); font-weight: 400;
-  font-size: clamp(24px, 3vw, 30px); line-height: 1.2; letter-spacing: -0.015em;
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(25px, 3vw, 31px); line-height: 1.18; letter-spacing: -0.022em;
   color: var(--ink);
   margin-top: var(--s-xxl); margin-bottom: var(--s-md);
   scroll-margin-top: 88px; text-wrap: balance;
@@ -627,11 +775,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .cs-callout {
   margin-block: var(--s-xl);
   background: var(--surface-card);
-  border-left: 3px solid var(--primary);
+  border-left: 3px solid var(--accent);
   border-radius: 0 var(--r-card) var(--r-card) 0;
   padding: var(--s-lg) var(--s-xl);
 }
-.cs-callout p { font-family: var(--font-display); font-size: 20px; line-height: 1.42; color: var(--ink); }
+.cs-callout p { font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.42; color: var(--ink); }
 
 .cs-stats {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -639,13 +787,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .cs-stat { background: var(--surface-dark); color: var(--on-dark); border-radius: var(--r-card); padding: var(--s-lg); }
 .cs-stat-n {
-  font-family: var(--font-display); font-size: 34px; line-height: 1;
-  letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+  font-family: var(--font-display); font-weight: 500; font-size: 34px; line-height: 1;
+  letter-spacing: -0.025em; font-variant-numeric: tabular-nums;
+  color: var(--accent);
 }
 .cs-stat-d { margin-top: 10px; font-size: 13px; line-height: 1.45; color: var(--on-dark-soft); }
 
 .cs-more { margin-top: 96px; padding-top: var(--s-xl); border-top: 1px solid var(--hairline); }
-.cs-more h2 { font-family: var(--font-display); font-weight: 400; font-size: 24px; color: var(--ink); margin-bottom: var(--s-lg); }
+.cs-more h2 { font-family: var(--font-display); font-weight: 500; font-size: 22px; color: var(--ink); margin-bottom: var(--s-lg); }
 .cs-more-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--s-md); }
 .cs-more-card {
   text-align: left; width: 100%;
@@ -653,7 +802,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: transform .25s ease, background-color .25s ease;
 }
 .cs-more-card:hover { transform: translateY(-3px); background: var(--surface-strong); }
-.cs-more-t { display: block; font-family: var(--font-display); font-size: 19px; color: var(--ink); line-height: 1.22; }
+.cs-more-t { display: block; font-family: var(--font-display); font-weight: 500; font-size: 18px; color: var(--ink); line-height: 1.22; }
 .cs-more-d { display: block; margin-top: 8px; font-size: 13.5px; color: var(--body); text-wrap: pretty; }
 </style>
 </head>
@@ -709,19 +858,27 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   <div class="wrap">
     <div class="section-head">
       <h2 class="display-lg">Projects</h2>
-      <p>A vehicle subsystem taken from geometry through failure and rebuild, a commercial solar internship, and two independent studies.</p>
+      <p>Grouped by discipline rather than by date. A vehicle subsystem taken from geometry through failure and rebuild, commercial and humanitarian solar work, and independent studies.</p>
+    </div>
+
+    <!-- ═══ GROUP 01 ═══ -->
+    <div class="p-set">
+    <div class="p-group reveal">
+      <span class="p-group-n">01</span>
+      <h3 class="p-group-t">Vehicle systems</h3>
+      <span class="p-group-line" aria-hidden="true"></span>
     </div>
 
     <!-- ═══ FEATURED PROJECT ═══
          To feature a different project, move this block and change data-case. -->
-    <article class="p-featured reveal" id="proj-tsc" data-case="cs-triton" tabindex="0" role="button" aria-label="Open case study: Ackermann steering system">
+    <article class="p-featured reveal" id="proj-tsc" data-case="cs-triton" tabindex="0" role="button" aria-label="Open case study: Ackermann steering, fixturing and driver controls">
       <div class="p-media">
         <img src="car-assembly-hero.jpg" alt="Triton Solar Car assembly" loading="lazy" decoding="async">
       </div>
       <div class="p-info">
         <div class="p-kicker">Triton Solar Car, UC San Diego, 2025 to present</div>
-        <h3 class="p-title">Ackermann steering system and wheel ergonomics</h3>
-        <p class="p-desc">Full design to fabrication of custom steering geometry for UCSD&rsquo;s American Solar Challenge car. Ackermann trade study, ANSYS FEA, CNC wood prototyping into steel. Plus the steering wheel control module housing: CAD, printed tolerancing iterations, CNC aluminium backplate.</p>
+        <h3 class="p-title">Ackermann steering, fixturing and driver controls</h3>
+        <p class="p-desc">Three pieces of work on UCSD&rsquo;s American Solar Challenge car: the Ackermann steering geometry from trade study through ANSYS FEA into steel, the weld fixturing that got it onto the chassis, and the driver control module housing.</p>
         <div class="p-result">Geometry trade study, ANSYS FEA, steel fabrication. The part is on the car.</div>
         <div class="p-tags">
           <span class="tag key">SolidWorks</span>
@@ -735,7 +892,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
       </div>
     </article>
 
-    <!-- ═══ PROJECT GRID: 3 items, 3 cells ═══ -->
+    </div><!-- /p-set 01 -->
+
+    <!-- ═══ GROUP 02 ═══ -->
+    <div class="p-set">
+    <div class="p-group reveal">
+      <span class="p-group-n">02</span>
+      <h3 class="p-group-t">Energy systems</h3>
+      <span class="p-group-line" aria-hidden="true"></span>
+    </div>
+
     <div class="p-grid">
 
       <article class="p-card wide reveal" id="proj-cce" data-case="cs-cce" tabindex="0" role="button" aria-label="Open case study: commercial solar PV design">
@@ -774,6 +940,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
           <span class="p-link">Read study <span class="arw" aria-hidden="true">&rarr;</span></span>
         </div>
       </article>
+
+    </div>
+    </div><!-- /p-set 02 -->
+
+    <!-- ═══ GROUP 03 ═══ -->
+    <div class="p-set">
+    <div class="p-group reveal">
+      <span class="p-group-n">03</span>
+      <h3 class="p-group-t">Independent research</h3>
+      <span class="p-group-line" aria-hidden="true"></span>
+    </div>
+
+    <div class="p-grid">
 
       <article class="p-card reveal" data-case="cs-research" tabindex="0" role="button" aria-label="Open case study: rotor swept area and solar tilt studies">
         <div class="p-media">
@@ -818,6 +997,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
       -->
 
     </div>
+    </div><!-- /p-set 03 -->
   </div>
 </section>
 
@@ -957,12 +1137,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 <!-- ══════════════════ CONTACT ══════════════════ -->
 <section id="contact">
   <div class="wrap">
-    <div class="coral-band reveal">
+    <div class="brand-band reveal">
+      <span class="k mono-label">Get in touch</span>
       <h2 class="display-lg">Let&rsquo;s build something<br>that has to work.</h2>
-      <div class="coral-links">
-        <a class="btn btn-on-coral" href="mailto:owali@ucsd.edu">owali@ucsd.edu</a>
-        <a class="btn btn-on-coral" href="https://www.linkedin.com/in/omar-wali-42b9192a2/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn btn-on-coral" href="tel:+18582208206">(858)&nbsp;220-8206</a>
+      <div class="brand-links">
+        <a class="btn btn-on-brand" href="mailto:owali@ucsd.edu">owali@ucsd.edu</a>
+        <a class="btn btn-on-brand" href="https://www.linkedin.com/in/omar-wali-42b9192a2/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-on-brand" href="tel:+18582208206">(858)&nbsp;220-8206</a>
       </div>
     </div>
   </div>
@@ -994,11 +1175,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   </div></div>
   <div class="cs-content">
     <div class="cs-tag">Mechanical design, FEA, fabrication, 2025 to present</div>
-    <h1 class="cs-title display-lg">Ackermann steering system</h1>
+    <h1 class="cs-title display-lg">Ackermann steering, fixturing and driver controls</h1>
 
     <div class="cs-meta">
       <div><div class="cs-meta-k">Team</div><div class="cs-meta-v">Triton Solar Car, UC San Diego</div></div>
-      <div><div class="cs-meta-k">Role</div><div class="cs-meta-v">Steering and ergonomics</div></div>
+      <div><div class="cs-meta-k">Role</div><div class="cs-meta-v">Steering, fabrication, driver controls</div></div>
       <div><div class="cs-meta-k">Tools</div><div class="cs-meta-v">SolidWorks, Fusion 360, ANSYS, CNC, steel fab</div></div>
       <div><div class="cs-meta-k">Status</div><div class="cs-meta-v">Fabricated and run on the car</div></div>
     </div>
@@ -1016,10 +1197,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
     <div class="cs-body">
 
-      <h2>The problem</h2>
+      <h2 class="cs-part first" data-toc="Steering geometry and FEA"><span class="cs-part-n">Part 01</span>Steering geometry and FEA</h2>
+
+      <h3>The problem</h3>
       <p>When a car turns, the inner and outer wheels trace arcs of different radii. Parallel steering makes the outer tyre scrub sideways. <em>Ackermann geometry</em> fixes that, but the real question is how much Ackermann. Full Ackermann minimises scrub at low speed. Partial distributes lateral load better at speed. My task was to run the trade study, pick the number, and build it.</p>
 
-      <h2>Geometry and iteration</h2>
+      <h3>Geometry and iteration</h3>
       <p>I drew construction lines in SolidWorks from the rear axle centrepoint through each kingpin axis. Tie rod endpoints have to fall on those lines to produce true Ackermann behaviour. Then I iterated tie rod positions, each one producing a different Ackermann percentage, until the scrub against load tradeoff landed at <em>21.5&deg; inner and 16.8&deg; outer</em>.</p>
 
       <div class="cs-media contain" style="aspect-ratio:16/9">
@@ -1031,10 +1214,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
         <img src="ackermann-3d-model.png" alt="3D model of the steering linkage" loading="lazy" decoding="async">
       </div>
 
-      <h2>The kingpin complication</h2>
+      <h3>The kingpin complication</h3>
       <p>The suspension team&rsquo;s kingpin geometry had a Z axis rotation component, not the purely simplified Y axis my initial analysis assumed. First generation car, no prior precedent on the team. I made a documented assumption, proceeded, and built the part.</p>
 
-      <h2>FEA, and what it missed</h2>
+      <h3>FEA, and what it missed</h3>
       <p>ANSYS static structural under what I called worst case combined kingpin loading, a hard turn plus an impact event. Peak von Mises came out at 55,338&nbsp;psi. I cleared the design.</p>
       <p>It failed on the car. The part yielded in torsion, and torsion was not in the load case I had built. The mesh was fine, the solve was fine, the material model was fine. The loading assumption underneath all of it was wrong, so the analysis confirmed a case that never governed. The plate was thickened for the rebuild.</p>
       <p>Every load case I have written since starts from a different question. Not which load is easiest to apply, but which failure mode actually governs this part.</p>
@@ -1053,7 +1236,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
         <img src="ansys-fea.png" alt="ANSYS von Mises stress plot of the steering plate" loading="lazy" decoding="async">
       </div>
 
-      <h2>Fabrication</h2>
+      <h2 class="cs-part" data-toc="Fabrication and weld fixturing"><span class="cs-part-n">Part 02</span>Fabrication and weld fixturing</h2>
+
+      <h3>Cutting and fitting the geometry</h3>
       <p>CNC wood prototypes first, fast and cheap to validate fit on the car before touching steel. Once the geometry checked out I recut in steel plate. Tie rod endpoints are the critical tolerance. A few millimetres off changes the effective Ackermann percentage.</p>
 
       <div class="cs-pair">
@@ -1067,7 +1252,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
         <div class="cs-media" style="aspect-ratio:4/3"><img src="fabrication-chassis.png" alt="Steering system mounted on the chassis" loading="lazy" decoding="async"></div>
       </div>
 
-      <h2>Weld jig for the cross bar</h2>
+      <h3>Weld jig for the cross bar</h3>
       <p>Getting the cross bar tabbed in the right place is a fixturing problem, not a welding one. Clamps alone let the bar walk while you are setting up, and once heat goes in the position is permanent. So I cut the bar to length on the horizontal bandsaw, then printed a jig that indexes it off the frame tube. Drop the jig on, clamp through it, and the bar is held square while the tabs go down.</p>
 
       <div class="cs-media" style="aspect-ratio:16/10">
@@ -1085,7 +1270,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
         </div>
       </div>
 
-      <h2>Steering wheel control module</h2>
+      <h2 class="cs-part" data-toc="Driver control module"><span class="cs-part-n">Part 03</span>Driver control module</h2>
+
+      <h3>Designing the housing</h3>
       <p>ASC regulations require all controls to rotate with the wheel, so the button module housing had to clip onto the module and turn with the column. The module had an unusual elliptical profile, so I modelled it fully in CAD before printing anything.</p>
       <p>My first design was overengineered, solving problems I had not encountered yet. The redesign strips it to the functional core.</p>
 
@@ -1097,7 +1284,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
         <img src="button-module-cad-complex.png" alt="The overengineered first CAD design of the button housing" loading="lazy" decoding="async">
       </div>
 
-      <h2>Tolerancing when calipers aren&rsquo;t enough</h2>
+      <h3>Tolerancing when calipers aren&rsquo;t enough</h3>
       <p>The usual rule is to measure the physical part, not the spec sheet. The problem here was that several critical dimensions on the button module were geometrically inaccessible: recessed curves and internal features you cannot reach with calipers no matter how you try. Iteration became the measurement tool.</p>
       <p>Each print revealed something specific. Mounting holes oversized from shrinkage. Curved faces not seating flush. And a recurring structural issue, inner walls thin enough that the clips would snap off under the force needed to seat the module. The fix was not only dimensional. I varied infill percentage and wall thickness until the part was stiff enough to survive assembly without the critical features breaking.</p>
 
@@ -1105,7 +1292,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
         <img src="IMG_0373.jpg" alt="All tolerancing test iterations laid out together" loading="lazy" decoding="async">
       </div>
 
-      <h2>Final assembly</h2>
+      <h3>Final assembly</h3>
       <p>CNC machined aluminium backplate, dimensioned against the SolidWorks reference. Module clips into the holder, holder mounts to the backplate, backplate bolts to the wheel.</p>
 
       <div class="cs-pair">
@@ -1335,7 +1522,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    project means editing this array, not four hardcoded blocks.
    ══════════════════════════════════════════════════════════════ */
 const PROJECTS = [
-  { id: 'cs-triton',   title: 'Ackermann steering system',           blurb: 'Geometry trade study, ANSYS FEA, steel fabrication, and the torsional failure that followed.' },
+  { id: 'cs-triton',   title: 'Ackermann steering and driver controls', blurb: 'Geometry trade study, ANSYS FEA, steel fabrication, and the torsional failure that followed.' },
   { id: 'cs-cce',      title: 'Commercial solar PV design',          blurb: 'Helioscope layout, utility bill analysis, and 20 year financial models for real clients.' },
   { id: 'cs-solar',    title: 'Solar carport, Shatila refugee camp', blurb: '4,736 panels, 4.38 GWh per year, published in Curieux Academic Journal.' },
   { id: 'cs-research', title: 'Rotor area and solar tilt studies',   blurb: 'Printed rotor scaling experiment plus a calculus based monthly tilt schedule.' }
@@ -1343,6 +1530,31 @@ const PROJECTS = [
 
 document.documentElement.classList.add('js');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLL LOCK
+   One implementation for the drawing viewer and the case studies.
+   Unlocking restores the offset in the same frame the fixed
+   positioning is removed, so the page never flashes at the top.
+   ══════════════════════════════════════════════════════════════ */
+var lockY = 0, lockDepth = 0;
+function lockScroll() {
+  if (lockDepth++ > 0) return;
+  lockY = window.scrollY;
+  document.body.style.top = '-' + lockY + 'px';
+  document.body.classList.add('locked');
+}
+function unlockScroll() {
+  if (--lockDepth > 0) return;
+  lockDepth = 0;
+  var root = document.documentElement;
+  var prev = root.style.scrollBehavior;
+  root.style.scrollBehavior = 'auto';
+  document.body.classList.remove('locked');
+  document.body.style.top = '';
+  window.scrollTo(0, lockY);
+  root.style.scrollBehavior = prev;
+}
 
 /* decorative loops must not autoplay under reduced motion, but the frame stays */
 if (reduceMotion) {
@@ -1372,10 +1584,10 @@ if (reduceMotion) {
   var revealObs = new IntersectionObserver(function (entries) {
     entries.forEach(function (e, i) {
       if (!e.isIntersecting) return;
-      setTimeout(function () { e.target.classList.add('visible'); }, i * 70);
+      setTimeout(function () { e.target.classList.add('visible'); }, Math.min(i, 4) * 50);
       revealObs.unobserve(e.target);
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(function (r) { revealObs.observe(r); });
 }
 
@@ -1415,28 +1627,20 @@ navLinks.forEach(function (link) {
   var closeBtn = document.getElementById('lb-close');
   if (!box) return;
   var opener = null;
-  var scrollY = 0;
 
   function open(btn) {
     opener = btn;
     img.src = btn.dataset.full;
     img.alt = btn.dataset.title || '';
-    scrollY = window.scrollY;
     box.hidden = false;
-    document.body.style.top = '-' + scrollY + 'px';
-    document.body.classList.add('locked');
+    lockScroll();
     closeBtn.focus();
   }
 
   function close() {
     box.hidden = true;
     img.src = '';
-    document.body.classList.remove('locked');
-    document.body.style.top = '';
-    var prev = document.documentElement.style.scrollBehavior;
-    document.documentElement.style.scrollBehavior = 'auto';
-    window.scrollTo(0, scrollY);
-    document.documentElement.style.scrollBehavior = prev;
+    unlockScroll();
     if (opener) { opener.focus({ preventScroll: true }); opener = null; }
   }
 
@@ -1455,7 +1659,6 @@ navLinks.forEach(function (link) {
    Deep linkable: yoursite/?case=cs-triton opens straight into a
    study, so you can send one recruiter one link to one project.
    ══════════════════════════════════════════════════════════════ */
-var savedScroll = 0;
 var lastTrigger = null;
 
 (function buildMoreGrids() {
@@ -1478,29 +1681,22 @@ var lastTrigger = null;
 function openCase(id, push) {
   var el = document.getElementById(id);
   if (!el) return;
-  savedScroll = window.scrollY;
   el.classList.add('open');
   el.scrollTop = 0;
-  document.body.style.top = '-' + savedScroll + 'px';
-  document.body.classList.add('locked');
+  lockScroll();
   el.setAttribute('tabindex', '-1');
   el.focus({ preventScroll: true });
+  syncToc(el);
   if (push !== false) history.pushState({ caseId: id }, '', '?case=' + id);
 }
 
 function closeCase(id, push) {
   var el = id ? document.getElementById(id) : document.querySelector('.case-study.open');
   if (!el) return;
+  closeToc(el);
   el.scrollTop = 0;
   el.classList.remove('open');
-  document.body.classList.remove('locked');
-  document.body.style.top = '';
-  requestAnimationFrame(function () {
-    var prev = document.documentElement.style.scrollBehavior;
-    document.documentElement.style.scrollBehavior = 'auto';
-    window.scrollTo(0, savedScroll);
-    document.documentElement.style.scrollBehavior = prev;
-  });
+  unlockScroll();
   if (lastTrigger) { lastTrigger.focus({ preventScroll: true }); lastTrigger = null; }
   if (push !== false) history.pushState({}, '', location.pathname);
 }
@@ -1525,17 +1721,24 @@ document.addEventListener('click', function (e) {
   var to = goto.dataset.goto;
   var el = document.getElementById(to);
   if (!el) return;
+  closeToc(from);
   from.classList.remove('open');
   from.scrollTop = 0;
   el.classList.add('open');
   el.scrollTop = 0;
   el.setAttribute('tabindex', '-1');
   el.focus({ preventScroll: true });
+  syncToc(el);
   history.pushState({ caseId: to }, '', '?case=' + to);
 });
 
 document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape' && document.querySelector('.case-study.open')) closeCase();
+  if (e.key !== 'Escape') return;
+  var open = document.querySelector('.case-study.open');
+  if (!open) return;
+  var panel = open.querySelector('.cs-toc');
+  if (panel && !panel.hidden) { closeToc(open); return; }
+  closeCase();
 });
 
 /* browser back closes or switches the overlay */
@@ -1544,6 +1747,142 @@ addEventListener('popstate', function (e) {
   var want = e.state && e.state.caseId;
   if (open && open.id !== want) closeCase(open.id, false);
   if (want && (!open || open.id !== want)) openCase(want, false);
+});
+
+/* ══════════════════════════════════════════════════════════════
+   CONTENTS NAVIGATION
+   Built by scanning each study for h2 and h3. Add a heading and it
+   appears here on its own: no list to maintain, and nothing new
+   gets buried at the bottom of a long study.
+     h2.cs-part = a part, h2 = a plain section, h3 = a subsection
+   ══════════════════════════════════════════════════════════════ */
+function pad(i) { return (i + 1 < 10 ? '0' : '') + (i + 1); }
+function esc(str) {
+  return String(str).replace(/[&<>"]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+  });
+}
+
+(function buildContents() {
+  document.querySelectorAll('.case-study').forEach(function (cs) {
+    var body = cs.querySelector('.cs-body');
+    if (!body) return;
+
+    var heads = Array.prototype.filter.call(
+      body.querySelectorAll('h2, h3'),
+      function (h) { return !h.closest('.cs-more'); }
+    );
+    if (heads.length < 2) return;
+
+    var top = 0;
+    var items = heads.map(function (h, i) {
+      var isSub = h.tagName === 'H3';
+      var label = h.dataset.toc || h.textContent.trim();
+      if (!h.id) h.id = cs.id + '-h' + i;
+      if (!isSub) top++;
+      return { el: h, sub: isSub, label: label, num: isSub ? '' : pad(top - 1) };
+    });
+    cs._toc = items;
+
+    /* control in the sticky bar, replacing the static label */
+    var navInner = cs.querySelector('.cs-nav-inner');
+    var oldLabel = navInner.querySelector('.mono-label');
+    var btn = document.createElement('button');
+    btn.className = 'cs-toc-btn';
+    btn.type = 'button';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<span>Contents</span><span class="cur"></span>' +
+                    '<svg class="cev" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">' +
+                    '<path d="M1 3.5 5 7.5 9 3.5" fill="none" stroke="currentColor" stroke-width="1.5" ' +
+                    'stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    if (oldLabel) oldLabel.replaceWith(btn); else navInner.appendChild(btn);
+
+    var panel = document.createElement('div');
+    panel.className = 'cs-toc';
+    panel.hidden = true;
+    panel.innerHTML = items.map(function (it, i) {
+      return '<button class="cs-toc-i' + (it.sub ? ' sub' : '') + '" data-jump="' + i + '">' +
+             (it.sub ? '' : '<span class="num">' + it.num + '</span>') +
+             '<span>' + esc(it.label) + '</span></button>';
+    }).join('');
+    navInner.appendChild(panel);
+
+    /* an inline index, but only where a study is long enough to need one */
+    if (heads.length >= 6) {
+      var tops = items.filter(function (it) { return !it.sub; });
+      var idx = document.createElement('div');
+      idx.className = 'cs-index';
+      idx.innerHTML = '<div class="cs-index-h mono-label">In this case study</div>' +
+        '<div class="cs-index-l">' + tops.map(function (it) {
+          var subs = [], j = items.indexOf(it) + 1;
+          while (j < items.length && items[j].sub) { subs.push(items[j].label); j++; }
+          return '<button class="cs-index-i" data-jump="' + items.indexOf(it) + '">' +
+                 '<span class="num">Part ' + it.num + '</span>' +
+                 '<span class="ttl">' + esc(it.label) + '</span>' +
+                 (subs.length ? '<span class="sub">' + esc(subs.join(' &middot; ')).replace(/&amp;middot;/g, '&middot;') + '</span>' : '') +
+                 '</button>';
+        }).join('') + '</div>';
+      body.insertBefore(idx, body.firstChild);
+    }
+  });
+})();
+
+function closeToc(cs) {
+  var panel = cs && cs.querySelector('.cs-toc');
+  if (!panel) return;
+  panel.hidden = true;
+  cs.querySelector('.cs-toc-btn').setAttribute('aria-expanded', 'false');
+}
+
+function jumpTo(cs, i) {
+  var it = cs._toc && cs._toc[i];
+  if (!it) return;
+  closeToc(cs);
+  var y = it.el.offsetTop - 92;
+  if (reduceMotion) cs.scrollTop = y;
+  else cs.scrollTo({ top: y, behavior: 'smooth' });
+}
+
+/* current section, read off the overlay's own scroll position */
+function syncToc(cs) {
+  var items = cs._toc;
+  if (!items) return;
+  var y = cs.scrollTop + 108, cur = 0;
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].el.offsetTop <= y) cur = i;
+  }
+  var top = cur;
+  while (top > 0 && items[top].sub) top--;
+  var label = cs.querySelector('.cs-toc-btn .cur');
+  if (label) label.textContent = cs.scrollTop > 240 ? items[top].label : '';
+  cs.querySelectorAll('.cs-toc-i').forEach(function (b, i) {
+    b.classList.toggle('on', i === cur);
+  });
+}
+
+document.querySelectorAll('.case-study').forEach(function (cs) {
+  if (!cs._toc) return;
+  var queued = false;
+  cs.addEventListener('scroll', function () {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function () { queued = false; syncToc(cs); });
+  }, { passive: true });
+
+  cs.addEventListener('click', function (e) {
+    var btn = e.target.closest('.cs-toc-btn');
+    if (btn) {
+      var panel = cs.querySelector('.cs-toc');
+      var willOpen = panel.hidden;
+      panel.hidden = !willOpen;
+      btn.setAttribute('aria-expanded', String(willOpen));
+      if (willOpen) syncToc(cs);
+      return;
+    }
+    var jump = e.target.closest('[data-jump]');
+    if (jump) { jumpTo(cs, +jump.dataset.jump); return; }
+    if (!e.target.closest('.cs-toc')) closeToc(cs);
+  });
 });
 
 /* deep link on first load */
