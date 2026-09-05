@@ -2,2123 +2,1352 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Omar Wali — Engineering Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Omar Wali, Engineering Portfolio</title>
+<meta name="description" content="Omar Wali, mechanical and structural engineering portfolio: Ackermann steering design and fabrication, FEA, solar PV design, and independent research.">
+<meta name="theme-color" content="#faf9f5">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="car-assembly-hero.jpg" fetchpriority="high">
-<meta name="description" content="Omar Wali — mechanical and structural engineering portfolio: Ackermann steering design and fabrication, FEA, solar PV design, and independent research.">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --bg:        #ffffff;
-    --bg2:       #f8fafc;
-    --bg3:       #f1f5f9;
-    --border:    #e2e8f0;
-    --border2:   #cbd5e1;
-    --text:      #0f172a;
-    --body:      #334155;
-    --muted:     #64748b;
-    --faint:     #94a3b8;
-    --cyan:      #0e7490;
-    --cyan2:     #06b6d4;
-    --cyan-ink:  #155e75;
-    --cyan-tint: #ecfeff;
-    --cyan-line: #a5f3fc;
-    --font-head: 'Space Grotesk', sans-serif;
-    --font-mono: 'IBM Plex Mono', monospace;
-    --font-body: 'Inter', sans-serif;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 88px;
-    scrollbar-gutter: stable;
-    -webkit-text-size-adjust: 100%;
-  }
-
-  * { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border: 2px solid var(--bg);
-    border-radius: 6px;
-  }
-  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-  .js img { opacity: 0; transition: opacity 0.45s ease; }
-  .js img.is-loaded { opacity: 1; }
-
-  :focus-visible { outline: 2px solid var(--cyan2); outline-offset: 3px; }
-
-  ::selection { background: var(--cyan-line); color: var(--text); }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-    .js img { opacity: 1; }
-    .reveal { opacity: 1 !important; transform: none !important; }
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--body);
-    font-family: var(--font-body);
-    font-weight: 400;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* ── SUBTLE BLUEPRINT GRID (hero area only, fades out) ── */
-  body::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 760px;
-    background-image:
-      linear-gradient(rgba(8,145,178,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(8,145,178,0.05) 1px, transparent 1px);
-    background-size: 44px 44px;
-    -webkit-mask-image: linear-gradient(#000 55%, transparent);
-    mask-image: linear-gradient(#000 55%, transparent);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 48px;
-    height: 64px;
-    background: rgba(255,255,255,0.82);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid transparent;
-    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  nav.scrolled {
-    background: rgba(255,255,255,0.94);
-    border-bottom-color: var(--border);
-    box-shadow: 0 1px 12px rgba(15,23,42,0.05);
-  }
-
-  body.locked {
-    position: fixed;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .nav-logo {
-    font-family: var(--font-head);
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: 0.02em;
-    text-decoration: none;
-  }
-
-  .nav-logo span { color: var(--cyan); }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.01em;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
-  .nav-links a.active { color: var(--cyan); }
-
-  .nav-cta {
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff !important;
-    background: var(--cyan);
-    padding: 8px 18px;
-    border-radius: 8px;
-    text-decoration: none;
-  }
-
-  .nav-cta:hover { background: var(--cyan-ink); color: #fff !important; }
-
-  /* ── SECTIONS ── */
-  section {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ── HERO ── */
-  #hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 140px 48px 64px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .hero-tag {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--cyan);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 500;
-  }
-
-  .hero-tag::before {
-    content: '';
-    display: block;
-    width: 32px;
-    height: 2px;
-    background: var(--cyan2);
-  }
-
-  .hero-name {
-    font-family: var(--font-head);
-    font-size: clamp(46px, 6.5vw, 78px);
-    font-weight: 700;
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-    color: var(--text);
-    margin-bottom: 18px;
-  }
-
-  .hero-name span { color: var(--cyan); }
-
-  .hero-title {
-    font-family: var(--font-head);
-    font-size: clamp(17px, 2.2vw, 23px);
-    font-weight: 500;
-    color: var(--muted);
-    margin-bottom: 28px;
-    letter-spacing: -0.01em;
-  }
-
-  .hero-title strong {
-    color: var(--text);
-    font-weight: 600;
-  }
-
-  .hero-bio {
-    font-size: 17px;
-    color: var(--body);
-    max-width: 620px;
-    line-height: 1.75;
-    margin-bottom: 32px;
-  }
-
-  .hero-bio em {
-    color: var(--text);
-    font-style: normal;
-    font-weight: 500;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .btn-primary {
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    background: var(--cyan);
-    color: #fff;
-    padding: 13px 28px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(8,145,178,0.25);
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-  }
-
-  .btn-primary:hover {
-    background: var(--cyan-ink);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(8,145,178,0.3);
-  }
-
-  .btn-ghost {
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--text);
-    padding: 13px 28px;
-    border: 1.5px solid var(--border2);
-    border-radius: 10px;
-    transition: border-color 0.2s, color 0.2s, background 0.2s;
-  }
-
-  .btn-ghost:hover {
-    border-color: var(--cyan);
-    color: var(--cyan);
-    background: var(--cyan-tint);
-  }
-
-  .hero-stats {
-    display: flex;
-    gap: 44px;
-    margin-top: 52px;
-    padding-top: 30px;
-    border-top: 1px solid var(--border);
-    flex-wrap: wrap;
-  }
-
-  .stat-item {}
-
-  .stat-num {
-    font-family: var(--font-head);
-    font-size: 34px;
-    font-weight: 700;
-    color: var(--cyan);
-    line-height: 1;
-    margin-bottom: 6px;
-    letter-spacing: -0.02em;
-  }
-
-  .stat-label {
-    font-family: var(--font-body);
-    font-size: 12.5px;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 0.02em;
-  }
-
-  /* ── SECTION HEADERS ── */
-  .section-wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 80px 48px;
-  }
-
-  .section-label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--cyan);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 500;
-  }
-
-  .section-label::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--cyan2);
-  }
-
-  .section-title {
-    font-family: var(--font-head);
-    font-size: clamp(28px, 3.5vw, 40px);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 36px;
-    color: var(--text);
-  }
-
-  /* ── PROJECTS ── */
-  #projects { background: var(--bg); }
-
-  .project-group-label {
-    font-family: var(--font-head);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    padding: 10px 16px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--cyan);
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 20px;
-    margin-top: 48px;
-  }
-  .project-group-label:first-of-type { margin-top: 0; }
-
-  .project-featured {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    margin-bottom: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 360px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-  }
-
-  .project-featured:hover {
-    border-color: var(--cyan2);
-    box-shadow: 0 8px 28px rgba(8,145,178,0.12);
-    transform: translateY(-2px);
-  }
-
-  .project-media {
-    background: var(--bg3);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .project-media img,
-  .project-media video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .media-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    color: var(--faint);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-align: center;
-    padding: 40px;
-  }
-
-  .media-placeholder .icon {
-    width: 48px;
-    height: 48px;
-    border: 1px dashed var(--faint);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    margin-bottom: 8px;
-  }
-
-  .project-info {
-    padding: 40px 44px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .project-num {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--cyan);
-    letter-spacing: 0.08em;
-    margin-bottom: 16px;
-    font-weight: 500;
-  }
-
-  .project-title {
-    font-family: var(--font-head);
-    font-size: 27px;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.015em;
-    margin-bottom: 14px;
-    color: var(--text);
-  }
-
-  .project-desc {
-    font-size: 15px;
-    color: var(--body);
-    line-height: 1.72;
-    margin-bottom: 20px;
-    flex: 1;
-  }
-
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-
-  .tag {
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    padding: 5px 12px;
-    border: 1px solid var(--border);
-    background: var(--bg2);
-    color: var(--muted);
-    border-radius: 999px;
-  }
-
-  .tag.highlight {
-    border-color: var(--cyan-line);
-    background: var(--cyan-tint);
-    color: var(--cyan-ink);
-  }
-
-  .project-link {
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    color: var(--cyan);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: gap 0.2s, color 0.2s;
-  }
-
-  .project-link:hover { gap: 14px; color: var(--cyan-ink); }
-  .project-link::after { content: '→'; }
-
-  /* Project grid (smaller cards) */
-  .project-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .project-card {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
-    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    cursor: default;
-    overflow: hidden;
-  }
-
-  .project-card:hover {
-    border-color: var(--cyan2);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 28px rgba(8,145,178,0.12);
-  }
-
-  .card-thumb {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    background: var(--bg3);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .card-thumb-placeholder {
-    width: 100%;
-    height: 160px;
-    background: #0f172a;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .card-thumb-placeholder img {
-    max-height: 56px;
-    width: auto;
-  }
-
-  .card-body {
-    padding: 24px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .card-result {
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: var(--cyan-ink);
-    letter-spacing: 0.02em;
-    padding: 7px 12px;
-    background: var(--cyan-tint);
-    border-left: 2px solid var(--cyan2);
-    border-radius: 0 6px 6px 0;
-    margin-bottom: 2px;
-  }
-
-  .card-num {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--faint);
-    letter-spacing: 0.1em;
-  }
-
-  .card-title {
-    font-family: var(--font-head);
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.3;
-    letter-spacing: -0.01em;
-  }
-
-  .card-desc {
-    font-size: 14px;
-    color: var(--body);
-    line-height: 1.68;
-    flex: 1;
-  }
-
-  /* ── SKILLS ── */
-  #skills { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-
-  .skill-block {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px 26px;
-    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
-  }
-
-  .skill-category {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--cyan);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    font-weight: 500;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .skill-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-  }
-
-  .skill-list li {
-    font-size: 14px;
-    color: var(--body);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .skill-list li::before {
-    content: '';
-    display: block;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--cyan2);
-    flex-shrink: 0;
-  }
-
-  /* ── ABOUT ── */
-  #about {}
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 72px;
-    align-items: start;
-  }
-
-  .about-text p {
-    font-size: 16px;
-    color: var(--body);
-    line-height: 1.85;
-    margin-bottom: 20px;
-  }
-
-  .about-text p em {
-    color: var(--text);
-    font-style: normal;
-    font-weight: 500;
-  }
-
-  .about-details {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 12px 26px;
-  }
-
-  .detail-row {
-    display: flex;
-    gap: 16px;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .detail-row:last-child { border-bottom: none; }
-
-  .detail-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--faint);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    min-width: 92px;
-    padding-top: 3px;
-  }
-
-  .detail-value {
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  /* ── CONTACT ── */
-  #contact { background: var(--text); }
-
-  #contact .section-wrap { padding: 88px 48px; }
-
-  .contact-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 40px;
-  }
-
-  .contact-heading {
-    font-family: var(--font-head);
-    font-size: clamp(30px, 4vw, 50px);
-    font-weight: 700;
-    color: #fff;
-    max-width: 520px;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-  }
-
-  .contact-heading span { color: var(--cyan2); }
-
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  .contact-link {
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-weight: 500;
-    color: #cbd5e1;
-    text-decoration: none;
-    letter-spacing: 0.01em;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    transition: color 0.2s;
-  }
-
-  .contact-link:hover { color: var(--cyan2); }
-
-  .contact-link .cl {
-    width: 28px;
-    height: 2px;
-    background: rgba(148,163,184,0.4);
-    display: block;
-    transition: background 0.2s;
-  }
-
-  .contact-link:hover .cl { background: var(--cyan2); }
-
-  /* ── FOOTER ── */
-  footer {
-    position: relative;
-    z-index: 1;
-    padding: 26px 48px;
-    background: var(--text);
-    border-top: 1px solid rgba(148,163,184,0.15);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  footer span {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: #64748b;
-    letter-spacing: 0.06em;
-  }
-
-  /* ── DIVIDER ── */
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: var(--border);
-    margin: 0;
-  }
-
-  .hero-avail {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    font-family: var(--font-body);
-    font-size: 13.5px;
-    font-weight: 500;
-    color: var(--muted);
-    padding-left: 6px;
-  }
-
-  .hero-avail .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #10b981;
-    box-shadow: 0 0 0 4px rgba(16,185,129,0.15);
-    flex-shrink: 0;
-  }
-
-  /* ── SCROLL ANIMATIONS ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-tag   { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
-  .hero-name  { animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
-  .hero-title { animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.32s both; }
-  .hero-bio   { animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.42s both; }
-  .hero-cta   { animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.52s both; }
-  .hero-stats { animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.65s both; }
-
-  a, button { transition: all 0.25s cubic-bezier(0.22,1,0.36,1); }
-
-  /* ── CASE STUDY IMAGE COMPRESSION ── */
-  .cs-media-full img,
-  .cs-media-full video {
-    width: 100%;
-    max-height: 420px;
-    object-fit: cover;
-    display: block;
-  }
-
-  .cs-media-full img[style*="object-fit:contain"],
-  .cs-media-full img[style*="object-fit: contain"] {
-    max-height: 320px;
-  }
-
-  .cs-media-pair {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-
-  .cs-media-pair .cs-media-full {
-    margin-bottom: 0;
-  }
-
-  .cs-cap {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    margin: 8px 0 20px;
-  }
-
-  .cs-media-pair + .cs-cap-pair {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  /* ── CASE STUDY PAGE ── */
-  .case-study {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--bg);
-    z-index: 200;
-    overflow-y: auto;
-  }
-
-  .case-study.open {
-    display: block;
-    animation: caseIn 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .case-study:focus { outline: none; }
-
-  @keyframes caseIn {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: none; }
-  }
-
-  .cs-nav {
-    position: sticky;
-    top: 0;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 48px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    z-index: 10;
-  }
-
-  .cs-back {
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.01em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    transition: color 0.2s;
-  }
-
-  .cs-back:hover { color: var(--cyan); }
-  .cs-back::before { content: '←'; }
-
-  .cs-content {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 72px 48px;
-  }
-
-  .cs-tag {
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: var(--cyan);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 18px;
-    font-weight: 500;
-  }
-
-  .cs-title {
-    font-family: var(--font-head);
-    font-size: clamp(34px, 5vw, 56px);
-    font-weight: 700;
-    line-height: 1.06;
-    margin-bottom: 32px;
-    letter-spacing: -0.025em;
-    color: var(--text);
-  }
-
-  .cs-meta {
-    display: flex;
-    gap: 40px;
-    padding: 22px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 28px;
-    flex-wrap: wrap;
-  }
-
-  .cs-meta-item {}
-  .cs-meta-label {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    color: var(--faint);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .cs-meta-val {
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .cs-media-full {
-    width: 100%;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .cs-media-full img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain;
-  }
-
-  .cs-media-full video {
-    width: 100%;
-    height: auto;
-    min-height: 260px;
-    max-height: 480px;
-    object-fit: cover;
-  }
-
-  .cs-media-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 44px;
-  }
-
-  .cs-media-grid .cs-media-full {
-    margin-bottom: 0;
-  }
-
-  .cs-media-grid .cs-media-full img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    object-position: center;
-    display: block;
-  }
-
-  .cs-body h2 {
-    font-family: var(--font-head);
-    font-size: 23px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.015em;
-    margin: 48px 0 16px;
-    padding-top: 44px;
-    border-top: 1px solid var(--border);
-  }
-
-  .cs-body h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
-
-  .cs-body p {
-    font-size: 16px;
-    color: var(--body);
-    line-height: 1.85;
-    margin-bottom: 20px;
-  }
-
-  .cs-body p em {
-    color: var(--cyan-ink);
-    font-style: normal;
-    font-weight: 600;
-  }
-
-  .cs-body strong {
-    color: var(--text);
-    font-weight: 600;
-  }
-
-  .cs-stat-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin: 36px 0;
-  }
-
-  .cs-stat {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--cyan2);
-    border-radius: 10px;
-    padding: 22px 24px;
-  }
-
-  .cs-stat-num {
-    font-family: var(--font-head);
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--cyan);
-    line-height: 1;
-    margin-bottom: 8px;
-    letter-spacing: -0.02em;
-  }
-
-  .cs-stat-desc {
-    font-family: var(--font-body);
-    font-size: 12.5px;
-    color: var(--muted);
-    letter-spacing: 0.01em;
-    line-height: 1.5;
-    font-weight: 500;
-  }
-
-  .cs-callout {
-    border-left: 3px solid var(--cyan2);
-    padding: 20px 24px;
-    background: var(--cyan-tint);
-    border-radius: 0 10px 10px 0;
-    margin: 32px 0;
-  }
-
-  .cs-callout p {
-    margin-bottom: 0;
-    color: var(--cyan-ink);
-    font-weight: 500;
-  }
-
-  .cs-skills-used {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 0 0 28px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 36px;
-  }
-
-  .cs-skill-pill {
-    font-family: var(--font-body);
-    font-size: 12.5px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    padding: 6px 14px;
-    border: 1px solid var(--cyan-line);
-    color: var(--cyan-ink);
-    background: var(--cyan-tint);
-    border-radius: 999px;
-  }
-
-  .cs-skill-pill.secondary {
-    border-color: var(--border);
-    color: var(--muted);
-    background: var(--bg2);
-  }
-
-  .cs-other-projects {
-    margin-top: 64px;
-    padding-top: 40px;
-    border-top: 1px solid var(--border);
-  }
-
-  .cs-other-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--cyan);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    font-weight: 500;
-  }
-
-  .cs-other-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .cs-other-card {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
-    cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .cs-other-card:hover {
-    border-color: var(--cyan2);
-    box-shadow: 0 4px 16px rgba(8,145,178,0.1);
-  }
-
-  .cs-other-num {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--faint);
-    letter-spacing: 0.1em;
-    margin-bottom: 8px;
-  }
-
-  .cs-other-title {
-    font-family: var(--font-head);
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 6px;
-    line-height: 1.3;
-  }
-
-  .cs-other-desc {
-    font-size: 12.5px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  @media (max-width: 900px) {
-    nav { padding: 0 24px; }
-    .nav-links { gap: 20px; }
-    .nav-links li:nth-child(2), .nav-links li:nth-child(3), .nav-links li:nth-child(4) { display: none; }
-    #hero { padding: 120px 24px 60px; }
-    .section-wrap { padding: 64px 24px; }
-    .project-featured { grid-template-columns: 1fr; }
-    .project-grid { grid-template-columns: 1fr; }
-    .skills-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
-    .about-grid { grid-template-columns: 1fr; gap: 48px; }
-    .cs-content { padding: 48px 24px; }
-    .cs-nav { padding: 14px 24px; }
-    .cs-stat-row { grid-template-columns: 1fr; }
-    footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
-  }
-
-  @media (max-width: 560px) {
-    .skills-grid { grid-template-columns: 1fr; }
-    .cs-media-pair { grid-template-columns: 1fr; }
-    .cs-media-pair + .cs-cap-pair { grid-template-columns: 1fr; }
-    .hero-stats { gap: 28px; }
-  }
+/* ══════════════════════════════════════════════════════════════
+   1. TOKENS
+   Warm editorial system. Do not add colours outside this block.
+   ══════════════════════════════════════════════════════════════ */
+:root {
+  /* brand */
+  --primary:              #cc785c;   /* coral, large surfaces and display text only */
+  --primary-ink:          #a9583e;   /* darker coral, all small text and buttons (AA) */
+
+  /* text */
+  --ink:                  #141413;
+  --body-strong:          #252523;
+  --body:                 #3d3d3a;
+  --muted:                #6c6a64;
+
+  /* surfaces */
+  --canvas:               #faf9f5;
+  --surface-soft:         #f5f0e8;
+  --surface-card:         #efe9de;
+  --surface-strong:       #e8e0d2;
+  --surface-dark:         #181715;
+  --surface-dark-elev:    #252320;
+
+  /* lines */
+  --hairline:             #e6dfd8;
+  --hairline-soft:        #ebe6df;
+
+  /* on-colour */
+  --on-primary:           #ffffff;
+  --on-dark:              #faf9f5;
+  --on-dark-soft:         #a09d96;
+
+  /* semantic */
+  --success:              #5db872;
+
+  /* type */
+  --font-display: 'Source Serif 4', 'Tiempos Headline', Georgia, serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* radius scale: buttons 8, cards 12, hero 16, pills full */
+  --r-sm:   6px;
+  --r-btn:  8px;
+  --r-card: 12px;
+  --r-hero: 16px;
+  --r-pill: 9999px;
+
+  /* spacing */
+  --s-xxs: 4px;  --s-xs: 8px;   --s-sm: 12px;  --s-md: 16px;
+  --s-lg: 24px;  --s-xl: 32px;  --s-xxl: 48px; --s-section: 96px;
+
+  --maxw: 1200px;
+  --nav-h: 68px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   2. BASE
+   ══════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 24px);
+  scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--body);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba(204,120,92,0.14);
+  touch-action: manipulation;
+}
+body.locked { position: fixed; width: 100%; overflow: hidden; }
+
+* { scrollbar-width: thin; scrollbar-color: var(--surface-strong) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--surface-strong);
+  border: 2px solid var(--canvas);
+  border-radius: var(--r-sm);
+}
+::selection { background: var(--surface-strong); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--primary-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--ink); color: var(--on-dark);
+  padding: 12px 20px; border-radius: 0 0 var(--r-btn) 0;
+  font-size: 14px; font-weight: 500;
+}
+.skip-link:focus { left: 0; }
+
+.wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--s-lg); }
+
+/* ── type scale ── */
+.display-xl, .display-lg, .display-md, .display-sm {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.display-xl { font-size: clamp(46px, 7vw, 76px); line-height: 1.04; letter-spacing: -0.022em; }
+.display-lg { font-size: clamp(34px, 4.4vw, 48px); line-height: 1.1;  letter-spacing: -0.02em; }
+.display-md { font-size: clamp(27px, 3.2vw, 36px); line-height: 1.15; letter-spacing: -0.015em; }
+.display-sm { font-size: clamp(23px, 2.4vw, 28px); line-height: 1.2;  letter-spacing: -0.011em; }
+
+.lede { font-size: 18px; line-height: 1.55; color: var(--body-strong); text-wrap: pretty; }
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── reveal ── */
+.reveal { opacity: 0; transform: translateY(22px); }
+.reveal.visible {
+  opacity: 1; transform: none;
+  transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+}
+.js img { opacity: 0; transition: opacity .5s ease; }
+.js img.is-loaded { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .js img { opacity: 1; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   3. BUTTONS
+   ══════════════════════════════════════════════════════════════ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 44px; padding: 0 22px;
+  font-size: 14px; font-weight: 500; line-height: 1;
+  border-radius: var(--r-btn);
+  transition: background-color .2s ease, transform .12s ease, border-color .2s ease;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--primary-ink); color: var(--on-primary); }
+.btn-primary:hover { background: #8f4832; }
+.btn-primary:active { transform: translateY(1px); }
+
+.btn-secondary {
+  background: var(--canvas); color: var(--ink);
+  border: 1px solid var(--hairline);
+}
+.btn-secondary:hover { border-color: var(--muted); }
+.btn-secondary:active { transform: translateY(1px); }
+
+.btn-on-coral { background: var(--canvas); color: var(--primary-ink); font-weight: 600; }
+.btn-on-coral:hover { background: #ffffff; }
+.btn-on-coral:active { transform: translateY(1px); }
+
+/* ══════════════════════════════════════════════════════════════
+   4. NAV
+   ══════════════════════════════════════════════════════════════ */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 100;
+  height: var(--nav-h);
+  display: flex; align-items: center;
+  background: rgba(250,249,245,0.86);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .25s ease;
+  padding-top: env(safe-area-inset-top);
+}
+.nav.scrolled { border-bottom-color: var(--hairline); }
+.nav-inner {
+  width: 100%; max-width: var(--maxw); margin-inline: auto;
+  padding-inline: var(--s-lg);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-lg);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 20px; letter-spacing: -0.015em; color: var(--ink);
+}
+.nav-logo b { color: var(--primary-ink); font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+.nav-links a {
+  position: relative; display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px; font-weight: 500; color: var(--muted);
+  transition: color .2s ease;
+}
+.nav-links a::after {
+  content: ""; position: absolute;
+  left: 12px; right: 12px; bottom: 3px; height: 1.5px;
+  background: var(--primary-ink);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .28s cubic-bezier(.16,1,.3,1);
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+.nav-links a.active { color: var(--ink); }
+.nav-links .btn { margin-left: var(--s-xs); height: 38px; padding: 0 18px; color: var(--on-primary); }
+.nav-links .btn::after { display: none; }
+.nav-links .btn:hover { color: var(--on-primary); }
+
+@media (max-width: 720px) {
+  .nav-links li:not(:last-child) { display: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   5. HERO  (layout family: asymmetric split)
+   ══════════════════════════════════════════════════════════════ */
+#hero { padding-top: calc(var(--nav-h) + 56px); padding-bottom: 72px; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: var(--s-xxl);
+  align-items: center;
+}
+.hero-copy > * + * { margin-top: var(--s-lg); }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px;
+  background: var(--surface-card); color: var(--ink);
+  border-radius: var(--r-pill);
+  font-size: 13px; font-weight: 500;
+}
+.chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); flex: none; }
+.hero-sub { max-width: 34ch; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: var(--s-sm); }
+
+.hero-media {
+  border-radius: var(--r-hero);
+  overflow: hidden;
+  background: var(--surface-card);
+  aspect-ratio: 4 / 3;
+}
+.hero-media img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: var(--s-xl); }
+  .hero-sub { max-width: 46ch; }
+  #hero { padding-top: calc(var(--nav-h) + 36px); padding-bottom: 56px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   6. FACTS BAND  (layout family: dark metric strip)
+   ══════════════════════════════════════════════════════════════ */
+.facts { background: var(--surface-dark); color: var(--on-dark); }
+.facts-inner {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-lg);
+  padding-block: var(--s-xxl);
+}
+.fact-num {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.4vw, 40px);
+  line-height: 1; letter-spacing: -0.02em;
+  color: var(--on-dark);
+  font-variant-numeric: tabular-nums;
+}
+.fact-label {
+  margin-top: 10px;
+  font-size: 13px; line-height: 1.45; color: var(--on-dark-soft);
+  max-width: 22ch;
+}
+@media (max-width: 760px) {
+  .facts-inner { grid-template-columns: repeat(2, 1fr); gap: var(--s-xl) var(--s-lg); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   7. SECTION SHELL
+   ══════════════════════════════════════════════════════════════ */
+.section { padding-block: var(--s-section); }
+.section-head { max-width: 60ch; margin-bottom: var(--s-xxl); }
+.section-head p { margin-top: var(--s-md); color: var(--body); text-wrap: pretty; }
+@media (max-width: 760px) {
+  :root { --s-section: 64px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   8. PROJECTS
+   Featured split row, then a 3 cell grid for 3 items.
+   ══════════════════════════════════════════════════════════════ */
+.p-featured {
+  display: grid; grid-template-columns: 7fr 5fr;
+  background: var(--surface-card);
+  border-radius: var(--r-card);
+  overflow: hidden; cursor: pointer;
+  transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease;
+  margin-bottom: var(--s-lg);
+}
+.p-featured:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(20,20,19,0.10); }
+.p-featured .p-media { aspect-ratio: 16 / 11; overflow: hidden; background: var(--surface-strong); }
+.p-featured .p-media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+}
+.p-featured:hover .p-media img { transform: scale(1.035); }
+.p-featured .p-info { padding: var(--s-xl); display: flex; flex-direction: column; }
+
+.p-kicker {
+  font-family: var(--font-mono); font-size: 11.5px;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
+}
+.p-title {
+  font-family: var(--font-display); font-size: 27px; line-height: 1.18;
+  letter-spacing: -0.014em; color: var(--ink); margin-top: 10px; text-wrap: balance;
+}
+.p-desc { margin-top: var(--s-sm); font-size: 15px; color: var(--body); text-wrap: pretty; }
+.p-result {
+  margin-top: var(--s-md); padding-left: 14px;
+  border-left: 2px solid var(--primary);
+  font-size: 14px; font-weight: 500; color: var(--body-strong);
+}
+.p-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--s-md); }
+.tag {
+  font-size: 12px; font-weight: 500;
+  padding: 4px 11px; border-radius: var(--r-pill);
+  background: var(--canvas); color: var(--body-strong);
+  border: 1px solid var(--hairline);
+}
+.tag.key { background: var(--primary-ink); color: var(--on-primary); border-color: transparent; }
+.p-link {
+  margin-top: auto; padding-top: var(--s-lg);
+  font-size: 14px; font-weight: 600; color: var(--primary-ink);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.p-link .arw { transition: transform .25s ease; }
+.p-featured:hover .p-link .arw, .p-card:hover .p-link .arw { transform: translateX(4px); }
+
+.p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-lg); }
+.p-card {
+  display: flex; flex-direction: column;
+  background: var(--surface-card);
+  border-radius: var(--r-card);
+  overflow: hidden; cursor: pointer;
+  transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease;
+}
+.p-card:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(20,20,19,0.10); }
+.p-card.wide { grid-column: 1 / -1; flex-direction: row; }
+.p-card .p-media { aspect-ratio: 16 / 9; overflow: hidden; background: var(--surface-strong); }
+.p-card.wide .p-media { aspect-ratio: auto; width: 38%; flex: none; }
+.p-card .p-media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+}
+.p-card:hover .p-media img { transform: scale(1.035); }
+.p-card .p-info { padding: var(--s-lg); display: flex; flex-direction: column; flex: 1; }
+.p-card .p-title { font-size: 22px; }
+
+.p-media.dark-tile {
+  background: var(--surface-dark);
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--s-xl);
+}
+.p-media.dark-tile img { width: auto; height: auto; max-height: 92px; max-width: 78%; object-fit: contain; }
+.p-card:hover .p-media.dark-tile img { transform: none; }
+
+@media (max-width: 900px) {
+  .p-featured { grid-template-columns: 1fr; }
+  .p-grid { grid-template-columns: 1fr; }
+  .p-card.wide { flex-direction: column; }
+  .p-card.wide .p-media { width: 100%; aspect-ratio: 16 / 9; }
+  .p-featured .p-info { padding: var(--s-lg); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   9. SKILLS  (layout family: grouped label and pill rows)
+   ══════════════════════════════════════════════════════════════ */
+#skills { background: var(--surface-soft); }
+.skill-row {
+  display: grid; grid-template-columns: 220px 1fr;
+  gap: var(--s-lg);
+  padding-block: var(--s-lg);
+}
+.skill-row + .skill-row { border-top: 1px solid var(--hairline); }
+.skill-name { font-family: var(--font-display); font-size: 20px; color: var(--ink); letter-spacing: -0.01em; }
+.skill-items { display: flex; flex-wrap: wrap; gap: 8px; align-content: start; }
+.skill-items .tag { background: var(--canvas); font-size: 13px; padding: 6px 13px; }
+@media (max-width: 700px) {
+  .skill-row { grid-template-columns: 1fr; gap: var(--s-sm); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   10. ABOUT  (layout family: ledger plus prose)
+   ══════════════════════════════════════════════════════════════ */
+.about-grid { display: grid; grid-template-columns: 5fr 7fr; gap: var(--s-xxl); align-items: start; }
+.about-prose > p + p { margin-top: var(--s-md); }
+.about-prose p { text-wrap: pretty; }
+.about-pull {
+  font-family: var(--font-display);
+  font-size: clamp(23px, 2.4vw, 28px); line-height: 1.28; letter-spacing: -0.012em;
+  color: var(--ink); text-wrap: balance;
+}
+.ledger { background: var(--surface-card); border-radius: var(--r-card); padding: var(--s-lg) var(--s-xl); }
+.ledger-row { display: grid; grid-template-columns: 108px 1fr; gap: var(--s-md); padding-block: 13px; }
+.ledger-row + .ledger-row { border-top: 1px solid var(--surface-strong); }
+.ledger-k {
+  font-family: var(--font-mono); font-size: 11.5px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 3px;
+}
+.ledger-v { font-size: 15px; color: var(--body-strong); font-weight: 500; }
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; gap: var(--s-xl); }
+  .ledger { padding: var(--s-md) var(--s-lg); }
+  .ledger-row { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   11. CONTACT  (layout family: coral callout band)
+   ══════════════════════════════════════════════════════════════ */
+#contact { padding-bottom: var(--s-section); }
+.coral-band {
+  background: var(--primary);
+  border-radius: var(--r-card);
+  padding: clamp(36px, 6vw, 64px);
+  color: var(--on-primary);
+}
+.coral-band h2 { color: var(--on-primary); }
+.coral-links { display: flex; flex-wrap: wrap; gap: var(--s-sm); margin-top: var(--s-xl); }
+.coral-links .btn { height: 46px; }
+
+/* ══════════════════════════════════════════════════════════════
+   12. FOOTER
+   ══════════════════════════════════════════════════════════════ */
+.footer {
+  background: var(--surface-dark);
+  color: var(--on-dark-soft);
+  padding-block: var(--s-xxl);
+  padding-bottom: calc(var(--s-xxl) + env(safe-area-inset-bottom));
+  font-size: 14px;
+}
+.footer-inner { display: flex; flex-wrap: wrap; gap: var(--s-md); justify-content: space-between; align-items: center; }
+
+/* ══════════════════════════════════════════════════════════════
+   13. CASE STUDY OVERLAY
+   ══════════════════════════════════════════════════════════════ */
+.case-study {
+  position: fixed; inset: 0; z-index: 150;
+  background: var(--canvas);
+  overflow-y: auto; overscroll-behavior: contain;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .35s ease, visibility .35s;
+}
+.case-study.open { opacity: 1; visibility: visible; pointer-events: auto; }
+
+.cs-nav {
+  position: sticky; top: 0; z-index: 5;
+  background: rgba(250,249,245,0.92);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--hairline);
+  padding-top: env(safe-area-inset-top);
+}
+.cs-nav-inner {
+  max-width: 940px; margin-inline: auto; padding: 14px var(--s-lg);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-md);
+}
+.cs-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 500; color: var(--ink);
+  padding: 8px 14px 8px 10px; border-radius: var(--r-btn);
+  transition: background-color .2s ease;
+}
+.cs-back:hover { background: var(--surface-card); }
+
+.cs-content { max-width: 940px; margin-inline: auto; padding: var(--s-xxl) var(--s-lg) 96px; }
+.cs-tag {
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+}
+.cs-title { margin-top: var(--s-sm); }
+
+.cs-meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--s-lg);
+  margin-top: var(--s-xl); padding-top: var(--s-lg);
+  border-top: 1px solid var(--hairline);
+}
+.cs-meta-k {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+}
+.cs-meta-v { margin-top: 5px; font-size: 15px; color: var(--body-strong); font-weight: 500; }
+
+.cs-pills { display: flex; flex-wrap: wrap; gap: 7px; margin-top: var(--s-lg); }
+
+.cs-media { margin-block: var(--s-xl); border-radius: var(--r-card); overflow: hidden; background: var(--surface-card); }
+.cs-media img, .cs-media video { width: 100%; height: 100%; object-fit: cover; }
+.cs-media.contain { background: var(--surface-soft); }
+.cs-media.contain img, .cs-media.contain video { object-fit: contain; padding: 14px; }
+.cs-media.paper { background: #ffffff; }
+.cs-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-md); margin-block: var(--s-xl); align-items: start; }
+.cs-pair .cs-media { margin-block: 0; }
+.cs-cap { margin-top: 8px; font-size: 13px; color: var(--muted); }
+@media (max-width: 700px) { .cs-pair { grid-template-columns: 1fr; } }
+
+.cs-body h2 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(24px, 3vw, 30px); line-height: 1.2; letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-top: var(--s-xxl); margin-bottom: var(--s-md);
+  scroll-margin-top: 88px; text-wrap: balance;
+}
+.cs-body p { font-size: 17px; line-height: 1.65; color: var(--body); text-wrap: pretty; }
+.cs-body p + p { margin-top: var(--s-md); }
+.cs-body em { color: var(--ink); font-style: italic; }
+
+.cs-callout {
+  margin-block: var(--s-xl);
+  background: var(--surface-card);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 var(--r-card) var(--r-card) 0;
+  padding: var(--s-lg) var(--s-xl);
+}
+.cs-callout p { font-family: var(--font-display); font-size: 20px; line-height: 1.42; color: var(--ink); }
+
+.cs-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--s-md); margin-block: var(--s-xl);
+}
+.cs-stat { background: var(--surface-dark); color: var(--on-dark); border-radius: var(--r-card); padding: var(--s-lg); }
+.cs-stat-n {
+  font-family: var(--font-display); font-size: 34px; line-height: 1;
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+}
+.cs-stat-d { margin-top: 10px; font-size: 13px; line-height: 1.45; color: var(--on-dark-soft); }
+
+.cs-more { margin-top: 96px; padding-top: var(--s-xl); border-top: 1px solid var(--hairline); }
+.cs-more h2 { font-family: var(--font-display); font-weight: 400; font-size: 24px; color: var(--ink); margin-bottom: var(--s-lg); }
+.cs-more-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--s-md); }
+.cs-more-card {
+  text-align: left; width: 100%;
+  background: var(--surface-card); border-radius: var(--r-card); padding: var(--s-lg);
+  transition: transform .25s ease, background-color .25s ease;
+}
+.cs-more-card:hover { transform: translateY(-3px); background: var(--surface-strong); }
+.cs-more-t { display: block; font-family: var(--font-display); font-size: 19px; color: var(--ink); line-height: 1.22; }
+.cs-more-d { display: block; margin-top: 8px; font-size: 13.5px; color: var(--body); text-wrap: pretty; }
 </style>
 </head>
-<body>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#hero">Omar Wali<span>.</span></a>
-  <ul class="nav-links">
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#proj-tsc">TSC</a></li>
-    <li><a href="#proj-cce">CCE</a></li>
-    <li><a href="#proj-research">Research</a></li>
-    <li><a class="nav-cta" href="#contact">Contact</a></li>
-  </ul>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#hero">Omar Wali<b>.</b></a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a class="btn btn-primary" href="#contact">Contact</a></li>
+    </ul>
+  </div>
 </nav>
 
-<!-- HERO -->
+<main id="main">
+
+<!-- ══════════════════ HERO ══════════════════ -->
 <section id="hero">
-  <div class="hero-tag">Structural &amp; Mechanical Engineering · UCSD</div>
-  <h1 class="hero-name">Omar<br><span>Wali.</span></h1>
-  <p class="hero-title">
-    <strong>CAD · FEA · Fabrication</strong> &nbsp;—&nbsp; Model · Validate · Build · Test
-  </p>
-  <p class="hero-bio">
-    Sophomore at UCSD with steel parts on a solar race car, a published paper, and a commercial solar internship — most of it done before my second year. Steering geometry, FEA, and steel fabrication on one project; PV layouts and payback models on another. I want the full loop: model it, validate it, build it, find out where I was wrong.
-  </p>
-  <div class="hero-cta">
-    <a class="btn-primary" href="#projects">View Projects</a>
-    <a class="btn-ghost" href="#contact">Get in Touch</a>
-    <span class="hero-avail"><span class="dot"></span>Open to internships — design · analysis · fabrication</span>
-  </div>
-  <div class="hero-stats">
-    <div class="stat-item">
-      <div class="stat-num">4.0</div>
-      <div class="stat-label">GPA · UCSD</div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="chip"><span class="dot" aria-hidden="true"></span>Open to summer 2027 internships</span>
+      <h1 class="display-xl">Omar Wali</h1>
+      <p class="lede hero-sub">Mechanical design, FEA and fabrication. Structural engineering at UC&nbsp;San&nbsp;Diego.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projects">View projects</a>
+        <a class="btn btn-secondary" href="#contact">Contact</a>
+      </div>
     </div>
-    <div class="stat-item">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Independent Research Studies</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">1×</div>
-      <div class="stat-label">Published Research</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">ASC</div>
-      <div class="stat-label">American Solar Challenge</div>
+    <div class="hero-media">
+      <img src="car-assembly-hero.jpg" alt="Triton Solar Car chassis and steering assembly during build" decoding="async" fetchpriority="high">
     </div>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-wrap">
-    <div class="section-label">Work</div>
-    <h2 class="section-title">Engineering Projects</h2>
+<!-- ══════════════════ FACTS BAND ══════════════════ -->
+<section class="facts" aria-label="Key facts">
+  <div class="wrap facts-inner">
+    <div><div class="fact-num">4.0</div><div class="fact-label">Cumulative GPA, UC San Diego</div></div>
+    <div><div class="fact-num">1</div><div class="fact-label">Peer reviewed publication, Curieux Academic Journal</div></div>
+    <div><div class="fact-num">2</div><div class="fact-label">Steering systems designed for the solar car</div></div>
+    <div><div class="fact-num">2029</div><div class="fact-label">B.S. Structural Engineering, expected June</div></div>
+  </div>
+</section>
 
-    <!-- GROUP 1: COMPETITION TEAM -->
-    <div class="project-group-label" id="proj-tsc">01 — Competition Team</div>
-
-    <div class="project-featured reveal" id="open-triton" style="cursor:pointer">
-      <div class="project-media" style="overflow:hidden">
-        <img decoding="async" fetchpriority="high" src="car-assembly-hero.jpg" alt="Triton Solar Car assembly" style="width:100%;height:100%;object-fit:cover">
-      </div>
-      <div class="project-info">
-        <div>
-          <div class="project-num">Triton Solar Car · UCSD · 2025–Present</div>
-          <h3 class="project-title">Ackermann Steering System<br>+ Steering Wheel Ergonomics</h3>
-          <p class="project-desc">
-            Full design-to-fabrication of custom steering geometry for UCSD's American Solar Challenge car. Ackermann trade study, ANSYS FEA under worst-case loading, CNC wood prototyping → steel. Also designed the steering wheel button module housing: CAD, 3D printed tolerancing iterations, CNC aluminum backplate.
-          </p>
-          <div class="card-result">Geometry designed, FEA validated, steel fabricated — part is physically on the car</div>
-          <div class="project-tags" style="margin-top:12px">
-            <span class="tag highlight">SolidWorks</span>
-            <span class="tag highlight">Fusion 360</span>
-            <span class="tag">ANSYS FEA</span>
-            <span class="tag">Steel Fab</span>
-            <span class="tag">CNC</span>
-            <span class="tag">3D Printing</span>
-          </div>
-        </div>
-        <span class="project-link" style="margin-top:20px">Read Case Study</span>
-      </div>
+<!-- ══════════════════ PROJECTS ══════════════════ -->
+<section class="section" id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="display-lg">Projects</h2>
+      <p>A vehicle subsystem taken from geometry through failure and rebuild, a commercial solar internship, and two independent studies.</p>
     </div>
 
-    <!-- GROUP 2: INTERNSHIP -->
-    <div class="project-group-label" id="proj-cce">02 — Internship</div>
-
-    <div class="project-grid" style="margin-bottom:0">
-      <div class="project-card reveal" id="open-cce" style="cursor:pointer">
-        <div class="card-thumb-placeholder">
-          <img loading="lazy" decoding="async" src="cce-logo.png" alt="Center for Community Energy">
+    <!-- ═══ FEATURED PROJECT ═══
+         To feature a different project, move this block and change data-case. -->
+    <article class="p-featured reveal" id="proj-tsc" data-case="cs-triton" tabindex="0" role="button" aria-label="Open case study: Ackermann steering system">
+      <div class="p-media">
+        <img src="car-assembly-hero.jpg" alt="Triton Solar Car assembly" loading="lazy" decoding="async">
+      </div>
+      <div class="p-info">
+        <div class="p-kicker">Triton Solar Car, UC San Diego, 2025 to present</div>
+        <h3 class="p-title">Ackermann steering system and wheel ergonomics</h3>
+        <p class="p-desc">Full design to fabrication of custom steering geometry for UCSD&rsquo;s American Solar Challenge car. Ackermann trade study, ANSYS FEA, CNC wood prototyping into steel. Plus the steering wheel control module housing: CAD, printed tolerancing iterations, CNC aluminium backplate.</p>
+        <div class="p-result">Designed, analysed, fabricated in steel and run on the car. Then it failed in torsion, and the load case I had written turned out to be the wrong one.</div>
+        <div class="p-tags">
+          <span class="tag key">SolidWorks</span>
+          <span class="tag key">ANSYS FEA</span>
+          <span class="tag">Fusion 360</span>
+          <span class="tag">Steel fabrication</span>
+          <span class="tag">CNC</span>
+          <span class="tag">3D printing</span>
         </div>
-        <div class="card-body">
-          <div class="card-num">02</div>
-          <h3 class="card-title">Commercial Solar PV Design</h3>
-          <div class="card-result">Viasat safe-harbor ITC proposal · Helioscope · ROI modeling</div>
-          <p class="card-desc">Carport + dual-axis tracker PV systems for real clients. Utility bill analysis, stringing, BOM, NPV/payback financial modeling, structural feasibility coordination.</p>
-          <div class="project-tags" style="margin-top:auto;padding-top:12px">
-            <span class="tag highlight">Helioscope</span>
+        <span class="p-link">Read case study <span class="arw" aria-hidden="true">&rarr;</span></span>
+      </div>
+    </article>
+
+    <!-- ═══ PROJECT GRID: 3 items, 3 cells ═══ -->
+    <div class="p-grid">
+
+      <article class="p-card wide reveal" id="proj-cce" data-case="cs-cce" tabindex="0" role="button" aria-label="Open case study: commercial solar PV design">
+        <div class="p-media dark-tile">
+          <img src="cce-logo.png" alt="Center for Community Energy" loading="lazy" decoding="async">
+        </div>
+        <div class="p-info">
+          <div class="p-kicker">Center for Community Energy, engineering intern</div>
+          <h3 class="p-title">Commercial solar PV design</h3>
+          <p class="p-desc">Carport and dual axis tracker PV systems for real clients. Utility bill analysis, Helioscope layout and stringing, BOM, NPV and payback modelling, structural coordination with outside engineers.</p>
+          <div class="p-result">Viasat safe harbour ITC proposal, load profile studies, 20 year financial models</div>
+          <div class="p-tags">
+            <span class="tag key">Helioscope</span>
             <span class="tag">Solar PV</span>
-            <span class="tag">Financial Modeling</span>
-            <span class="tag">EV Charging</span>
+            <span class="tag">Financial modelling</span>
+            <span class="tag">EV charging</span>
           </div>
-          <span class="project-link" style="margin-top:12px;display:inline-flex">View Work</span>
+          <span class="p-link">View work <span class="arw" aria-hidden="true">&rarr;</span></span>
         </div>
-      </div>
-    </div>
+      </article>
 
-    <!-- GROUP 3: RESEARCH -->
-    <div class="project-group-label" id="proj-research">03 &amp; 04 — Independent Research</div>
-
-    <div class="project-grid">
-      <div class="project-card reveal" id="open-solar" style="cursor:pointer">
-        <img loading="lazy" decoding="async" class="card-thumb" src="research-autocad-clean.png" alt="AutoCAD solar carport layout">
-        <div class="card-body">
-          <div class="card-num">03</div>
-          <h3 class="card-title">Solar Carport — Humanitarian Infrastructure</h3>
-          <div class="card-result">4,736 panels · 4.38 GWh/yr · 14% camp demand · Published</div>
-          <p class="card-desc">PV carport for Shatila refugee camp, Beirut. AutoCAD layout, irradiance modeling, $2.5M cost analysis. Published in Curieux Academic Journal.</p>
-          <div class="project-tags" style="margin-top:auto;padding-top:12px">
-            <span class="tag highlight">AutoCAD</span>
+      <article class="p-card reveal" id="proj-research" data-case="cs-solar" tabindex="0" role="button" aria-label="Open case study: solar carport for the Shatila refugee camp">
+        <div class="p-media">
+          <img src="research-autocad-clean.png" alt="AutoCAD solar carport layout" loading="lazy" decoding="async">
+        </div>
+        <div class="p-info">
+          <div class="p-kicker">Independent research, published</div>
+          <h3 class="p-title">Solar carport, Shatila refugee camp</h3>
+          <p class="p-desc">PV carport study for the Camille Chamoun stadium lot in Beirut. AutoCAD layout, irradiance modelling, construction cost analysis.</p>
+          <div class="p-result">4,736 panels, 4.38&nbsp;GWh/yr, 14% of camp demand</div>
+          <div class="p-tags">
+            <span class="tag key">AutoCAD</span>
             <span class="tag">Published</span>
-            <span class="tag">Solar</span>
+            <span class="tag">Irradiance modelling</span>
           </div>
-          <span class="project-link" style="margin-top:12px;display:inline-flex">Read Study</span>
+          <span class="p-link">Read study <span class="arw" aria-hidden="true">&rarr;</span></span>
         </div>
-      </div>
+      </article>
 
-      <div class="project-card reveal" id="open-research" style="cursor:pointer">
-        <img loading="lazy" decoding="async" class="card-thumb" src="research-wind-turbine.png" alt="3D printed wind turbine rotors">
-        <div class="card-body">
-          <div class="card-num">04</div>
-          <h3 class="card-title">Wind Turbine &amp; Solar Tilt Research</h3>
-          <div class="card-result">R²=0.794 vs Betz limit · Calculus-optimized monthly tilt schedule</div>
-          <p class="card-desc">Study 1: experimental rotor swept-area scaling with 3D-printed rotors + Logger Pro. Study 2: calculus-based solar tilt angle optimization using irradiance geometry models.</p>
-          <div class="project-tags" style="margin-top:auto;padding-top:12px">
-            <span class="tag">Experimental</span>
-            <span class="tag">MATLAB</span>
-            <span class="tag">3D Printing</span>
+      <article class="p-card reveal" data-case="cs-research" tabindex="0" role="button" aria-label="Open case study: rotor swept area and solar tilt studies">
+        <div class="p-media">
+          <img src="research-wind-turbine.png" alt="3D printed wind turbine rotors of varying radius" loading="lazy" decoding="async">
+        </div>
+        <div class="p-info">
+          <div class="p-kicker">Independent research</div>
+          <h3 class="p-title">Rotor swept area and solar tilt studies</h3>
+          <p class="p-desc">An experimental rotor scaling study using printed rotors and Logger Pro, and a calculus based optimisation of monthly panel tilt angle.</p>
+          <div class="p-result">R&sup2;&nbsp;=&nbsp;0.794 against swept area, full monthly tilt schedule derived</div>
+          <div class="p-tags">
+            <span class="tag key">MATLAB</span>
+            <span class="tag">Experimental design</span>
+            <span class="tag">3D printing</span>
           </div>
-          <span class="project-link" style="margin-top:12px;display:inline-flex">Read Study</span>
+          <span class="p-link">Read study <span class="arw" aria-hidden="true">&rarr;</span></span>
         </div>
-      </div>
-    </div>
+      </article>
 
-  </div>
-</section>
+      <!-- ═══════════════════════════════════════════════════════════
+           TEMPLATE: copy this block for a new project.
+           1. set data-case to the id of its case study div below
+           2. add a matching entry to the PROJECTS array in the script
+           3. copy the CASE STUDY TEMPLATE further down
+           ═══════════════════════════════════════════════════════════
+      <article class="p-card reveal" data-case="cs-NEWID" tabindex="0" role="button" aria-label="Open case study: TITLE">
+        <div class="p-media">
+          <img src="IMAGE.jpg" alt="ALT TEXT" loading="lazy" decoding="async">
+        </div>
+        <div class="p-info">
+          <div class="p-kicker">CONTEXT LINE</div>
+          <h3 class="p-title">TITLE</h3>
+          <p class="p-desc">TWO SENTENCES ON WHAT IT IS.</p>
+          <div class="p-result">THE OUTCOME, WITH NUMBERS</div>
+          <div class="p-tags">
+            <span class="tag key">MAIN TOOL</span>
+            <span class="tag">TOOL</span>
+          </div>
+          <span class="p-link">Read case study <span class="arw" aria-hidden="true">&rarr;</span></span>
+        </div>
+      </article>
+      -->
 
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-wrap">
-    <div class="section-label">Toolbox</div>
-    <h2 class="section-title">Technical Skills</h2>
-    <div class="skills-grid">
-      <div class="skill-block reveal">
-        <div class="skill-category">CAD / Simulation</div>
-        <ul class="skill-list">
-          <li>SolidWorks (CAD + FEA)</li>
-          <li>Fusion360</li>
-          <li>AutoCAD</li>
-          <li>ANSYS FEA</li>
-          <li>Helioscope</li>
-        </ul>
-      </div>
-      <div class="skill-block reveal">
-        <div class="skill-category">Fabrication</div>
-        <ul class="skill-list">
-          <li>CNC Laser Cutting</li>
-          <li>Waterjet Cutting</li>
-          <li>3D Printing (FDM)</li>
-          <li>Steel Fabrication</li>
-          <li>Drill Press / Miter Saw</li>
-        </ul>
-      </div>
-      <div class="skill-block reveal">
-        <div class="skill-category">Programming</div>
-        <ul class="skill-list">
-          <li>MATLAB</li>
-          <li>Java / SQL</li>
-          
-          <li>Logger Pro</li>
-          <li>Excel / G-Suite</li>
-        </ul>
-      </div>
-      <div class="skill-block reveal">
-        <div class="skill-category">Certifications</div>
-        <ul class="skill-list">
-          <li>SolidWorks CSWA (In Progress)</li>
-          <li>SolidWorks CSWP (In Progress)</li>
-          <li>ASC Competitor</li>
-          <li>GPA 4.0 / 4.0</li>
-        </ul>
-      </div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-wrap">
-    <div class="section-label">Background</div>
-    <h2 class="section-title">About Me</h2>
+<!-- ══════════════════ SKILLS ══════════════════ -->
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="display-lg">What I work with</h2>
+    </div>
+    <div class="reveal">
+      <div class="skill-row">
+        <div class="skill-name">CAD and simulation</div>
+        <div class="skill-items">
+          <span class="tag">SolidWorks</span><span class="tag">Fusion 360</span><span class="tag">AutoCAD</span>
+          <span class="tag">ANSYS Mechanical</span><span class="tag">Abaqus</span><span class="tag">Helioscope</span>
+          <span class="tag">GD&amp;T</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-name">Fabrication</div>
+        <div class="skill-items">
+          <span class="tag">Steel fabrication</span><span class="tag">CNC laser cutting</span><span class="tag">Waterjet</span>
+          <span class="tag">FDM 3D printing</span><span class="tag">Weld fixturing</span><span class="tag">Drill press and miter saw</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-name">Computation</div>
+        <div class="skill-items">
+          <span class="tag">MATLAB</span><span class="tag">Python</span><span class="tag">PyTorch</span>
+          <span class="tag">scikit-learn</span><span class="tag">Java</span><span class="tag">SQL</span><span class="tag">Logger Pro</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-name">In progress</div>
+        <div class="skill-items">
+          <span class="tag">SolidWorks CSWA</span><span class="tag">SolidWorks CSWP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ ABOUT ══════════════════ -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="display-lg">About</h2>
+    </div>
     <div class="about-grid">
-      <div class="about-text reveal">
-        <p>
-          I got into engineering because I wanted to understand how things actually work — not in textbooks, but in the real world where tolerances matter, assumptions have consequences, and the part either fits or it doesn't.
-        </p>
-        <p>
-          I'm a sophomore at UCSD, running ahead on credits, with a habit of taking on more than I probably should. So far that's led to steel geometry on a race car, a published paper on refugee camp energy, and a solar PV internship where I build financial models for clients who aren't messing around.
-        </p>
-        <p>
-          Those three don't have much in common on paper — a vehicle subsystem, an energy study, a client-facing design job. I took them that way deliberately. Second year is early to pick a lane, and the parts that transfer — constraints, tolerances, FEA, knowing what a drawing costs to actually make — transfer everywhere.
-        </p>
-        <p>
-          Outside engineering: Formula 1, long drives, and an embarrassing amount of time thinking about how things are put together.
-        </p>
+      <div class="reveal">
+        <div class="ledger">
+          <div class="ledger-row"><div class="ledger-k">Now</div><div class="ledger-v">Sophomore, Structural Engineering, UC San Diego</div></div>
+          <div class="ledger-row"><div class="ledger-k">Team</div><div class="ledger-v">Triton Solar Car, steering and suspension</div></div>
+          <div class="ledger-row"><div class="ledger-k">Lab</div><div class="ledger-v">Computational mechanics, ML surrogate models for composites</div></div>
+          <div class="ledger-row"><div class="ledger-k">Next</div><div class="ledger-v">M.S. Mechanical Engineering</div></div>
+          <div class="ledger-row"><div class="ledger-k">Open to</div><div class="ledger-v">Internships in design, analysis and fabrication. Industry open.</div></div>
+          <div class="ledger-row"><div class="ledger-k">Based</div><div class="ledger-v">San Diego, California</div></div>
+        </div>
       </div>
-      <div class="about-details reveal">
-        <div class="detail-row">
-          <span class="detail-label">Currently</span>
-          <span class="detail-value">Sophomore · UCSD · Structural Engineering</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Goal</span>
-          <span class="detail-value">M.S. Mechanical Engineering</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Interests</span>
-          <span class="detail-value">Mechanical design · Energy systems · Vehicles · Aerospace structures</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Open to</span>
-          <span class="detail-value">Internships in design, analysis &amp; fabrication — industry open</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Team</span>
-          <span class="detail-value">Triton Solar Car — Steering Subsystem</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Location</span>
-          <span class="detail-value">San Diego, CA</span>
-        </div>
+      <div class="about-prose reveal">
+        <p class="about-pull">I wanted to understand how things actually work. Not in a textbook, but where tolerances matter and the part either fits or it doesn&rsquo;t.</p>
+        <p>I&rsquo;m a sophomore at UCSD, running ahead on credits, with a habit of taking on more than I probably should. So far that has meant steel geometry on a race car, a published paper on refugee camp energy, and a solar PV internship building financial models for clients who aren&rsquo;t messing around.</p>
+        <p>Those three don&rsquo;t have much in common on paper. I took them that way deliberately. Second year is early to pick a lane, and the parts that transfer, constraints and tolerances and knowing what a drawing costs to actually make, transfer everywhere.</p>
+        <p>The work I&rsquo;m proudest of is the work that broke. The steering plate cleared my FEA and then failed on the car, because the load case I wrote was bending and the failure was torsional. That correction taught me more than a part that passed on the first try.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- ══════════════════ CONTACT ══════════════════ -->
 <section id="contact">
-  <div class="section-wrap">
-    <div class="contact-inner">
-      <h2 class="contact-heading reveal">
-        Let's work on<br>something <span>real.</span>
-      </h2>
-      <div class="contact-links reveal">
-        <a class="contact-link" href="mailto:owali@ucsd.edu">
-          <span class="cl"></span>owali@ucsd.edu
-        </a>
-        <a class="contact-link" href="https://www.linkedin.com/in/omar-wali-42b9192a2/" target="_blank">
-          <span class="cl"></span>linkedin.com/in/omar-wali-42b9192a2/
-        </a>
-        <a class="contact-link" href="tel:8582208206">
-          <span class="cl"></span>(858) 220-8206
-        </a>
+  <div class="wrap">
+    <div class="coral-band reveal">
+      <h2 class="display-lg">Let&rsquo;s build something<br>that has to work.</h2>
+      <div class="coral-links">
+        <a class="btn btn-on-coral" href="mailto:owali@ucsd.edu">owali@ucsd.edu</a>
+        <a class="btn btn-on-coral" href="https://www.linkedin.com/in/omar-wali-42b9192a2/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-on-coral" href="tel:+18582208206">(858)&nbsp;220-8206</a>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <span>Omar Wali · UCSD Structural Engineering</span>
-  <span>San Diego, CA · 2025–2026</span>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span>Omar Wali, UC San Diego Structural Engineering</span>
+    <span>San Diego, California, 2026</span>
+  </div>
 </footer>
 
-<!-- ══════════════════════════════════════════
-     CASE STUDY: TRITON SOLAR CAR
-══════════════════════════════════════════ -->
-<div class="case-study" id="cs-triton">
-  <div class="cs-nav">
-    <button class="cs-back" onclick="closeCase('cs-triton')">Back to Projects</button>
-    <span style="font-family:var(--font-mono);font-size:11px;color:var(--faint);letter-spacing:0.08em;">01 — Triton Solar Car</span>
-  </div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     CASE STUDY 1: TRITON SOLAR CAR
+     ══════════════════════════════════════════════════════════════ -->
+<div class="case-study" id="cs-triton" role="dialog" aria-modal="true" aria-label="Case study: Ackermann steering system">
+  <div class="cs-nav"><div class="cs-nav-inner">
+    <button class="cs-back" data-close><span aria-hidden="true">&larr;</span> Back to projects</button>
+    <span class="mono-label">Triton Solar Car</span>
+  </div></div>
   <div class="cs-content">
-    <div class="cs-tag">Mechanical Design · FEA · Fabrication · 2025–Present</div>
-    <h1 class="cs-title">Ackermann Steering System</h1>
+    <div class="cs-tag">Mechanical design, FEA, fabrication, 2025 to present</div>
+    <h1 class="cs-title display-lg">Ackermann steering system</h1>
 
     <div class="cs-meta">
-      <div class="cs-meta-item"><div class="cs-meta-label">Team</div><div class="cs-meta-val">Triton Solar Car — UCSD</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-val">Mechanical Engineering Team — Steering &amp; Ergonomics</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">SolidWorks · Fusion360 · FEA (ANSYS) · CNC · Steel Fab</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Status</div><div class="cs-meta-val">Manufactured · On vehicle</div></div>
+      <div><div class="cs-meta-k">Team</div><div class="cs-meta-v">Triton Solar Car, UC San Diego</div></div>
+      <div><div class="cs-meta-k">Role</div><div class="cs-meta-v">Steering and ergonomics</div></div>
+      <div><div class="cs-meta-k">Tools</div><div class="cs-meta-v">SolidWorks, Fusion 360, ANSYS, CNC, steel fab</div></div>
+      <div><div class="cs-meta-k">Status</div><div class="cs-meta-v">Fabricated, run, failed, rebuilt</div></div>
     </div>
 
-    <div class="cs-skills-used">
-      <span class="cs-skill-pill">SolidWorks</span>
-      <span class="cs-skill-pill">Fusion 360</span>
-      <span class="cs-skill-pill">ANSYS FEA</span>
-      <span class="cs-skill-pill">3D Printing</span>
-      <span class="cs-skill-pill secondary">CNC Prototyping</span>
-      <span class="cs-skill-pill secondary">Steel Fabrication</span>
-      <span class="cs-skill-pill secondary">Geometric Tolerancing</span>
-      <span class="cs-skill-pill secondary">Trade Study</span>
+    <div class="cs-pills">
+      <span class="tag key">SolidWorks</span><span class="tag key">ANSYS FEA</span>
+      <span class="tag">Fusion 360</span><span class="tag">3D printing</span>
+      <span class="tag">CNC prototyping</span><span class="tag">Steel fabrication</span>
+      <span class="tag">Tolerancing</span><span class="tag">Trade study</span>
     </div>
 
-    <!-- HERO MEDIA -->
-    <div class="cs-media-full" style="min-height:360px;overflow:hidden">
-      <img decoding="async" fetchpriority="high" src="car-assembly-hero.jpg" alt="Triton Solar Car full assembly — Fusion360" style="width:100%;height:360px;object-fit:cover;object-position:center center">
+    <div class="cs-media" style="aspect-ratio:16/7">
+      <img src="car-assembly-hero.jpg" alt="Triton Solar Car full assembly in Fusion 360" loading="lazy" decoding="async">
     </div>
 
     <div class="cs-body">
 
-      <h2>The Problem</h2>
-      <p>
-        When a car turns, the inner and outer wheels trace arcs of different radii. Parallel steering makes the outer tire scrub sideways. <em>Ackermann geometry</em> fixes this — but for a solar race car operating at both low and high speeds, the question is how much Ackermann. Full Ackermann minimizes scrub at low speed; partial distributes lateral load better at speed. Task: run the trade study, pick the number, build it.
-      </p>
+      <h2>The problem</h2>
+      <p>When a car turns, the inner and outer wheels trace arcs of different radii. Parallel steering makes the outer tyre scrub sideways. <em>Ackermann geometry</em> fixes that, but the real question is how much Ackermann. Full Ackermann minimises scrub at low speed. Partial distributes lateral load better at speed. My task was to run the trade study, pick the number, and build it.</p>
 
-      <h2>Geometry &amp; Iteration</h2>
-      <p>
-        I drew construction lines in SolidWorks from the rear axle centerpoint through each kingpin axis — tie rod endpoints have to fall on those lines to produce true Ackermann behavior. Then iterated tie rod positions, each producing a different Ackermann percentage, until the scrub vs. load tradeoff landed at <em>21.5° inner / 16.8° outer</em>.
-      </p>
+      <h2>Geometry and iteration</h2>
+      <p>I drew construction lines in SolidWorks from the rear axle centrepoint through each kingpin axis. Tie rod endpoints have to fall on those lines to produce true Ackermann behaviour. Then I iterated tie rod positions, each one producing a different Ackermann percentage, until the scrub against load tradeoff landed at <em>21.5&deg; inner and 16.8&deg; outer</em>.</p>
 
-      <div class="cs-media-full">
-        <video autoplay muted loop playsinline style="width:100%;height:420px;object-fit:contain;background:#f1f5f9">
+      <div class="cs-media contain" style="aspect-ratio:16/9">
+        <video autoplay muted loop playsinline preload="metadata" aria-label="Animated 2D Ackermann geometry sweep">
           <source src="ackermann-geometry-2d.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="cs-media-full">
-        <img loading="lazy" decoding="async" src="ackermann-3d-model.png" alt="Ackermann steering 3D model screenshot" style="height:380px;object-fit:contain;background:#f1f5f9;width:100%">
+      <div class="cs-media contain" style="aspect-ratio:16/9">
+        <img src="ackermann-3d-model.png" alt="3D model of the steering linkage" loading="lazy" decoding="async">
       </div>
 
-      <h2>Kingpin Complication</h2>
-      <p>
-        The suspension team's kingpin geometry had a Z-axis rotation component — not purely the simplified Y-axis the initial analysis assumed. First-generation car, no prior precedent on the team. I made a documented assumption, proceeded, and built the part. The design is on the car. That's the test that matters.
-      </p>
+      <h2>The kingpin complication</h2>
+      <p>The suspension team&rsquo;s kingpin geometry had a Z axis rotation component, not the purely simplified Y axis my initial analysis assumed. First generation car, no prior precedent on the team. I made a documented assumption, proceeded, and built the part.</p>
+
+      <h2>FEA, and what it missed</h2>
+      <p>ANSYS static structural under what I called worst case combined kingpin loading, a hard turn plus an impact event. Peak von Mises came out at 55,338&nbsp;psi. I cleared the design.</p>
+      <p>It failed on the car. The part yielded in torsion, and torsion was not in the load case I had built. The mesh was fine, the solve was fine, the material model was fine. The loading assumption underneath all of it was wrong, so the analysis confirmed a case that never governed. The plate was thickened for the rebuild.</p>
+      <p>Every load case I have written since starts from a different question. Not which load is easiest to apply, but which failure mode actually governs this part.</p>
+
       <div class="cs-callout">
-        <p>A perfect model of a flawed input is still a flawed output. Make a defensible assumption, document it, build, and learn from the physical result.</p>
+        <p>A perfect model of a flawed input is still a flawed output.</p>
       </div>
 
-      <h2>FEA Validation</h2>
-      <p>
-        ANSYS static structural analysis under worst-case combined front kingpin loading — hard turn plus impact event simultaneously. 55,338 psi max von Mises. Design cleared.
-      </p>
-
-      <div class="cs-stat-row">
-        <div class="cs-stat">
-          <div class="cs-stat-num">55,338</div>
-          <div class="cs-stat-desc">psi peak stress<br>design cleared under worst-case load</div>
-        </div>
-        <div class="cs-stat">
-          <div class="cs-stat-num">21.5°</div>
-          <div class="cs-stat-desc">inner wheel angle<br>optimized partial Ackermann</div>
-        </div>
-        <div class="cs-stat">
-          <div class="cs-stat-num">16.8°</div>
-          <div class="cs-stat-desc">outer wheel angle<br>cornering load balanced</div>
-        </div>
+      <div class="cs-stats">
+        <div class="cs-stat"><div class="cs-stat-n">55,338</div><div class="cs-stat-d">psi peak von Mises, bending load case only</div></div>
+        <div class="cs-stat"><div class="cs-stat-n">21.5&deg;</div><div class="cs-stat-d">inner wheel angle at full lock</div></div>
+        <div class="cs-stat"><div class="cs-stat-n">16.8&deg;</div><div class="cs-stat-d">outer wheel angle at full lock</div></div>
       </div>
 
-      <div class="cs-media-full">
-        <img loading="lazy" decoding="async" src="ansys-fea.png" alt="ANSYS von Mises stress analysis">
+      <div class="cs-media" style="aspect-ratio:16/10">
+        <img src="ansys-fea.png" alt="ANSYS von Mises stress plot of the steering plate" loading="lazy" decoding="async">
       </div>
 
       <h2>Fabrication</h2>
-      <p>
-        CNC wood prototypes first — fast and cheap to validate fit on the car before touching steel. Once geometry checked out, recut in steel plate. Tie rod endpoints are the critical tolerance: a few millimeters off changes the effective Ackermann percentage.
-      </p>
+      <p>CNC wood prototypes first, fast and cheap to validate fit on the car before touching steel. Once the geometry checked out I recut in steel plate. Tie rod endpoints are the critical tolerance. A few millimetres off changes the effective Ackermann percentage.</p>
 
-      <div class="cs-media-pair">
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="fabrication-on-car.jpg" alt="Fitting steering geometry on car" style="height:260px;object-fit:cover">
-        </div>
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="fabrication-team-fit.png" alt="Wood prototype fit check" style="height:260px;object-fit:cover">
-        </div>
+      <div class="cs-pair">
+        <div class="cs-media" style="aspect-ratio:4/3"><img src="fabrication-on-car.jpg" alt="Fitting the steering geometry on the car" loading="lazy" decoding="async"></div>
+        <div class="cs-media" style="aspect-ratio:4/3"><img src="fabrication-team-fit.png" alt="Wood prototype fit check with the team" loading="lazy" decoding="async"></div>
       </div>
-      <div class="cs-media-pair">
-        <div class="cs-media-full">
-          <video autoplay muted loop playsinline preload="metadata" poster="" style="width:100%;height:260px;object-fit:cover"><source src="steering-assembly.mp4" type="video/mp4"></video>
+      <div class="cs-pair">
+        <div class="cs-media" style="aspect-ratio:4/3">
+          <video autoplay muted loop playsinline preload="metadata" aria-label="Steering assembly rotating"><source src="steering-assembly.mp4" type="video/mp4"></video>
         </div>
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="fabrication-chassis.png" alt="Steering system on chassis" style="height:260px;object-fit:cover">
-        </div>
+        <div class="cs-media" style="aspect-ratio:4/3"><img src="fabrication-chassis.png" alt="Steering system mounted on the chassis" loading="lazy" decoding="async"></div>
       </div>
 
-      <h2>Weld Jig — Cross Bar</h2>
-      <p>
-        Getting the cross bar tabbed in the right place is a fixturing problem, not a welding one. Clamps alone let the bar walk while you're setting up, and once heat goes in the position is permanent. So I cut the bar to length on the horizontal bandsaw, then 3D printed a jig that indexes it off the frame tube — drop the jig on, clamp through it, and the bar is held square while the tabs go down.
-      </p>
+      <h2>Weld jig for the cross bar</h2>
+      <p>Getting the cross bar tabbed in the right place is a fixturing problem, not a welding one. Clamps alone let the bar walk while you are setting up, and once heat goes in the position is permanent. So I cut the bar to length on the horizontal bandsaw, then printed a jig that indexes it off the frame tube. Drop the jig on, clamp through it, and the bar is held square while the tabs go down.</p>
 
-      <div class="cs-media-full">
-        <img loading="lazy" decoding="async" src="cross_bar_fab.jpeg" alt="Cutting the cross bar to length on the horizontal bandsaw" style="height:380px;object-fit:cover;object-position:center 45%">
+      <div class="cs-media" style="aspect-ratio:16/10">
+        <img src="cross_bar_fab.jpeg" alt="Cutting the cross bar to length on the horizontal bandsaw" loading="lazy" decoding="async" style="object-position:center 45%">
       </div>
 
-      <div class="cs-media-pair">
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="jig%20no%20clamp.jpeg" alt="3D printed weld jig locating the cross bar against the frame tube" style="height:340px;object-fit:cover;object-position:center 52%">
+      <div class="cs-pair">
+        <div>
+          <div class="cs-media" style="aspect-ratio:4/3"><img src="jig%20no%20clamp.jpeg" alt="3D printed weld jig locating the cross bar against the frame tube" loading="lazy" decoding="async" style="object-position:center 52%"></div>
+          <div class="cs-cap">Printed jig indexed off the frame tube</div>
         </div>
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="jig_with_clamp.jpeg" alt="Weld jig clamped, holding the cross bar in position to be tabbed" style="height:340px;object-fit:cover;object-position:center 48%">
+        <div>
+          <div class="cs-media" style="aspect-ratio:4/3"><img src="jig_with_clamp.jpeg" alt="Weld jig clamped, holding the cross bar in position to be tabbed" loading="lazy" decoding="async" style="object-position:center 48%"></div>
+          <div class="cs-cap">Clamped, cross bar held square to be tabbed</div>
         </div>
       </div>
-      <div class="cs-cap-pair">
-        <div class="cs-cap">3D printed jig indexed off the frame tube</div>
-        <div class="cs-cap">Clamped — cross bar held square to be tabbed</div>
-      </div>
 
-      <h2>Steering Wheel Control Module</h2>
-      <p>
-        ASC regulations require all controls to rotate with the wheel — so the button module housing had to clip onto the module and turn with the column. The button module had an unusual elliptical profile, so I modelled it fully in CAD before printing anything.
-      </p>
+      <h2>Steering wheel control module</h2>
+      <p>ASC regulations require all controls to rotate with the wheel, so the button module housing had to clip onto the module and turn with the column. The module had an unusual elliptical profile, so I modelled it fully in CAD before printing anything.</p>
+      <p>My first design was overengineered, solving problems I had not encountered yet. The redesign strips it to the functional core.</p>
 
-      <h2>Design Iteration: Complexity Is a Liability</h2>
-      <p>
-        First design was overengineered — solving problems I hadn't encountered yet. The redesign strips it to the functional core.
-      </p>
       <div class="cs-callout">
-        <p>Never make something more complicated than it needs to be. Complexity is a liability, not a signal of effort.</p>
-      </div>
-      <div class="cs-media-full">
-        <img loading="lazy" decoding="async" src="button-module-cad-complex.png" alt="Overengineered first CAD design" style="height:280px;object-fit:contain;background:#f1f5f9;width:100%">
+        <p>Complexity is a liability, not a signal of effort.</p>
       </div>
 
-      <h2>Tolerancing — When Calipers Aren't Enough</h2>
-      <p>
-        The usual rule is measure the physical part, not the spec sheet. Problem: several critical dimensions on the button module were geometrically inaccessible — recessed curves and internal features you can't reach with calipers no matter how you try. Iteration became the measurement tool.
-      </p>
-      <p>
-        Each print revealed something specific. Mounting holes oversized from shrinkage. Curved faces not seating flush. And a recurring structural issue: inner walls thin enough that the clips would snap off under the force needed to seat the module. The fix wasn't just dimensional — I started varying infill percentage and wall thickness until the part was stiff enough to survive assembly without the critical features breaking. Once the geometry and the print settings both landed right, the fit was tight and the part held.
-      </p>
-      <div class="cs-media-full">
-        <img loading="lazy" decoding="async" src="IMG_0373.jpg" alt="All tolerancing test iterations">
+      <div class="cs-media contain" style="aspect-ratio:16/9">
+        <img src="button-module-cad-complex.png" alt="The overengineered first CAD design of the button housing" loading="lazy" decoding="async">
       </div>
 
-      <h2>Final Design</h2>
-      <p>Once the fit was right, I went ahead with the design.</p>
-      <div class="cs-media-pair">
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="button-module-irl-2.jpg" alt="Redesigned holder — disassembled" style="height:280px;object-fit:cover">
-        </div>
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="button-module-irl-3.jpg" alt="Holder clipped onto button module" style="height:280px;object-fit:cover">
-        </div>
+      <h2>Tolerancing when calipers aren&rsquo;t enough</h2>
+      <p>The usual rule is to measure the physical part, not the spec sheet. The problem here was that several critical dimensions on the button module were geometrically inaccessible: recessed curves and internal features you cannot reach with calipers no matter how you try. Iteration became the measurement tool.</p>
+      <p>Each print revealed something specific. Mounting holes oversized from shrinkage. Curved faces not seating flush. And a recurring structural issue, inner walls thin enough that the clips would snap off under the force needed to seat the module. The fix was not only dimensional. I varied infill percentage and wall thickness until the part was stiff enough to survive assembly without the critical features breaking.</p>
+
+      <div class="cs-media" style="aspect-ratio:16/10">
+        <img src="IMG_0373.jpg" alt="All tolerancing test iterations laid out together" loading="lazy" decoding="async">
       </div>
 
-      <h2>Backplate &amp; Final Assembly</h2>
-      <p>
-        CNC-machined aluminum backplate, dimensioned against the SolidWorks reference. Module clips into holder, holder mounts to backplate, backplate bolts to wheel. On the car.
-      </p>
-      <div class="cs-media-pair">
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="IMG_0350.jpg" alt="Aluminum backplate" style="height:280px;object-fit:cover">
-        </div>
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="IMG_0347.jpg" alt="CNC laser cutting the backplate" style="height:280px;object-fit:cover">
-        </div>
+      <h2>Final assembly</h2>
+      <p>CNC machined aluminium backplate, dimensioned against the SolidWorks reference. Module clips into the holder, holder mounts to the backplate, backplate bolts to the wheel.</p>
+
+      <div class="cs-pair">
+        <div class="cs-media" style="aspect-ratio:4/3"><img src="button-module-irl-2.jpg" alt="Redesigned holder, disassembled" loading="lazy" decoding="async"></div>
+        <div class="cs-media" style="aspect-ratio:4/3"><img src="button-module-irl-3.jpg" alt="Holder clipped onto the button module" loading="lazy" decoding="async"></div>
       </div>
-      <div class="cs-media-pair">
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="IMG_0353.jpg" alt="Assembly on wheel — close up" style="height:280px;object-fit:cover">
-        </div>
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="IMG_0351.jpg" alt="Full steering wheel with module" style="height:280px;object-fit:cover">
-        </div>
+      <div class="cs-pair">
+        <div class="cs-media" style="aspect-ratio:4/3"><img src="IMG_0350.jpg" alt="Machined aluminium backplate" loading="lazy" decoding="async"></div>
+        <div class="cs-media" style="aspect-ratio:4/3"><img src="IMG_0347.jpg" alt="CNC laser cutting the backplate" loading="lazy" decoding="async"></div>
+      </div>
+      <div class="cs-pair">
+        <div class="cs-media" style="aspect-ratio:4/3"><img src="IMG_0353.jpg" alt="Assembly on the wheel, close up" loading="lazy" decoding="async"></div>
+        <div class="cs-media" style="aspect-ratio:4/3"><img src="IMG_0351.jpg" alt="Full steering wheel with the control module fitted" loading="lazy" decoding="async"></div>
       </div>
 
-      <div class="cs-other-projects">
-        <div class="cs-other-label">Other Projects</div>
-        <div class="cs-other-grid">
-          <div class="cs-other-card" onclick="closeCase('cs-triton');openCase('cs-cce')">
-            <div class="cs-other-num">02 — Internship</div>
-            <div class="cs-other-title">Commercial Solar PV Design</div>
-            <div class="cs-other-desc">Helioscope layout, financial modeling, Viasat safe-harbor ITC proposal.</div>
-          </div>
-          <div class="cs-other-card" onclick="closeCase('cs-triton');openCase('cs-solar')">
-            <div class="cs-other-num">03 — Research</div>
-            <div class="cs-other-title">Solar Carport — Refugee Camp</div>
-            <div class="cs-other-desc">4,736 panels · 4.38 GWh/yr · Published in Curieux Academic Journal.</div>
-          </div>
-          <div class="cs-other-card" onclick="closeCase('cs-triton');openCase('cs-research')">
-            <div class="cs-other-num">04 — Research</div>
-            <div class="cs-other-title">Wind Turbine &amp; Solar Tilt</div>
-            <div class="cs-other-desc">3D-printed rotor study + calculus-based tilt angle optimization.</div>
-          </div>
-        </div>
-      </div>
-
+      <div class="cs-more" data-more></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     CASE STUDY: CCE (SKELETON)
-══════════════════════════════════════════ -->
-<div class="case-study" id="cs-cce">
-  <div class="cs-nav">
-    <button class="cs-back" onclick="closeCase('cs-cce')">Back to Projects</button>
-    <span style="font-family:var(--font-mono);font-size:11px;color:var(--faint);letter-spacing:0.08em;">02 — Center for Community Energy</span>
-  </div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     CASE STUDY 2: CCE
+     ══════════════════════════════════════════════════════════════ -->
+<div class="case-study" id="cs-cce" role="dialog" aria-modal="true" aria-label="Case study: commercial solar PV design">
+  <div class="cs-nav"><div class="cs-nav-inner">
+    <button class="cs-back" data-close><span aria-hidden="true">&larr;</span> Back to projects</button>
+    <span class="mono-label">Center for Community Energy</span>
+  </div></div>
   <div class="cs-content">
-    <div class="cs-tag">Solar PV Design · Energy Engineering · 2026–Present</div>
-    <h1 class="cs-title">Commercial Solar PV Systems</h1>
+    <div class="cs-tag">Solar PV design, energy engineering, 2026</div>
+    <h1 class="cs-title display-lg">Commercial solar PV systems</h1>
+
     <div class="cs-meta">
-      <div class="cs-meta-item"><div class="cs-meta-label">Client</div><div class="cs-meta-val">Center for Community Energy — Various</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-val">Engineering Intern</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">Helioscope · AutoCAD · Excel</div></div>
+      <div><div class="cs-meta-k">Organisation</div><div class="cs-meta-v">Center for Community Energy</div></div>
+      <div><div class="cs-meta-k">Role</div><div class="cs-meta-v">Engineering intern</div></div>
+      <div><div class="cs-meta-k">Tools</div><div class="cs-meta-v">Helioscope, AutoCAD, Excel</div></div>
     </div>
 
-    <div class="cs-skills-used">
-      <span class="cs-skill-pill">Helioscope</span>
-      <span class="cs-skill-pill">Solar PV Design</span>
-      <span class="cs-skill-pill">Financial Modeling</span>
-      <span class="cs-skill-pill secondary">NPV / ITC Analysis</span>
-      <span class="cs-skill-pill secondary">Utility Bill Analysis</span>
-      <span class="cs-skill-pill secondary">Structural Coordination</span>
+    <div class="cs-pills">
+      <span class="tag key">Helioscope</span><span class="tag">Solar PV design</span>
+      <span class="tag">Financial modelling</span><span class="tag">NPV and ITC analysis</span>
+      <span class="tag">Utility bill analysis</span><span class="tag">Structural coordination</span>
     </div>
 
-    <div class="cs-media-full" style="background:#0f172a;padding:40px;min-height:160px;display:flex;align-items:center;justify-content:center">
-      <img loading="lazy" decoding="async" src="cce-logo.png" alt="Center for Community Energy" style="max-height:100px;width:auto;object-fit:contain">
+    <div class="cs-media" style="background:var(--surface-dark);aspect-ratio:16/5;display:flex;align-items:center;justify-content:center;padding:40px">
+      <img src="cce-logo.png" alt="Center for Community Energy" loading="lazy" decoding="async" style="max-height:100px;width:auto;object-fit:contain">
     </div>
+
     <div class="cs-body">
-      <h2>The Work</h2>
-      <p>
-        San Diego nonprofit accelerating commercial solar adoption. My role is broad — utility bill analysis, Helioscope layout and stringing, financial modeling (NPV, ITC, MACRS), BOM development, and structural coordination with external engineers. One week might be a Viasat safe-harbor proposal; the next, load profile analysis for a school district.
-      </p>
+      <h2>The work</h2>
+      <p>CCE is a San Diego nonprofit accelerating commercial solar adoption. My role was broad: utility bill analysis, Helioscope layout and stringing, financial modelling with NPV, ITC and MACRS, BOM development, and structural coordination with external engineers. One week might be a Viasat safe harbour proposal, the next a load profile analysis for a school district.</p>
 
-      <h2>Utility Bill Analysis</h2>
-      <p>Pull interval billing data, map load profile, identify peak demand timing. This is what makes the financial model defensible.</p>
-      <div class="cs-media-full">
-        <img loading="lazy" decoding="async" src="cce-dashboard-utility.png" alt="Utility dashboard — billing analysis">
-      </div>
+      <h2>Utility bill analysis</h2>
+      <p>Pull interval billing data, map the load profile, identify peak demand timing. This is what makes the financial model defensible.</p>
+      <div class="cs-media" style="aspect-ratio:16/9"><img src="cce-dashboard-utility.png" alt="Utility dashboard showing billing analysis" loading="lazy" decoding="async"></div>
 
-      <h2>Solar Production Modeling</h2>
-      <p>Helioscope layout, stringing, shading analysis. Dual-axis trackers overlaid against facility demand — the overlap is where the savings come from.</p>
-      <div class="cs-media-full">
-        <img loading="lazy" decoding="async" src="cce-dashboard-load.png" alt="Load profile vs solar production">
-      </div>
+      <h2>Production modelling</h2>
+      <p>Helioscope layout, stringing, shading analysis. Dual axis trackers overlaid against facility demand. The overlap is where the savings come from.</p>
+      <div class="cs-media" style="aspect-ratio:16/9"><img src="cce-dashboard-load.png" alt="Load profile plotted against modelled solar production" loading="lazy" decoding="async"></div>
 
-      <h2>Financial Modeling</h2>
-      <p>20-year NPV analysis: payback period, ITC and MACRS depreciation, O&M escalation. Built to go in front of a client's accountant.</p>
-      <div class="cs-media-full">
-        <img loading="lazy" decoding="async" src="cce-dashboard-savings.png" alt="20-year solar savings projection">
-      </div>
+      <h2>Financial modelling</h2>
+      <p>Twenty year NPV analysis: payback period, ITC and MACRS depreciation, O&amp;M escalation. Built to go in front of a client&rsquo;s accountant.</p>
+      <div class="cs-media" style="aspect-ratio:16/9"><img src="cce-dashboard-savings.png" alt="Twenty year solar savings projection" loading="lazy" decoding="async"></div>
 
-      <div class="cs-other-projects">
-        <div class="cs-other-label">Other Projects</div>
-        <div class="cs-other-grid">
-          <div class="cs-other-card" onclick="closeCase('cs-cce');openCase('cs-triton')">
-            <div class="cs-other-num">01 — Competition Team</div>
-            <div class="cs-other-title">Ackermann Steering System</div>
-            <div class="cs-other-desc">SolidWorks · ANSYS FEA · Steel fabrication · On vehicle.</div>
-          </div>
-          <div class="cs-other-card" onclick="closeCase('cs-cce');openCase('cs-solar')">
-            <div class="cs-other-num">03 — Research</div>
-            <div class="cs-other-title">Solar Carport — Refugee Camp</div>
-            <div class="cs-other-desc">4,736 panels · 4.38 GWh/yr · Published.</div>
-          </div>
-          <div class="cs-other-card" onclick="closeCase('cs-cce');openCase('cs-research')">
-            <div class="cs-other-num">04 — Research</div>
-            <div class="cs-other-title">Wind Turbine &amp; Solar Tilt</div>
-            <div class="cs-other-desc">3D-printed rotor study + calculus-based tilt optimization.</div>
-          </div>
-        </div>
-      </div>
-
+      <div class="cs-more" data-more></div>
     </div>
   </div>
 </div>
 
-<div class="case-study" id="cs-solar">
-  <div class="cs-nav">
-    <button class="cs-back" onclick="closeCase('cs-solar')">Back to Projects</button>
-    <span style="font-family:var(--font-mono);font-size:11px;color:var(--faint);letter-spacing:0.08em;">03 — Humanitarian Solar</span>
-  </div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     CASE STUDY 3: SHATILA SOLAR CARPORT
+     ══════════════════════════════════════════════════════════════ -->
+<div class="case-study" id="cs-solar" role="dialog" aria-modal="true" aria-label="Case study: solar carport for the Shatila refugee camp">
+  <div class="cs-nav"><div class="cs-nav-inner">
+    <button class="cs-back" data-close><span aria-hidden="true">&larr;</span> Back to projects</button>
+    <span class="mono-label">Humanitarian solar</span>
+  </div></div>
   <div class="cs-content">
-    <div class="cs-tag">Independent Research · Published in Curieux Academic Journal · 2023–2024</div>
-    <h1 class="cs-title">Solar PV Carport for the Shatila Refugee Camp</h1>
+    <div class="cs-tag">Independent research, Curieux Academic Journal, 2023 to 2024</div>
+    <h1 class="cs-title display-lg">Solar PV carport for the Shatila refugee camp</h1>
+
     <div class="cs-meta">
-      <div class="cs-meta-item"><div class="cs-meta-label">Published</div><div class="cs-meta-val">Curieux Academic Journal, Pg. 278</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Location</div><div class="cs-meta-val">Beirut, Lebanon</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">AutoCAD · Global Solar Atlas · Google Earth Pro</div></div>
+      <div><div class="cs-meta-k">Published</div><div class="cs-meta-v">Curieux Academic Journal, page 278</div></div>
+      <div><div class="cs-meta-k">Location</div><div class="cs-meta-v">Beirut, Lebanon</div></div>
+      <div><div class="cs-meta-k">Tools</div><div class="cs-meta-v">AutoCAD, Global Solar Atlas, Google Earth Pro</div></div>
     </div>
 
-    <div class="cs-skills-used">
-      <span class="cs-skill-pill">AutoCAD</span>
-      <span class="cs-skill-pill">Solar Irradiance Modeling</span>
-      <span class="cs-skill-pill secondary">Global Solar Atlas</span>
-      <span class="cs-skill-pill secondary">Google Earth Pro</span>
-      <span class="cs-skill-pill secondary">Cost Analysis</span>
-      <span class="cs-skill-pill secondary">Published Research</span>
+    <div class="cs-pills">
+      <span class="tag key">AutoCAD</span><span class="tag">Irradiance modelling</span>
+      <span class="tag">Global Solar Atlas</span><span class="tag">Google Earth Pro</span>
+      <span class="tag">Cost analysis</span><span class="tag">Published research</span>
     </div>
 
-    <div class="cs-media-full">
-      <img loading="lazy" decoding="async" src="research-satellite-clean.png" alt="Satellite view of Camille Chamoun Sports City Stadium" style="image-rendering:crisp-edges">
-    </div>
+    <div class="cs-media" style="aspect-ratio:16/9"><img src="research-satellite-clean.png" alt="Satellite view of Camille Chamoun Sports City Stadium" loading="lazy" decoding="async"></div>
+
     <div class="cs-body">
+      <h2>The problem</h2>
+      <p>Shatila refugee camp in Beirut houses roughly 40,000 residents on one to three hours of government electricity per day. After the 2020 explosion, private generator costs became unaffordable. The question: could a solar PV carport at the nearby Camille Chamoun stadium parking lot supply meaningful energy to the camp?</p>
 
-      <h2>The Problem</h2>
-      <p>
-        Shatila refugee camp, Beirut — 40,000 residents, 1–3 hours of government electricity per day. After the 2020 explosion, private generator costs became unaffordable. The question: could a solar PV carport at the nearby Camille Chamoun Stadium parking lot supply meaningful energy to the camp?
-      </p>
+      <h2>Site analysis</h2>
+      <p>GHI of 1,904.8&nbsp;kWh/m&sup2;, optimum tilt 27&deg; south. Strong solar access year round with no significant terrain shading.</p>
+      <div class="cs-media" style="aspect-ratio:16/9"><img src="research-solar-sunpath-clean.png" alt="Sunpath diagram for the Beirut site" loading="lazy" decoding="async"></div>
 
-      <h2>Site Analysis</h2>
-      <p>GHI of 1,904.8 kWh/m², optimum tilt 27° south. Strong solar access year-round, no significant terrain shading.</p>
-      <div class="cs-media-full">
-        <img loading="lazy" decoding="async" src="research-solar-sunpath-clean.png" alt="Sunpath diagram for Beirut site">
-      </div>
-
-      <h2>Two Iterations</h2>
-      <p>First: percentage-based area estimates (60–100%) to bound the output range. Second: actual AutoCAD layout — T-configuration carport rows with 2.7m car lanes, Jinko Tiger Pro 72HC at 550W each, counting every panel that physically fit.</p>
-      <div class="cs-media-pair">
-        <div class="cs-media-full" style="background:#fff">
-          <img loading="lazy" decoding="async" src="research-autocad-clean.png" alt="AutoCAD carport layout" style="height:280px;object-fit:contain;width:100%;padding:12px">
-        </div>
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="research-solar-chart2.png" alt="Monthly output — second iteration" style="height:280px;object-fit:contain;background:#fff;padding:16px;width:100%">
-        </div>
+      <h2>Two iterations</h2>
+      <p>First pass used percentage based area estimates, 60 to 100 percent, to bound the output range. Second pass was an actual AutoCAD layout: T configuration carport rows with 2.7&nbsp;m car lanes, Jinko Tiger Pro 72HC panels at 550&nbsp;W each, counting every panel that physically fit.</p>
+      <div class="cs-pair">
+        <div class="cs-media contain paper" style="aspect-ratio:4/3"><img src="research-autocad-clean.png" alt="AutoCAD carport layout drawing" loading="lazy" decoding="async"></div>
+        <div class="cs-media contain paper" style="aspect-ratio:4/3"><img src="research-solar-chart2.png" alt="Monthly output chart from the second iteration" loading="lazy" decoding="async"></div>
       </div>
 
       <h2>Results</h2>
-      <div class="cs-stat-row">
-        <div class="cs-stat">
-          <div class="cs-stat-num">4,736</div>
-          <div class="cs-stat-desc">panels fitted<br>T-configuration carports</div>
-        </div>
-        <div class="cs-stat">
-          <div class="cs-stat-num">4.38</div>
-          <div class="cs-stat-desc">GWh/yr<br>estimated annual output</div>
-        </div>
-        <div class="cs-stat">
-          <div class="cs-stat-num">14%</div>
-          <div class="cs-stat-desc">of camp's total<br>energy demand supplied</div>
-        </div>
+      <div class="cs-stats">
+        <div class="cs-stat"><div class="cs-stat-n">4,736</div><div class="cs-stat-d">panels fitted in T configuration carports</div></div>
+        <div class="cs-stat"><div class="cs-stat-n">4.38</div><div class="cs-stat-d">GWh per year estimated output</div></div>
+        <div class="cs-stat"><div class="cs-stat-n">14%</div><div class="cs-stat-d">of the camp&rsquo;s total energy demand</div></div>
       </div>
+
+      <p>14 percent is not a complete solution. But in a camp where residents get one to three hours of power a day, a system that changes that is worth costing out. The two barriers are a $2.5&nbsp;M construction cost and Lebanese government approval for the stadium site.</p>
 
       <div class="cs-callout">
-        <p>14% isn't a complete solution. But in a camp where residents get 1–3 hours of power a day, a system that changes that is worth building. Main barriers: $2.5M construction cost and Lebanese government approval for the stadium site.</p>
-      </div>
-      <div class="cs-callout">
-        <p>Engineering research doesn't always end with a solved problem. Sometimes the value is in precisely defining what's possible, what it costs, and what stands in the way.</p>
+        <p>Sometimes the value of a study is precisely defining what is possible, what it costs, and what stands in the way.</p>
       </div>
 
-      <div class="cs-other-projects">
-        <div class="cs-other-label">Other Projects</div>
-        <div class="cs-other-grid">
-          <div class="cs-other-card" onclick="closeCase('cs-solar');openCase('cs-triton')">
-            <div class="cs-other-num">01 — Competition Team</div>
-            <div class="cs-other-title">Ackermann Steering System</div>
-            <div class="cs-other-desc">SolidWorks · ANSYS FEA · Steel fabrication · On vehicle.</div>
-          </div>
-          <div class="cs-other-card" onclick="closeCase('cs-solar');openCase('cs-cce')">
-            <div class="cs-other-num">02 — Internship</div>
-            <div class="cs-other-title">Commercial Solar PV Design</div>
-            <div class="cs-other-desc">Helioscope layout · Financial modeling · Viasat ITC proposal.</div>
-          </div>
-          <div class="cs-other-card" onclick="closeCase('cs-solar');openCase('cs-research')">
-            <div class="cs-other-num">04 — Research</div>
-            <div class="cs-other-title">Wind Turbine &amp; Solar Tilt</div>
-            <div class="cs-other-desc">3D-printed rotor study + calculus-based tilt optimization.</div>
-          </div>
-        </div>
-      </div>
-
+      <div class="cs-more" data-more></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     CASE STUDY: RESEARCH
-══════════════════════════════════════════ -->
-<div class="case-study" id="cs-research">
-  <div class="cs-nav">
-    <button class="cs-back" onclick="closeCase('cs-research')">Back to Projects</button>
-    <span style="font-family:var(--font-mono);font-size:11px;color:var(--faint);letter-spacing:0.08em;">04 — Independent Research</span>
-  </div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     CASE STUDY 4: WIND AND TILT RESEARCH
+     ══════════════════════════════════════════════════════════════ -->
+<div class="case-study" id="cs-research" role="dialog" aria-modal="true" aria-label="Case study: rotor swept area and solar tilt studies">
+  <div class="cs-nav"><div class="cs-nav-inner">
+    <button class="cs-back" data-close><span aria-hidden="true">&larr;</span> Back to projects</button>
+    <span class="mono-label">Independent research</span>
+  </div></div>
   <div class="cs-content">
-    <div class="cs-tag">Independent Research · 2024–2025</div>
-    <h1 class="cs-title">Wind Turbine &amp; Solar Tilt Studies</h1>
+    <div class="cs-tag">Independent research, 2024 to 2025</div>
+    <h1 class="cs-title display-lg">Rotor swept area and solar tilt studies</h1>
+
     <div class="cs-meta">
-      <div class="cs-meta-item"><div class="cs-meta-label">Type</div><div class="cs-meta-val">Independent Research</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Period</div><div class="cs-meta-val">Jun 2024 – Mar 2025</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Tools</div><div class="cs-meta-val">MATLAB · Logger Pro · 3D Printing · Calculus</div></div>
+      <div><div class="cs-meta-k">Type</div><div class="cs-meta-v">Independent research</div></div>
+      <div><div class="cs-meta-k">Period</div><div class="cs-meta-v">June 2024 to March 2025</div></div>
+      <div><div class="cs-meta-k">Tools</div><div class="cs-meta-v">MATLAB, Logger Pro, 3D printing</div></div>
     </div>
 
-    <div class="cs-skills-used">
-      <span class="cs-skill-pill">MATLAB</span>
-      <span class="cs-skill-pill">Logger Pro</span>
-      <span class="cs-skill-pill">3D Printing</span>
-      <span class="cs-skill-pill secondary">Experimental Design</span>
-      <span class="cs-skill-pill secondary">Calculus-Based Optimization</span>
-      <span class="cs-skill-pill secondary">Data Analysis</span>
+    <div class="cs-pills">
+      <span class="tag key">MATLAB</span><span class="tag">Logger Pro</span>
+      <span class="tag">3D printing</span><span class="tag">Experimental design</span>
+      <span class="tag">Calculus based optimisation</span><span class="tag">Data analysis</span>
     </div>
 
-    <div class="cs-media-full">
-      <img loading="lazy" decoding="async" src="research-wind-turbine.png" alt="3D printed wind turbine rotors">
-    </div>
+    <div class="cs-media" style="aspect-ratio:16/9"><img src="research-wind-turbine.png" alt="Set of 3D printed wind turbine rotors of varying radius" loading="lazy" decoding="async"></div>
+
     <div class="cs-body">
+      <h2>Study one, rotor swept area</h2>
+      <p>Does wind turbine power output scale predictably with rotor swept area? I printed a series of variable radius rotors, geometrically identical except for length, and measured voltage and current output against each size using a controlled fan and Logger Pro. R&sup2; of 0.794 confirmed the swept area scaling relationship, with nonlinear behaviour at lower wind speeds matching trends in the literature.</p>
 
-      <h2>Study 1 — Wind Turbine Rotor Swept Area</h2>
-      <p>
-        Does wind turbine power output scale predictably with rotor swept area? I 3D-printed a series of variable-radius rotors — geometrically identical except for length — and measured voltage and current output against each size using a controlled fan and Logger Pro. R² = 0.794 confirmed the swept-area scaling relationship, with nonlinear behavior at lower wind speeds matching trends in existing literature.
-      </p>
-
-      <div class="cs-stat-row">
-        <div class="cs-stat">
-          <div class="cs-stat-num">0.891</div>
-          <div class="cs-stat-desc">correlation coefficient<br>radius² vs. wattage</div>
-        </div>
-        <div class="cs-stat">
-          <div class="cs-stat-num">59.3%</div>
-          <div class="cs-stat-desc">Betz limit —<br>theoretical max efficiency</div>
-        </div>
-        <div class="cs-stat">
-          <div class="cs-stat-num">3×</div>
-          <div class="cs-stat-desc">rotor sizes tested<br>0.02 · 0.04 · 0.06m</div>
-        </div>
+      <div class="cs-stats">
+        <div class="cs-stat"><div class="cs-stat-n">0.891</div><div class="cs-stat-d">correlation coefficient, radius squared against wattage</div></div>
+        <div class="cs-stat"><div class="cs-stat-n">59.3%</div><div class="cs-stat-d">Betz limit, theoretical maximum efficiency</div></div>
+        <div class="cs-stat"><div class="cs-stat-n">3</div><div class="cs-stat-d">rotor sizes tested at 0.02, 0.04 and 0.06&nbsp;m</div></div>
       </div>
 
-      <div class="cs-media-pair">
-        <div class="cs-media-full">
-          <img loading="lazy" decoding="async" src="research-wind-setup.png" alt="Experimental setup" style="height:260px;object-fit:cover">
-        </div>
-        <div class="cs-media-full" style="background:#fff">
-          <img loading="lazy" decoding="async" src="research-wind-data-table.png" alt="Data table" style="height:260px;object-fit:contain;padding:16px;width:100%">
-        </div>
+      <div class="cs-pair">
+        <div class="cs-media" style="aspect-ratio:4/3"><img src="research-wind-setup.png" alt="Experimental test setup with fan and rotor" loading="lazy" decoding="async"></div>
+        <div class="cs-media contain paper" style="aspect-ratio:4/3"><img src="research-wind-data-table.png" alt="Recorded data table" loading="lazy" decoding="async"></div>
       </div>
-      <div class="cs-media-full">
-        <img loading="lazy" decoding="async" src="research-wind-graph.png" alt="Radius² vs wattage — Logger Pro">
-      </div>
+      <div class="cs-media contain paper" style="aspect-ratio:16/9"><img src="research-wind-graph.png" alt="Radius squared plotted against wattage in Logger Pro" loading="lazy" decoding="async"></div>
 
-      <h2>Study 2 — Optimal Solar Panel Tilt Angle</h2>
-      <p>
-        Fixed-angle panels sacrifice energy every month the sun deviates from that angle. I derived beam irradiation ratio R̄b as a function of tilt angle β, differentiated to find the monthly maximum, and produced a complete tilt schedule per calendar month — validated against known solar positioning models.
-      </p>
+      <h2>Study two, optimal panel tilt</h2>
+      <p>Fixed angle panels sacrifice energy every month the sun deviates from that angle. I derived the beam irradiation ratio as a function of tilt angle, differentiated to find the monthly maximum, and produced a complete tilt schedule per calendar month, validated against known solar positioning models.</p>
 
-      <div class="cs-media-pair">
-        <div class="cs-media-full" style="background:#fff">
-          <img loading="lazy" decoding="async" src="research-solar-irradiance.png" alt="GHI DNI DHI irradiance diagram" style="height:260px;object-fit:contain;padding:20px;width:100%">
-        </div>
-        <div class="cs-media-full" style="background:#fff">
-          <img loading="lazy" decoding="async" src="research-tilt-table-clean.png" alt="Monthly optimal tilt angles" style="height:260px;object-fit:contain;padding:20px;width:100%">
-        </div>
+      <div class="cs-pair">
+        <div class="cs-media contain paper" style="aspect-ratio:4/3"><img src="research-solar-irradiance.png" alt="GHI, DNI and DHI irradiance component diagram" loading="lazy" decoding="async"></div>
+        <div class="cs-media contain paper" style="aspect-ratio:4/3"><img src="research-tilt-table-clean.png" alt="Table of monthly optimal tilt angles" loading="lazy" decoding="async"></div>
       </div>
 
-      <div class="cs-other-projects">
-        <div class="cs-other-label">Other Projects</div>
-        <div class="cs-other-grid">
-          <div class="cs-other-card" onclick="closeCase('cs-research');openCase('cs-triton')">
-            <div class="cs-other-num">01 — Competition Team</div>
-            <div class="cs-other-title">Ackermann Steering System</div>
-            <div class="cs-other-desc">SolidWorks · ANSYS FEA · Steel fabrication · On vehicle.</div>
-          </div>
-          <div class="cs-other-card" onclick="closeCase('cs-research');openCase('cs-cce')">
-            <div class="cs-other-num">02 — Internship</div>
-            <div class="cs-other-title">Commercial Solar PV Design</div>
-            <div class="cs-other-desc">Helioscope layout · Financial modeling · Viasat ITC proposal.</div>
-          </div>
-          <div class="cs-other-card" onclick="closeCase('cs-research');openCase('cs-solar')">
-            <div class="cs-other-num">03 — Research</div>
-            <div class="cs-other-title">Solar Carport — Refugee Camp</div>
-            <div class="cs-other-desc">4,736 panels · 4.38 GWh/yr · Published.</div>
-          </div>
-        </div>
-      </div>
-
+      <div class="cs-more" data-more></div>
     </div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CASE STUDY TEMPLATE: copy this whole block for a new project.
+     ═══════════════════════════════════════════════════════════════
+<div class="case-study" id="cs-NEWID" role="dialog" aria-modal="true" aria-label="Case study: TITLE">
+  <div class="cs-nav"><div class="cs-nav-inner">
+    <button class="cs-back" data-close><span aria-hidden="true">&larr;</span> Back to projects</button>
+    <span class="mono-label">SHORT LABEL</span>
+  </div></div>
+  <div class="cs-content">
+    <div class="cs-tag">DISCIPLINE, DISCIPLINE, YEAR</div>
+    <h1 class="cs-title display-lg">TITLE</h1>
+    <div class="cs-meta">
+      <div><div class="cs-meta-k">Role</div><div class="cs-meta-v">VALUE</div></div>
+      <div><div class="cs-meta-k">Tools</div><div class="cs-meta-v">VALUE</div></div>
+      <div><div class="cs-meta-k">Status</div><div class="cs-meta-v">VALUE</div></div>
+    </div>
+    <div class="cs-pills">
+      <span class="tag key">MAIN TOOL</span><span class="tag">TOOL</span>
+    </div>
+    <div class="cs-media" style="aspect-ratio:16/7"><img src="HERO.jpg" alt="ALT" loading="lazy" decoding="async"></div>
+    <div class="cs-body">
+      <h2>HEADING</h2>
+      <p>BODY.</p>
+      <div class="cs-stats">
+        <div class="cs-stat"><div class="cs-stat-n">NUM</div><div class="cs-stat-d">WHAT IT MEANS</div></div>
+      </div>
+      <div class="cs-media" style="aspect-ratio:16/10"><img src="IMAGE.png" alt="ALT" loading="lazy" decoding="async"></div>
+      <div class="cs-callout"><p>ONE SENTENCE WORTH REMEMBERING.</p></div>
+      <div class="cs-more" data-more></div>
+    </div>
+  </div>
+</div>
+-->
+
 
 <script>
-  document.documentElement.classList.add('js');
+/* ══════════════════════════════════════════════════════════════
+   PROJECT REGISTRY
+   One entry per case study. The "more work" grid at the bottom
+   of every case study is generated from this, so adding a new
+   project means editing this array, not four hardcoded blocks.
+   ══════════════════════════════════════════════════════════════ */
+const PROJECTS = [
+  { id: 'cs-triton',   title: 'Ackermann steering system',           blurb: 'Geometry trade study, ANSYS FEA, steel fabrication, and the torsional failure that followed.' },
+  { id: 'cs-cce',      title: 'Commercial solar PV design',          blurb: 'Helioscope layout, utility bill analysis, and 20 year financial models for real clients.' },
+  { id: 'cs-solar',    title: 'Solar carport, Shatila refugee camp', blurb: '4,736 panels, 4.38 GWh per year, published in Curieux Academic Journal.' },
+  { id: 'cs-research', title: 'Rotor area and solar tilt studies',   blurb: 'Printed rotor scaling experiment plus a calculus based monthly tilt schedule.' }
+];
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.documentElement.classList.add('js');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ── images fade in once decoded (incl. lazy ones inside case studies) ── */
-  const markLoaded = img => img.classList.add('is-loaded');
-  document.querySelectorAll('img').forEach(img => {
-    if (img.complete && img.naturalWidth > 0) markLoaded(img);
-    else {
-      img.addEventListener('load', () => markLoaded(img), { once: true });
-      img.addEventListener('error', () => markLoaded(img), { once: true });
-    }
+/* decorative loops must not autoplay under reduced motion, but the frame stays */
+if (reduceMotion) {
+  document.querySelectorAll('video').forEach(function (v) {
+    v.removeAttribute('autoplay');
+    v.loop = false;
+    v.controls = true;
+    v.pause();
   });
+}
 
-  /* ── reveal on scroll ── */
-  const reveals = document.querySelectorAll('.reveal');
-  if (reduceMotion) {
-    reveals.forEach(r => r.classList.add('visible'));
-  } else {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 60);
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(r => obs.observe(r));
+/* ── image fade in ── */
+document.querySelectorAll('img').forEach(function (img) {
+  var mark = function () { img.classList.add('is-loaded'); };
+  if (img.complete && img.naturalWidth > 0) mark();
+  else {
+    img.addEventListener('load', mark, { once: true });
+    img.addEventListener('error', mark, { once: true });
   }
+});
 
-  /* ── one rAF-throttled scroll handler for nav state + active link ──
-     (two separate listeners reading offsetTop on every scroll event was the jank) */
-  const nav = document.querySelector('nav');
-  const navLinks = [...document.querySelectorAll('.nav-links a')];
-  const sections = [...document.querySelectorAll('section[id]')];
-  const groupLabels = [...document.querySelectorAll('.project-group-label[id]')];
-  const targets = [...sections, ...groupLabels];
-  let offsets = [];
-  let ticking = false;
-  let lastActive = '';
-  let scrolled = false;
-
-  const measure = () => {
-    offsets = targets
-      .map(el => ({ id: el.id, top: el.getBoundingClientRect().top + window.scrollY }))
-      .sort((a, b) => a.top - b.top);
-  };
-
-  const onScroll = () => {
-    const y = window.scrollY;
-
-    const isScrolled = y > 40;
-    if (isScrolled !== scrolled) {
-      scrolled = isScrolled;
-      nav.classList.toggle('scrolled', isScrolled);
-    }
-
-    let current = '';
-    for (const o of offsets) {
-      if (y >= o.top - 120) current = o.id; else break;
-    }
-    if (current !== lastActive) {
-      lastActive = current;
-      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
-    }
-    ticking = false;
-  };
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
-  }, { passive: true });
-
-  window.addEventListener('resize', () => { measure(); onScroll(); }, { passive: true });
-  window.addEventListener('load', () => { measure(); onScroll(); });
-  measure();
-  onScroll();
-
-  /* ── case study overlays ── */
-  let savedScroll = 0;
-
-  function openCase(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    savedScroll = window.scrollY;
-    el.classList.add('open');
-    el.scrollTop = 0;
-    document.body.style.top = `-${savedScroll}px`;
-    document.body.classList.add('locked');
-    el.setAttribute('tabindex', '-1');
-    el.focus({ preventScroll: true });
-  }
-
-  function closeCase(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.scrollTop = 0;
-    el.classList.remove('open');
-    document.body.classList.remove('locked');
-    document.body.style.top = '';
-    // wait for layout to come back before restoring, or the scroll gets clamped
-    requestAnimationFrame(() => {
-      const prev = document.documentElement.style.scrollBehavior;
-      document.documentElement.style.scrollBehavior = 'auto';
-      window.scrollTo(0, savedScroll);
-      document.documentElement.style.scrollBehavior = prev;
+/* ── scroll reveal, IntersectionObserver only, no scroll listeners ── */
+var reveals = document.querySelectorAll('.reveal');
+if (reduceMotion) {
+  reveals.forEach(function (r) { r.classList.add('visible'); });
+} else {
+  var revealObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e, i) {
+      if (!e.isIntersecting) return;
+      setTimeout(function () { e.target.classList.add('visible'); }, i * 70);
+      revealObs.unobserve(e.target);
     });
-  }
+  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+  reveals.forEach(function (r) { revealObs.observe(r); });
+}
 
-  const openers = {
-    'open-triton': 'cs-triton',
-    'open-cce': 'cs-cce',
-    'open-solar': 'cs-solar',
-    'open-research': 'cs-research'
-  };
-  Object.entries(openers).forEach(([btn, cs]) => {
-    const el = document.getElementById(btn);
-    if (!el) return;
-    el.addEventListener('click', () => openCase(cs));
-    el.setAttribute('tabindex', '0');
-    el.setAttribute('role', 'button');
-    el.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCase(cs); }
+/* ── nav hairline appears once you leave the top, via a sentinel ── */
+var nav = document.getElementById('nav');
+var sentinel = document.createElement('div');
+sentinel.setAttribute('aria-hidden', 'true');
+sentinel.style.cssText = 'position:absolute;top:0;left:0;height:40px;width:1px;pointer-events:none;';
+document.body.prepend(sentinel);
+new IntersectionObserver(function (entries) {
+  nav.classList.toggle('scrolled', !entries[0].isIntersecting);
+}, { threshold: 0 }).observe(sentinel);
+
+/* ── active nav link ── */
+var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+navLinks.forEach(function (link) {
+  var target = document.querySelector(link.getAttribute('href'));
+  if (!target) return;
+  new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        navLinks.forEach(function (a) { a.classList.remove('active'); });
+        link.classList.add('active');
+      }
     });
-  });
+  }, { rootMargin: '-45% 0px -50% 0px' }).observe(target);
+});
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    const open = document.querySelector('.case-study.open');
-    if (open) closeCase(open.id);
+/* ══════════════════════════════════════════════════════════════
+   CASE STUDY OVERLAYS
+   Deep linkable: yoursite/?case=cs-triton opens straight into a
+   study, so you can send one recruiter one link to one project.
+   ══════════════════════════════════════════════════════════════ */
+var savedScroll = 0;
+var lastTrigger = null;
+
+(function buildMoreGrids() {
+  document.querySelectorAll('.case-study').forEach(function (cs) {
+    var slot = cs.querySelector('[data-more]');
+    if (!slot) return;
+    var others = PROJECTS.filter(function (p) { return p.id !== cs.id; });
+    if (!others.length) { slot.remove(); return; }
+    slot.innerHTML =
+      '<h2>More work</h2><div class="cs-more-grid">' +
+      others.map(function (p) {
+        return '<button class="cs-more-card" data-goto="' + p.id + '">' +
+               '<span class="cs-more-t">' + p.title + '</span>' +
+               '<span class="cs-more-d">' + p.blurb + '</span></button>';
+      }).join('') +
+      '</div>';
   });
+})();
+
+function openCase(id, push) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  savedScroll = window.scrollY;
+  el.classList.add('open');
+  el.scrollTop = 0;
+  document.body.style.top = '-' + savedScroll + 'px';
+  document.body.classList.add('locked');
+  el.setAttribute('tabindex', '-1');
+  el.focus({ preventScroll: true });
+  if (push !== false) history.pushState({ caseId: id }, '', '?case=' + id);
+}
+
+function closeCase(id, push) {
+  var el = id ? document.getElementById(id) : document.querySelector('.case-study.open');
+  if (!el) return;
+  el.scrollTop = 0;
+  el.classList.remove('open');
+  document.body.classList.remove('locked');
+  document.body.style.top = '';
+  requestAnimationFrame(function () {
+    var prev = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, savedScroll);
+    document.documentElement.style.scrollBehavior = prev;
+  });
+  if (lastTrigger) { lastTrigger.focus({ preventScroll: true }); lastTrigger = null; }
+  if (push !== false) history.pushState({}, '', location.pathname);
+}
+
+/* card triggers wired from data-case, so a new card needs no JS edit */
+document.querySelectorAll('[data-case]').forEach(function (card) {
+  var id = card.dataset.case;
+  var go = function () { lastTrigger = card; openCase(id); };
+  card.addEventListener('click', go);
+  card.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+  });
+});
+
+/* back buttons and cross links */
+document.addEventListener('click', function (e) {
+  var back = e.target.closest('[data-close]');
+  if (back) { closeCase(back.closest('.case-study').id); return; }
+  var goto = e.target.closest('[data-goto]');
+  if (!goto) return;
+  var from = goto.closest('.case-study');
+  var to = goto.dataset.goto;
+  var el = document.getElementById(to);
+  if (!el) return;
+  from.classList.remove('open');
+  from.scrollTop = 0;
+  el.classList.add('open');
+  el.scrollTop = 0;
+  el.setAttribute('tabindex', '-1');
+  el.focus({ preventScroll: true });
+  history.pushState({ caseId: to }, '', '?case=' + to);
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && document.querySelector('.case-study.open')) closeCase();
+});
+
+/* browser back closes or switches the overlay */
+addEventListener('popstate', function (e) {
+  var open = document.querySelector('.case-study.open');
+  var want = e.state && e.state.caseId;
+  if (open && open.id !== want) closeCase(open.id, false);
+  if (want && (!open || open.id !== want)) openCase(want, false);
+});
+
+/* deep link on first load */
+(function () {
+  var want = new URLSearchParams(location.search).get('case');
+  if (want && document.getElementById(want)) openCase(want, false);
+})();
 </script>
 </body>
 </html>
